@@ -1,0 +1,36 @@
+{
+  "name": "screensf",
+  "version": "1.0.0",
+  "description": "a daily listing of all repertory cinema in the san francisco bay area",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "react-dev": "webpack -d --watch",
+    "start": "nodemon server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/omargarde/screensf.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/omargarde/screensf/issues"
+  },
+  "homepage": "https://github.com/omargarde/screensf#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "sass-loader": "^7.0.3"
+  },
+  "devDependencies": {
+    "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "node-sass": "^4.9.2",
+    "react": "^16.4.1",
+    "react-dev": "0.0.1",
+    "react-dom": "^16.4.1",
+    "webpack": "^4.15.1",
+    "webpack-cli": "^3.0.8"
+  }
+}
