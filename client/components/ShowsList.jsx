@@ -12,7 +12,12 @@ const ShowsList = (props) => (
         {props.show.trt > 0 && <div>{props.show.trt} min</div>}
         {props.show.format !== '' && <div>{props.show.format}</div>}
       </div>
-      {props.show.note !== '' && <div className="film-note">{props.show.note}</div>}
+      {props.show.note !== '' && 
+          <div>
+            {props.show.note.split("\n").map((i, key) => {
+              return <div className="film-note" key={key}>{i}</div>;
+            })}
+          </div>}
       <div className="showtimes">{props.show.showtimes.map(showtime => (
           <Showtime showtime={showtime} key={showtime} />
         ))}
@@ -24,3 +29,5 @@ const ShowsList = (props) => (
 
 
 export default ShowsList;
+
+

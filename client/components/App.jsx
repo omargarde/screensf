@@ -3,6 +3,7 @@ import Recommended from './Recommended.jsx';
 import Screenings from './Screenings.jsx';
 import Calendar from './Calendar.jsx';
 import exampleData from '../../exampleData.js';
+import exampleFeature from '../../exampleFeature.js';
 
 
 class App extends React.Component {
@@ -10,15 +11,17 @@ class App extends React.Component {
     super(props);
     this.state = { 
       today: '07/15/2018', 
-      showtimes: [], 
-      recommended: []
+      showtimes: [],
+      featured: exampleFeature,
     };
     this.handleShowtimes = this.handleShowtimes.bind(this);
+
   }
 
   componentDidMount(){
     this.handleShowtimes(exampleData);
   }
+
 
   handleShowtimes(data) {
     let nest = {};
@@ -26,36 +29,38 @@ class App extends React.Component {
 
     for (var i = 0; i < data.length; i++) {
         
-      if (!nest[data[i].Venue]){
-        nest[data[i].Venue] = { venue: data[i].Venue, shows: []}
+      if (!nest[data[i].venue]){
+        nest[data[i].venue] = { 
+          venue: data[i].venue, 
+          shows: []}
       }
 
-      let showArray = nest[data[i].Venue]['shows']
+      let showArray = nest[data[i].venue]['shows']
       let match = 0;
 
       for (var x = 0; x < showArray.length; x++){
-        if (showArray[x].film === data[i].Film){
-          showArray[x].showtimes.push(data[i].Showtime);
+        if (showArray[x].film === data[i].film){
+          showArray[x].showtimes.push(data[i].showtime);
           match++
         }
       } 
 
       if (!match) {
         let show = {};
-        show.film = data[i].Film;
-        show.director = data[i].Director;
-        show.country = data[i].Country;
-        show.format = data[i].Format;
-        show.language = data[i].Language;
-        show.link = data[i].Link;
-        show.note = data[i].Note;
-        show.ratio = data[i].RATIO;
-        show.trt = data[i].TRT;
-        show.series = data[i].Series;
-        show.year = data[i].Year;
-        show.showtimes = [ data[i].Showtime ]
+        show.film = data[i].film;
+        show.director = data[i].director;
+        show.country = data[i].country;
+        show.format = data[i].format;
+        show.language = data[i].language;
+        show.link = data[i].link;
+        show.note = data[i].note;
+        show.ratio = data[i].ratio;
+        show.trt = data[i].trt;
+        show.series = data[i].series;
+        show.year = data[i].year;
+        show.showtimes = [ data[i].showtime ]
 
-        nest[data[i].Venue]['shows'].push(show);
+        nest[data[i].venue]['shows'].push(show);
       }
     }
 
@@ -63,7 +68,7 @@ class App extends React.Component {
         arr.push(nest[venue])
     }
 
-    console.log(arr)
+
 
     return this.setState({ showtimes: arr });
 
@@ -71,13 +76,18 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="wrapper">
-        <div>Screen SF</div>
-        <Calendar />
-        <Recommended />
-        <Screenings venues={this.state.showtimes}/>
-        <div>Contact us here</div>
-        <div></div>
+      <div>
+        <div className="nav">
+          <h2>Screen SF</h2>
+        </div>
+        <div className="wrapper">
+          <Calendar />
+          <Recommended featured={this.state.featured} />
+          <Screenings venues={this.state.showtimes} />
+        </div>
+        <div className="nav">
+          <h2>Screen SF</h2>
+        </div>
       </div>
     )
   }
