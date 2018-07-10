@@ -21,29 +21,64 @@ class App extends React.Component {
   }
 
   handleShowtimes(data) {
-    let showsByVenue = {}
-    data.forEach(function(showtime) {
-      if(!showsByVenue[showtime.Venue]) {
-        showsByVenue[showtime.Venue] = [];
-        showsByVenue[showtime.Venue].push(showtime)
-      }
-      showsByVenue[showtime.Venue].push(showtime);
-    })
-    
+    let nest = {};
+    let arr = [];
 
-    return this.setState({showtimes: showsByVenue});
+    for (var i = 0; i < data.length; i++) {
+        
+      if (!nest[data[i].Venue]){
+        nest[data[i].Venue] = { venue: data[i].Venue, shows: []}
+      }
+
+      let showArray = nest[data[i].Venue]['shows']
+      let match = 0;
+
+      for (var x = 0; x < showArray.length; x++){
+        if (showArray[x].film === data[i].Film){
+          showArray[x].showtimes.push(data[i].Showtime);
+          match++
+        }
+      } 
+
+      if (!match) {
+        let show = {};
+        show.film = data[i].Film;
+        show.director = data[i].Director;
+        show.country = data[i].Country;
+        show.format = data[i].Format;
+        show.language = data[i].Language;
+        show.link = data[i].Link;
+        show.note = data[i].Note;
+        show.ratio = data[i].RATIO;
+        show.trt = data[i].TRT;
+        show.series = data[i].Series;
+        show.year = data[i].Year;
+        show.showtimes = [ data[i].Showtime ]
+
+        nest[data[i].Venue]['shows'].push(show);
+      }
+    }
+
+    for (var venue in nest) {
+        arr.push(nest[venue])
+    }
+
+    console.log(arr)
+
+    return this.setState({ showtimes: arr });
+
   }
 
   render() {
     return (
-      <div>
+      <div className="wrapper">
         <div>Screen SF</div>
         <Calendar />
         <Recommended />
         <Screenings venues={this.state.showtimes}/>
         <div>Contact us here</div>
         <div></div>
-       </div>
+      </div>
     )
   }
 }
