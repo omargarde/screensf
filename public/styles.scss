@@ -1,0 +1,116 @@
+body {
+  margin: 0%;
+}
+
+#frontpage{
+  @import url('https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,600,600i,700,700i');
+
+  .nav {
+    font-family: 'Lato', sans-serif;
+    width: 100%;
+    background-color: #008080;
+    color: #FFF;
+    padding: 1% 20% 1% 20%;
+
+  }
+
+  .nav > h2 {
+    font-weight: 300;
+    font-size: 2.5em;
+    margin: 0%; 
+  }
+
+  input {
+    padding: 2%;
+    border-radius: 10px;
+    font-family: 'Lato', sans-serif;
+    font-size: 1.2em;
+    width: 50%;
+  }
+
+  .wrapper {
+    margin: 1% 20% 1% 20%;
+    font-family: 'Lato', sans-serif;
+  }
+
+
+  .featured {
+    margin-top: 2%;
+    padding: 0% 0% 2% 0%;
+    background-color: #eee;
+  }
+
+  .featured-image {
+    max-width: 100%
+  }
+
+  .featured-details {
+    margin: 2%;
+    display: flex;
+  }
+
+  .featured-showtime {
+    margin-top: 1.5%;
+    width: 30%;
+  }
+
+  .featured-article {
+    font-weight: 300;
+    width: 70%;
+  }
+
+  .paragraph {
+    margin-top: 1.5%;
+  }
+
+  .screenings-venues {
+    margin: 5% 0% 2% 0;
+  }
+
+  .wrapper > h2 {
+    font-weight: 500;
+    margin: 2% 0% .5% 0%;
+  }
+
+  .venue-shows {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .shows-film {
+    margin: 1% 5% 1% 0%;
+  }
+
+  .film-series {
+    font-weight: 300;
+    font-size: .8em;
+  }
+
+  .film-title {
+    color: #800000;
+  }
+
+  .film-details {
+    display: flex;
+    font-weight: 300;
+    font-size: .8em;
+  }
+
+  .film-details > div {
+    margin-right: 10px; 
+  }
+
+  .film-note {
+    font-weight: 300;
+    font-size: .8em;
+  }
+
+  .showtimes {
+    display: flex;
+    color: #800000;
+  }
+  .showtime {
+    margin-right: 10px;
+  }
+
+}
