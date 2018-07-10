@@ -20,6 +20,8 @@
   "homepage": "https://github.com/omargarde/screensf#readme",
   "dependencies": {
     "express": "^4.16.3",
+    "moment": "^2.22.2",
+    "react-datepicker": "^1.5.0",
     "sass-loader": "^7.0.3"
   },
   "devDependencies": {

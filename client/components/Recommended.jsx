@@ -13,6 +13,7 @@ const Recommended = (props) => (
         <ShowsList show={props.featured} />
       </div>
       <div className="featured-article">
+        <div className="writer">{props.featured.writer}</div>
         {props.featured.article.short.split("\n").map((i, key) => {
           return <div className="paragraph" key={key}>{i}</div>;
         })}

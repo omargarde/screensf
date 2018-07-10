@@ -1,7 +1,9 @@
 import React from 'react';
 import Recommended from './Recommended.jsx';
 import Screenings from './Screenings.jsx';
-import Calendar from './Calendar.jsx';
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
+import 'react-datepicker/dist/react-datepicker.css';
 import exampleData from '../../exampleData.js';
 import exampleFeature from '../../exampleFeature.js';
 
@@ -9,79 +11,144 @@ import exampleFeature from '../../exampleFeature.js';
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { 
-      today: '07/15/2018', 
+    this.state = {  
       showtimes: [],
-      featured: exampleFeature,
+      featured: { 
+        "venue": "",
+        "series": "",
+        "link": "",
+        "date": "",
+        "showtimes": [],
+        "trt": "",
+        "format": "",
+        "note": "",
+        "film": "",
+        "director": "",
+        "Year": "",
+        "ratio": "",
+        "country": "",
+        "language": "",
+        "tmdb": "",
+        "article": { short: "", long: ""},
+        "writer": "",
+      "image": ""
+  },
+      startDate: moment()
     };
+
+    this.handleChange = this.handleChange.bind(this);
     this.handleShowtimes = this.handleShowtimes.bind(this);
 
   }
 
   componentDidMount(){
-    this.handleShowtimes(exampleData);
+    this.handleShowtimes();
   }
 
+  handleChange(date) {
+    this.setState({
+      startDate: date
+    }, this.handleShowtimes);
 
-  handleShowtimes(data) {
+   }
+ 
+  handleRecommended(){
+    for(var i = 0; i < exampleFeature.length; i++){
+      if(exampleFeature[i].date === this.state.startDate.format('MM/DD/YYYY')){
+        let today = exampleFeature[i]
+        this.setState({ featured: today });
+        return
+      }
+    }
+    this.setState({ featured: { 
+        "venue": "",
+        "series": "",
+        "link": "",
+        "date": "",
+        "showtimes": [],
+        "trt": "",
+        "format": "",
+        "note": "",
+        "film": "",
+        "director": "",
+        "Year": "",
+        "ratio": "",
+        "country": "",
+        "language": "",
+        "tmdb": "",
+        "article": { short: "", long: ""},
+        "writer": "",
+      "image": ""
+  } })
+  }
+
+  handleShowtimes() {
     let nest = {};
     let arr = [];
 
-    for (var i = 0; i < data.length; i++) {
-        
-      if (!nest[data[i].venue]){
-        nest[data[i].venue] = { 
-          venue: data[i].venue, 
-          shows: []}
-      }
+    for (var i = 0; i < exampleData.length; i++) {
 
-      let showArray = nest[data[i].venue]['shows']
-      let match = 0;
+      if (exampleData[i].date === this.state.startDate.format('MM/DD/YYYY')){
 
-      for (var x = 0; x < showArray.length; x++){
-        if (showArray[x].film === data[i].film){
-          showArray[x].showtimes.push(data[i].showtime);
-          match++
+        if (!nest[exampleData[i].venue]){
+          nest[exampleData[i].venue] = { 
+            venue: exampleData[i].venue, 
+            shows: []}
         }
-      } 
 
-      if (!match) {
-        let show = {};
-        show.film = data[i].film;
-        show.director = data[i].director;
-        show.country = data[i].country;
-        show.format = data[i].format;
-        show.language = data[i].language;
-        show.link = data[i].link;
-        show.note = data[i].note;
-        show.ratio = data[i].ratio;
-        show.trt = data[i].trt;
-        show.series = data[i].series;
-        show.year = data[i].year;
-        show.showtimes = [ data[i].showtime ]
+        let showArray = nest[exampleData[i].venue]['shows']
+        let match = 0;
 
-        nest[data[i].venue]['shows'].push(show);
+        for (var x = 0; x < showArray.length; x++){
+          if (showArray[x].film === exampleData[i].film){
+            showArray[x].showtimes.push(exampleData[i].showtime);
+            match++
+          }
+        } 
+
+        if (!match) {
+          let show = {};
+          show.film = exampleData[i].film;
+          show.director = exampleData[i].director;
+          show.country = exampleData[i].country;
+          show.format = exampleData[i].format;
+          show.language = exampleData[i].language;
+          show.link = exampleData[i].link;
+          show.note = exampleData[i].note;
+          show.ratio = exampleData[i].ratio;
+          show.trt = exampleData[i].trt;
+          show.series = exampleData[i].series;
+          show.year = exampleData[i].year;
+          show.showtimes = [ exampleData[i].showtime ]
+
+          nest[exampleData[i].venue]['shows'].push(show);
+        }
       }
+
     }
 
     for (var venue in nest) {
         arr.push(nest[venue])
     }
-
-
-
+    
+    this.handleRecommended()
+    
     return this.setState({ showtimes: arr });
 
   }
 
   render() {
+
     return (
       <div>
         <div className="nav">
           <h2>Screen SF</h2>
+          <DatePicker
+            selected={this.state.startDate}
+            onSelect={this.handleChange}
+          />
         </div>
         <div className="wrapper">
-          <Calendar />
           <Recommended featured={this.state.featured} />
           <Screenings venues={this.state.showtimes} />
         </div>
