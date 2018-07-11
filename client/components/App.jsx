@@ -5,8 +5,7 @@ import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import axios from 'axios';
 import 'react-datepicker/dist/react-datepicker.css';
-import exampleData from '../../exampleData.js';
-import exampleFeature from '../../exampleFeature.js';
+
 
 
 class App extends React.Component {
@@ -74,14 +73,14 @@ class App extends React.Component {
       <div>
         <div className="nav">
           <h2>Screen SF</h2>
+        </div>
+        <div className="wrapper">
           <div className="date-calendar">
-            Showtimes on <DatePicker
+            <DatePicker
               selected={this.state.startDate}
               onSelect={this.dateChange}
             />
           </div>
-        </div>
-        <div className="wrapper">
           {this.state.featured ? <Recommended featured={this.state.featured} /> : ''}
           <Screenings venues={this.state.showtimes} />
         </div>
