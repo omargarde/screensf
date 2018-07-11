@@ -40,8 +40,8 @@ class App extends React.Component {
  
   fetchRecommended() {
 
-    this.setState({ featured: null }) 
-
+    this.setState({ featured: null })
+    
     axios({
       method:'get',
       url:'/recommended/' + this.state.startDate.format('MMDDYYYY')
