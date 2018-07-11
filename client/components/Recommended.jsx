@@ -14,8 +14,8 @@ const Recommended = (props) => (
       </div>
       <div className="featured-article">
         <div className="writer">{props.featured.writer}</div>
-        {props.featured.article.short.split("\n").map((i, key) => {
-          return <div className="paragraph" key={key}>{i}</div>;
+        {props.featured.article.short.split("\n").map((paragraph, key) => {
+          return <div className="paragraph" key={key}>{paragraph}</div>;
         })}
       </div>
     </div>
