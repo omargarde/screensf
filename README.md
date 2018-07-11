@@ -1,2 +1,2 @@
 # screensf
-a daily listing
+a daily listing of repertory cinema

@@ -1,8 +1,62 @@
+const exampleData = require('../exampleData')
+const exampleFeature = require('../exampleFeature')
+
+const fetchShowtimes = (date) => {
+
+  //this code needs to check the database for a list of records given a date string.
+  //then the data needs to be flattened for use by the application.
+  //it is currently just fetching from the example data file.
+
+  //modify string input for use in example data
+
+  let nest = {};
+  let arr = [];
+  for (var i = 0; i < exampleData.length; i++) {
+    if (exampleData[i].date === date){
+      if (!nest[exampleData[i].venue]){
+        nest[exampleData[i].venue] = { 
+          venue: exampleData[i].venue, 
+          shows: []
+        }
+      }
+
+      let showArray = nest[exampleData[i].venue]['shows']
+      let match = 0;
+
+      for (var x = 0; x < showArray.length; x++){
+        if (showArray[x].film === exampleData[i].film){
+          showArray[x].showtimes.push(exampleData[i].showtime);
+          match++
+        }
+      } 
+
+      if (!match) {
+        let show = exampleData[i];
+        show.showtimes = [ exampleData[i].showtime ]
+        nest[exampleData[i].venue]['shows'].push(show);
+      }
+    }
+
+  }
+
+  for (var venue in nest) {
+      arr.push(nest[venue])
+  }
+
+  return arr
+
+}
 
 
-/*
+const fetchRecommended = (date) => {
+    for (var i = 0; i < exampleFeature.length; i++){
+      if (exampleFeature[i].date === date){
+        let today = exampleFeature[i]
+        return today
+      }
+    }
 
-  Create postgres methods here
+}
 
-  */
-  
+
+module.exports = { fetchShowtimes, fetchRecommended }
