@@ -7,10 +7,6 @@ Install NPM:
 
 npm i
 
-Once that is finished, compile the app using:
-
-npm run react-dev
-
 In a new tab, start the local server:
 
 npm start
