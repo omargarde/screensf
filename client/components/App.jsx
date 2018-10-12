@@ -1,20 +1,18 @@
 import React from 'react';
-import Recommended from './Recommended.jsx';
-import Screenings from './Screenings.jsx';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import axios from 'axios';
+import Recommended from './Recommended';
+import Screenings from './Screenings';
 import 'react-datepicker/dist/react-datepicker.css';
-
-
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {  
+    this.state = {
       showtimes: [],
       featured: null,
-      startDate: moment()
+      startDate: moment(),
     };
 
     this.dateChange = this.dateChange.bind(this);
@@ -22,57 +20,56 @@ class App extends React.Component {
     this.fetchRecommended = this.fetchRecommended.bind(this);
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.updateComponents();
   }
 
   dateChange(date) {
     this.setState({
-      startDate: date
+      startDate: date,
     }, this.updateComponents);
-
-   }
+  }
 
   updateComponents() {
     this.fetchRecommended();
     this.fetchShowtimes();
   }
- 
-  fetchRecommended() {
 
-    this.setState({ featured: null })
-    
+  fetchRecommended() {
+    this.setState({ featured: null });
+
     axios({
-      method:'get',
-      url:'/recommended/' + this.state.startDate.format('MMDDYYYY')
+      method: 'get',
+      url: '/recommended/' + this.state.startDate.format('MMDDYYYY'),
     })
-    .then( (response) => {
-      this.setState({ featured: response.data })
-    })
-    .catch( (error) => {
-      console.log(error);
-    })
+      .then((response) => {
+        this.setState({ featured: response.data });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   fetchShowtimes() {
     axios({
-      method:'get',
-      url:'/showtimes/' + this.state.startDate.format('MMDDYYYY')
+      method: 'get',
+      url: '/showtimes/' + this.state.startDate.format('MMDDYYYY'),
     })
-    .then( (response) => {
-      this.setState({ showtimes: response.data })
-    })
-    .catch( (error) => {
-      console.log(error);
-    })
+      .then((response) => {
+        this.setState({ showtimes: response.data });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   render() {
-
     return (
       <div>
         <div className="nav">
-          <h2>Screen SF</h2>
+          <h2>
+            Screen SF
+          </h2>
         </div>
         <div className="wrapper">
           <div className="date-calendar">
@@ -85,10 +82,12 @@ class App extends React.Component {
           <Screenings venues={this.state.showtimes} />
         </div>
         <div className="nav">
-          <h2>Screen SF</h2>
+          <h2>
+            Screen SF
+          </h2>
         </div>
       </div>
-    )
+    );
   }
 }
 

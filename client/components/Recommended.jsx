@@ -1,25 +1,28 @@
 import React from 'react';
-import ShowsList from './ShowsList.jsx';
+import ShowsList from './ShowsList';
 
 
-const Recommended = (props) => (
+const Recommended = props => (
   <div className="featured">
-    <img 
+    <img
       src={props.featured.image}
-      className="featured-image" 
+      className="featured-image"
+      alt="featured"
     />
     <div className="featured-details">
       <div className="featured-showtime">
         <ShowsList show={props.featured} />
       </div>
       <div className="featured-article">
-        <div className="writer">{props.featured.writer}</div>
-        {props.featured.article.short.split("\n").map((paragraph, key) => {
+        <div className="writer">
+          {props.featured.writer}
+        </div>
+        {props.featured.article.short.split('\n').map((paragraph, key) => {
           return <div className="paragraph" key={key}>{paragraph}</div>;
         })}
       </div>
     </div>
   </div>
-)
+);
 
 export default Recommended;
