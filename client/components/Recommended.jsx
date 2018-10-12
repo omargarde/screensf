@@ -1,5 +1,5 @@
 import React from 'react';
-import ShowsList from './ShowsList';
+import ShowsList from './ShowsList.jsx';
 
 
 const Recommended = props => (

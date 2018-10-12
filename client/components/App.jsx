@@ -2,8 +2,8 @@ import React from 'react';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import axios from 'axios';
-import Recommended from './Recommended';
-import Screenings from './Screenings';
+import Recommended from './Recommended.jsx';
+import Screenings from './Screenings.jsx';
 import 'react-datepicker/dist/react-datepicker.css';
 
 class App extends React.Component {
