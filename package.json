@@ -22,7 +22,12 @@
     "axios": "^0.18.0",
     "express": "^4.16.3",
     "moment": "^2.22.2",
+<<<<<<< HEAD
+    "nodemon": "^1.18.4",
+    "react": "^16.4.1",
+=======
     "nodemon": "^1.18.3",
+>>>>>>> 5134a23b0c1d89f8700a4c7a683e9eac40ff6464
     "react-datepicker": "^1.5.0",
     "sass-loader": "^7.0.3"
   },
@@ -30,11 +35,13 @@
     "babel-loader": "^7.1.5",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
-    "eslint": "^5.1.0",
+    "eslint": "^4.19.1",
     "eslint-config-airbnb": "^17.0.0",
     "eslint-config-airbnb-standard": "^1.6.6",
+    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-jsx-a11y": "^6.1.0",
+    "eslint-plugin-react": "^7.10.0",
     "node-sass": "^4.9.2",
-    "react": "^16.4.1",
     "react-dev": "0.0.1",
     "react-dom": "^16.4.1",
     "webpack": "^4.15.1",
