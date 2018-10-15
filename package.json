@@ -22,8 +22,12 @@
     "axios": "^0.18.0",
     "express": "^4.16.3",
     "moment": "^2.22.2",
+<<<<<<< HEAD
     "nodemon": "^1.18.4",
     "react": "^16.4.1",
+=======
+    "nodemon": "^1.18.3",
+>>>>>>> 5134a23b0c1d89f8700a4c7a683e9eac40ff6464
     "react-datepicker": "^1.5.0",
     "sass-loader": "^7.0.3"
   },
