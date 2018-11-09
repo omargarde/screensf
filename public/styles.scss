@@ -23,6 +23,24 @@ body {
     margin: 0%; 
   }
 
+  button {
+    border: 0;
+    font-family: inherit;
+    font-size: 1em;
+    font-weight: 300;
+    background-color: #eee;
+  }
+
+  .dates {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .today-button {
+    background-color: #008080;
+    color: white;
+  }
+
   .date-calendar {
     margin-top: 0.5%;
     margin-right: 35%;
