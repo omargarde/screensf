@@ -1,9 +1,10 @@
 import React from 'react';
-import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import axios from 'axios';
+import DatePicker from 'react-datepicker';
 import Recommended from './Recommended.jsx';
 import Screenings from './Screenings.jsx';
+import DateSelector from './DateSelector.jsx';
 import 'react-datepicker/dist/react-datepicker.css';
 
 class App extends React.Component {
@@ -12,7 +13,7 @@ class App extends React.Component {
     this.state = {
       showtimes: [],
       featured: null,
-      startDate: moment('07152018', 'MMDDYYYY'),
+      selectedDate: moment('07152018', 'MMDDYYYY'),
     };
 
     this.dateChange = this.dateChange.bind(this);
@@ -26,7 +27,7 @@ class App extends React.Component {
 
   dateChange(date) {
     this.setState({
-      startDate: date,
+      selectedDate: date,
     }, this.updateComponents);
   }
 
@@ -40,26 +41,26 @@ class App extends React.Component {
 
     axios({
       method: 'get',
-      url: '/recommended/' + this.state.startDate.format('MMDDYYYY'),
+      url: '/recommended/' + this.state.selectedDate.format('MMDDYYYY'),
     })
       .then((response) => {
         this.setState({ featured: response.data });
       })
       .catch((error) => {
-        console.log(error);
+        throw new Error(error);
       });
   }
 
   fetchShowtimes() {
     axios({
       method: 'get',
-      url: '/showtimes/' + this.state.startDate.format('MMDDYYYY'),
+      url: '/showtimes/' + this.state.selectedDate.format('MMDDYYYY'),
     })
       .then((response) => {
         this.setState({ showtimes: response.data });
       })
       .catch((error) => {
-        console.log(error);
+        throw new Error(error);
       });
   }
 
@@ -72,11 +73,17 @@ class App extends React.Component {
           </h2>
         </div>
         <div className="wrapper">
-          <div className="date-calendar">
-            <DatePicker
-              selected={this.state.startDate}
-              onSelect={this.dateChange}
-            />
+          <div className="dates">
+            <button>Today</button>
+            <button>Tomorrow</button>
+            <button>Day After Tomorrow</button>
+            <button>Day After Day After Tomorrow</button>
+            <div className="date-calendar">
+              <DatePicker
+                selected={this.state.selectedDate}
+                onChange={this.dateChange}
+              />
+            </div>
           </div>
           {this.state.featured ? <Recommended featured={this.state.featured} /> : ''}
           <Screenings venues={this.state.showtimes} />
