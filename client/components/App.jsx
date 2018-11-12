@@ -75,8 +75,6 @@ class App extends React.Component {
       showtimes,
     } = this.state;
 
-<<<<<<< HEAD
-=======
     const dates = {
       today: moment(new Date(selectedDate)).format('ddd MMM D'),
       tomorrow: moment(new Date(selectedDate)).add(1, 'days').format('ddd MMM D'),
@@ -86,7 +84,6 @@ class App extends React.Component {
       todayPlusFive: moment(new Date(selectedDate)).add(5, 'days').format('ddd MMM D'),
       todayPlusSix: moment(new Date(selectedDate)).add(6, 'days').format('ddd MMM D'),
     };
->>>>>>> 05c03b698c61efed1c9cac0a29394df8e27c945f
 
     return (
       <div>
