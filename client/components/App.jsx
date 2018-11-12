@@ -67,7 +67,7 @@ class App extends React.Component {
         throw new Error(error);
       });
   }
-.,.,.nn
+
   render() {
     const {
       selectedDate,
