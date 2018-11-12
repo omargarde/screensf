@@ -25,8 +25,10 @@ class App extends React.Component {
   }
 
   dateChange(date) {
+    const formatDate = moment(date);
+
     this.setState({
-      selectedDate: date,
+      selectedDate: formatDate,
     }, this.updateComponents);
   }
 
@@ -76,13 +78,13 @@ class App extends React.Component {
     } = this.state;
 
     const dates = {
-      today: moment(new Date(selectedDate)).format('ddd MMM D'),
-      tomorrow: moment(new Date(selectedDate)).add(1, 'days').format('ddd MMM D'),
-      todayPlusTwo: moment(new Date(selectedDate)).add(2, 'days').format('ddd MMM D'),
-      todayPlusThree: moment(new Date(selectedDate)).add(3, 'days').format('ddd MMM D'),
-      todayPlusFour: moment(new Date(selectedDate)).add(4, 'days').format('ddd MMM D'),
-      todayPlusFive: moment(new Date(selectedDate)).add(5, 'days').format('ddd MMM D'),
-      todayPlusSix: moment(new Date(selectedDate)).add(6, 'days').format('ddd MMM D'),
+      today: moment(new Date(selectedDate)),
+      tomorrow: moment(new Date(selectedDate)).add(1, 'days'),
+      todayPlusTwo: moment(new Date(selectedDate)).add(2, 'days'),
+      todayPlusThree: moment(new Date(selectedDate)).add(3, 'days'),
+      todayPlusFour: moment(new Date(selectedDate)).add(4, 'days'),
+      todayPlusFive: moment(new Date(selectedDate)).add(5, 'days'),
+      todayPlusSix: moment(new Date(selectedDate)).add(6, 'days'),
     };
 
     return (
