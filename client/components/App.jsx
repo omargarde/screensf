@@ -80,7 +80,8 @@ class App extends React.Component {
     const todayPlusTwo = moment(new Date(selectedDate)).add(2, 'days').format('ddd MMM D');
     const todayPlusThree = moment(new Date(selectedDate)).add(3, 'days').format('ddd MMM D');
     const todayPlusFour = moment(new Date(selectedDate)).add(4, 'days').format('ddd MMM D');
-    const todayPlusFive = moment(new Date(selectedDate)).add(4, 'days').format('ddd MMM D');
+    const todayPlusFive = moment(new Date(selectedDate)).add(5, 'days').format('ddd MMM D');
+    const todayPlusSix = moment(new Date(selectedDate)).add(6, 'days').format('ddd MMM D');
 
     return (
       <div>
@@ -99,7 +100,6 @@ class App extends React.Component {
             </button>
             <button
               type="button"
-              onClick={this.dateChange}
             >
               {tomorrow}
             </button>
@@ -114,6 +114,9 @@ class App extends React.Component {
             </button>
             <button type="button">
               {todayPlusFive}
+            </button>
+            <button type="button">
+              {todayPlusSix}
             </button>
             <div className="date-calendar">
               <DatePicker
