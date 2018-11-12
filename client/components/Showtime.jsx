@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Showtime = (props) => (
+const Showtime = props => (
   <div className="showtime">
     {props.showtime}
   </div>

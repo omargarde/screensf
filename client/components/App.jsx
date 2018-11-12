@@ -1,9 +1,9 @@
 import React from 'react';
 import moment from 'moment';
 import axios from 'axios';
-import DatePicker from 'react-datepicker';
 import Recommended from './Recommended.jsx';
 import Screenings from './Screenings.jsx';
+import DateSelector from './DateSelector.jsx';
 import 'react-datepicker/dist/react-datepicker.css';
 
 class App extends React.Component {
@@ -75,13 +75,15 @@ class App extends React.Component {
       showtimes,
     } = this.state;
 
-    const today = moment(new Date(selectedDate)).format('ddd MMM D');
-    const tomorrow = moment(new Date(selectedDate)).add(1, 'days').format('ddd MMM D');
-    const todayPlusTwo = moment(new Date(selectedDate)).add(2, 'days').format('ddd MMM D');
-    const todayPlusThree = moment(new Date(selectedDate)).add(3, 'days').format('ddd MMM D');
-    const todayPlusFour = moment(new Date(selectedDate)).add(4, 'days').format('ddd MMM D');
-    const todayPlusFive = moment(new Date(selectedDate)).add(5, 'days').format('ddd MMM D');
-    const todayPlusSix = moment(new Date(selectedDate)).add(6, 'days').format('ddd MMM D');
+    const dates = {
+      today: moment(new Date(selectedDate)).format('ddd MMM D'),
+      tomorrow: moment(new Date(selectedDate)).add(1, 'days').format('ddd MMM D'),
+      todayPlusTwo: moment(new Date(selectedDate)).add(2, 'days').format('ddd MMM D'),
+      todayPlusThree: moment(new Date(selectedDate)).add(3, 'days').format('ddd MMM D'),
+      todayPlusFour: moment(new Date(selectedDate)).add(4, 'days').format('ddd MMM D'),
+      todayPlusFive: moment(new Date(selectedDate)).add(5, 'days').format('ddd MMM D'),
+      todayPlusSix: moment(new Date(selectedDate)).add(6, 'days').format('ddd MMM D'),
+    };
 
     return (
       <div>
@@ -91,40 +93,11 @@ class App extends React.Component {
           </h2>
         </div>
         <div className="wrapper">
-          <span className="dates">
-            <button
-              type="button"
-              className="today-button"
-            >
-              {today}
-            </button>
-            <button
-              type="button"
-            >
-              {tomorrow}
-            </button>
-            <button type="button">
-              {todayPlusTwo}
-            </button>
-            <button type="button">
-              {todayPlusThree}
-            </button>
-            <button type="button">
-              {todayPlusFour}
-            </button>
-            <button type="button">
-              {todayPlusFive}
-            </button>
-            <button type="button">
-              {todayPlusSix}
-            </button>
-            <div className="date-calendar">
-              <DatePicker
-                selected={selectedDate}
-                onChange={this.dateChange}
-              />
-            </div>
-          </span>
+          <DateSelector
+            today={selectedDate}
+            dates={dates}
+            handleDateChange={this.dateChange.bind(this)}
+            />
           {featured ? <Recommended featured={featured} /> : ''}
           <Screenings venues={showtimes} />
         </div>
