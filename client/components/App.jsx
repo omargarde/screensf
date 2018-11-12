@@ -81,7 +81,7 @@ class App extends React.Component {
     const todayPlusThree = moment(new Date(selectedDate)).add(3, 'days').format('ddd MMM D');
     const todayPlusFour = moment(new Date(selectedDate)).add(4, 'days').format('ddd MMM D');
     const todayPlusFive = moment(new Date(selectedDate)).add(5, 'days').format('ddd MMM D');
-    const todayPlusSix = moment(new Date(selectedDate)).add(6, 'days').format('ddd MMM D');
+    const todayPlusSix = moment(new Date(selectedDate)).add(6, 'days').format('ddd MMM gitD');
 
     return (
       <div>
