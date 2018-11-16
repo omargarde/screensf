@@ -3,10 +3,6 @@ const exampleFeature = require('./exampleFeature')
 
 const fetchShowtimes = (date) => {
 
-  //this code needs to check the database for a list of records given a date string.
-  //then the data needs to be flattened for use by the application.
-  //it is currently just fetching from the example data file.
-
   let nest = {};
   let arr = [];
   for (var i = 0; i < exampleData.length; i++) {
