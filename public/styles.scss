@@ -4,6 +4,19 @@ body {
 
 }
 
+/* Breakpoints */
+
+$breakpoint-large: 1500px;
+$breakpoint-medium: 1230px;
+$breakpoint-small: 760px;
+$breakpoint-tiny: 540px;
+
+/* Colors */
+
+$screen-sf: #008080;
+$highlight: #800000;
+
+
 #frontpage{
   @import url('https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,600,600i,700,700i');
 
@@ -12,7 +25,7 @@ body {
     width: 100%;
     padding: 1% 1%;
     display: flex;
-    background-color: #008080;
+    background-color: $screen-sf;
     color: #FFF;
   }
 
@@ -32,12 +45,16 @@ body {
     width: 15%;
   }
 
+  .yesterday-button {
+    display: none;
+  }
+
   .dates {
     display: flex;
   }
 
   .today-button {
-    background-color: #008080;
+    background-color: $screen-sf;
     color: white;
   }
 
@@ -70,11 +87,84 @@ body {
     outline: none;
   }
 
-
-  @media (min-width: 1230px) {
+  @media only screen and (min-width: $breakpoint-large) {
     .wrapper {
       margin: 1% 25% 3% 25%;
     }
+
+    .featured-showtime {
+      margin-top: 1.5%;
+      width: 30%;
+    }
+
+  }
+
+  @media only screen and (max-width: $breakpoint-large) {
+    .wrapper {
+      margin: 1% 20% 3% 20%;
+    }
+
+    .featured-showtime {
+      margin-top: 1.5%;
+      width: 30%;
+    }
+  }
+
+  @media only screen and (max-width: $breakpoint-medium) {
+    .wrapper {
+      margin: 1% 10% 3% 10%;
+    }
+
+    .nav > h2 {
+      font-size: 2em;
+    }
+
+    .featured-showtime {
+      margin-top: 1.5%;
+      width: 45%;
+    }
+  }
+
+  @media only screen and (max-width: $breakpoint-small) {
+    .wrapper {
+      margin: 1% 5% 3% 5%;
+    }
+
+    .nav > h2 {
+      font-size: 1.5em;
+    }
+
+    .featured-showtime {
+      margin-top: 1.5%;
+      width: 50%;
+    }
+
+  }
+
+  @media only screen and (max-width: $breakpoint-tiny) {
+    .wrapper {
+      margin: 1% 5% 3% 5%;
+      min-width: 400px;
+    }
+
+    .nav > h2 {
+      font-size: 1.5em;
+    }
+
+    .day-button {
+      display: none;
+    }
+
+    .yesterday-button {
+      display: inherit;
+    }
+
+    .featured-showtime {
+      margin-top: 1.5%;
+      width: 50%;
+    }
+
+
   }
 
   .wrapper {
@@ -96,10 +186,6 @@ body {
     display: flex;
   }
 
-  .featured-showtime {
-    margin-top: 1.5%;
-    width: 30%;
-  }
 
   .featured-article {
     font-weight: 300;
@@ -135,7 +221,7 @@ body {
   }
 
   .film-title {
-    color: #800000;
+    color: $highlight;
   }
 
   .film-details {
@@ -155,7 +241,7 @@ body {
 
   .showtimes {
     display: flex;
-    color: #800000;
+    color: $highlight;
   }
   .showtime {
     margin-right: 10px;

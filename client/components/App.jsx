@@ -78,6 +78,7 @@ class App extends React.Component {
     } = this.state;
 
     const dates = {
+      yesterday: moment(new Date(selectedDate)).subtract(1, 'days'),
       today: moment(new Date(selectedDate)),
       tomorrow: moment(new Date(selectedDate)).add(1, 'days'),
       todayPlusTwo: moment(new Date(selectedDate)).add(2, 'days'),
