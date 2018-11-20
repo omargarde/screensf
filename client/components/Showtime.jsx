@@ -1,9 +1,9 @@
 import React from 'react';
 
 const Showtime = props => (
-  <div className="showtime">
+  <span className="showtime">
     {props.showtime}
-  </div>
+  </span>
 )
 
 export default Showtime;
