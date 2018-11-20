@@ -87,72 +87,67 @@ $highlight: #800000;
     outline: none;
   }
 
-  @media only screen and (min-width: $breakpoint-large) {
-    .wrapper {
+  .wrapper {
+    font-family: 'Lato', sans-serif;
+    @media only screen and (min-width: $breakpoint-large) {
       margin: 1% 25% 3% 25%;
     }
+    @media only screen and (max-width: $breakpoint-large) {
+      margin: 1% 20% 3% 20%;
+    }
+    @media only screen and (max-width: $breakpoint-medium) {
+      margin: 1% 10% 3% 10%;
+    }
+    @media only screen and (max-width: $breakpoint-small) {
+      margin: 1% 5% 3% 5%;
+    }
+    @media only screen and (max-width: $breakpoint-tiny) {
+      margin: 1% 5% 3% 5%;
+      min-width: 400px;
+    }
+  }
 
+
+  @media only screen and (min-width: $breakpoint-large) {
     .featured-showtime {
-      margin-top: 1.5%;
       width: 30%;
     }
-
   }
 
   @media only screen and (max-width: $breakpoint-large) {
-    .wrapper {
-      margin: 1% 20% 3% 20%;
-    }
-
     .featured-showtime {
-      margin-top: 1.5%;
       width: 30%;
     }
   }
 
   @media only screen and (max-width: $breakpoint-medium) {
-    .wrapper {
-      margin: 1% 10% 3% 10%;
-    }
-
     .nav > h2 {
       font-size: 2em;
     }
 
     .featured-showtime {
-      margin-top: 1.5%;
       width: 45%;
+    }
+
+    .day-button {
+      display: none;
     }
   }
 
   @media only screen and (max-width: $breakpoint-small) {
-    .wrapper {
-      margin: 1% 5% 3% 5%;
-    }
-
     .nav > h2 {
       font-size: 1.5em;
     }
 
     .featured-showtime {
-      margin-top: 1.5%;
       width: 50%;
     }
 
   }
 
   @media only screen and (max-width: $breakpoint-tiny) {
-    .wrapper {
-      margin: 1% 5% 3% 5%;
-      min-width: 400px;
-    }
-
     .nav > h2 {
       font-size: 1.5em;
-    }
-
-    .day-button {
-      display: none;
     }
 
     .yesterday-button {
@@ -164,11 +159,6 @@ $highlight: #800000;
       width: 50%;
     }
 
-
-  }
-
-  .wrapper {
-    font-family: 'Lato', sans-serif;
   }
 
   .featured {
@@ -184,6 +174,10 @@ $highlight: #800000;
   .featured-details {
     margin: 2%;
     display: flex;
+  }
+
+  .featured-showtime {
+    margin-top: 1.5%;
   }
 
 
