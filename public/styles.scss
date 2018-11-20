@@ -30,13 +30,10 @@ $highlight: #800000;
 
     h2 {
       font-weight: 300;
-      font-size: 2.5em;
+      font-size: large;
       margin: 0% 25%;
-      @media screen and (max-width: $breakpoint-medium) {
-        font-size: 2em;
-      }
-      @media screen and (max-width: $breakpoint-small) {
-        font-size: 1.5em;
+      @media screen and (min-width: $breakpoint-small) {
+        font-size: xx-large;
       }
     }
   }
@@ -67,7 +64,7 @@ $highlight: #800000;
     button {
       border: 0;
       font-family: inherit;
-      font-size: 1em;
+      font-size: medium;
       font-weight: 300;
       background-color: #eee;
       margin-right: 1%;
@@ -191,22 +188,20 @@ $highlight: #800000;
   }
 
   .film-details {
-    display: flex;
     font-weight: 300;
-    font-size: .8em; 
+    font-size: small; 
   }
 
-  .film-details > div {
-    margin-right: 1%;
+  .film-details > span {
+    margin-right: 2%;
   }
 
   .film-note {
     font-weight: 300;
-    font-size: .8em; 
+    font-size: small; 
   }
 
   .showtimes {
-    display: flex;
     color: $highlight;
     font-weight: 600;
   }
