@@ -27,64 +27,18 @@ $highlight: #800000;
     display: flex;
     background-color: $screen-sf;
     color: #FFF;
-  }
 
-  .nav > h2 {
-    font-weight: 300;
-    font-size: 2.5em;
-    margin: 0% 25%; 
-  }
-
-  button {
-    border: 0;
-    font-family: inherit;
-    font-size: 1em;
-    font-weight: 300;
-    background-color: #eee;
-    margin-right: 5px;
-    width: 15%;
-  }
-
-  .yesterday-button {
-    display: none;
-  }
-
-  .dates {
-    display: flex;
-  }
-
-  .today-button {
-    background-color: $screen-sf;
-    color: white;
-  }
-
-  .date-calendar {
-    margin-top: 0.5%;
-    width: 50px;
-    height: 50px;
-    background-image: url(https://cdn.iconscout.com/icon/premium/png-256-thumb/calendar-1770-588223.png);
-    background-size: cover;
-  }
-
-  .date-calendar input {
-    opacity: 0;
-    width: 50px;
-    height: 50px;
-  }
-
-  input {
-    padding: 4%;
-    border-radius: 4px;
-    font-family: 'Lato', sans-serif;
-    font-size: 1.2em;
-    font-weight: 300;
-    width: 55%;
-    cursor: pointer;
-    border: none;
-  }
-
-  input:focus {
-    outline: none;
+    h2 {
+      font-weight: 300;
+      font-size: 2.5em;
+      margin: 0% 25%;
+      @media only screen and (max-width: $breakpoint-medium) {
+        font-size: 2em;
+      }
+      @media only screen and (max-width: $breakpoint-small) {
+        font-size: 1.5em;
+      }
+    }
   }
 
   .wrapper {
@@ -100,63 +54,70 @@ $highlight: #800000;
     }
     @media only screen and (max-width: $breakpoint-small) {
       margin: 1% 5% 3% 5%;
-    }
-    @media only screen and (max-width: $breakpoint-tiny) {
-      margin: 1% 5% 3% 5%;
       min-width: 400px;
     }
   }
 
+  .dates {
+    display: flex;
+    justify-content: center;
 
-  @media only screen and (min-width: $breakpoint-large) {
-    .featured-showtime {
-      width: 30%;
-    }
-  }
 
-  @media only screen and (max-width: $breakpoint-large) {
-    .featured-showtime {
-      width: 30%;
-    }
-  }
-
-  @media only screen and (max-width: $breakpoint-medium) {
-    .nav > h2 {
-      font-size: 2em;
+    button {
+      border: 0;
+      font-family: inherit;
+      font-size: 1em;
+      font-weight: 300;
+      background-color: #eee;
+      margin-right: 5px;
+      width: 15%;
     }
 
-    .featured-showtime {
-      width: 45%;
-    }
-
-    .day-button {
-      display: none;
-    }
-  }
-
-  @media only screen and (max-width: $breakpoint-small) {
-    .nav > h2 {
-      font-size: 1.5em;
-    }
-
-    .featured-showtime {
-      width: 50%;
-    }
-
-  }
-
-  @media only screen and (max-width: $breakpoint-tiny) {
-    .nav > h2 {
-      font-size: 1.5em;
+    .today-button {
+      background-color: $screen-sf;
+      color: white;
     }
 
     .yesterday-button {
-      display: inherit;
+      display: none;
+      @media only screen and (max-width: $breakpoint-small){
+        display: inherit;
+      }
     }
 
-    .featured-showtime {
-      margin-top: 1.5%;
-      width: 50%;
+    .day-button {
+      @media only screen and (max-width: $breakpoint-small) {
+        display: none;
+      }
+    }
+
+    .date-calendar {
+      margin-top: 0.5%;
+      width: 50px;
+      height: 50px;
+      background-image: url(https://cdn.iconscout.com/icon/premium/png-256-thumb/calendar-1770-588223.png);
+      background-size: cover;
+    }
+
+    .date-calendar input {
+      opacity: 0;
+      width: 50px;
+      height: 50px;
+    }
+
+    input {
+      padding: 4%;
+      border-radius: 4px;
+      font-family: 'Lato', sans-serif;
+      font-size: 1.2em;
+      font-weight: 300;
+      width: 55%;
+      cursor: pointer;
+      border: none;
+    }
+
+    input:focus {
+      outline: none;
     }
 
   }
@@ -165,29 +126,37 @@ $highlight: #800000;
     margin-top: 2%;
     padding: 0% 0% 2% 0%;
     background-color: #eee;
-  }
+  
+    .featured-image {
+      max-width: 100%
+    }
 
-  .featured-image {
-    max-width: 100%
-  }
+    .featured-details {
+      margin: 2%;
+      display: flex;
+    }
 
-  .featured-details {
-    margin: 2%;
-    display: flex;
-  }
+    .featured-showtime {
+      margin-top: 1.5%;
+      width: 30%;
+      @media only screen and (max-width: $breakpoint-medium) {
+        width: 45%;
+      }
+      @media only screen and (max-width: $breakpoint-small) {
+        width: 50%;
+      }
+    }
 
-  .featured-showtime {
-    margin-top: 1.5%;
-  }
 
+    .featured-article {
+      font-weight: 300;
+      width: 70%;
+    }
 
-  .featured-article {
-    font-weight: 300;
-    width: 70%;
-  }
+    .paragraph {
+      margin-top: 1.5%;
+    }
 
-  .paragraph {
-    margin-top: 1.5%;
   }
 
   .screenings-venues {
@@ -207,11 +176,14 @@ $highlight: #800000;
   .shows-film {
     margin: 2% 0%;
     flex: 0 0 50%;
+    @media only screen and (max-width: $breakpoint-small) {
+      flex: 0 0 100%;
+    }
   }
 
   .film-series {
     font-weight: 300;
-    font-size: .8em;
+    margin-bottom: 1.5%
   }
 
   .film-title {
@@ -221,7 +193,6 @@ $highlight: #800000;
   .film-details {
     display: flex;
     font-weight: 300;
-    font-size: .8em;
   }
 
   .film-details > div {
@@ -230,7 +201,6 @@ $highlight: #800000;
 
   .film-note {
     font-weight: 300;
-    font-size: .8em;
   }
 
   .showtimes {
