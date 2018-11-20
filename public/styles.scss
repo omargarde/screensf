@@ -32,10 +32,10 @@ $highlight: #800000;
       font-weight: 300;
       font-size: 2.5em;
       margin: 0% 25%;
-      @media only screen and (max-width: $breakpoint-medium) {
+      @media screen and (max-width: $breakpoint-medium) {
         font-size: 2em;
       }
-      @media only screen and (max-width: $breakpoint-small) {
+      @media screen and (max-width: $breakpoint-small) {
         font-size: 1.5em;
       }
     }
@@ -43,16 +43,16 @@ $highlight: #800000;
 
   .wrapper {
     font-family: 'Lato', sans-serif;
-    @media only screen and (min-width: $breakpoint-large) {
+    @media  screen and (min-width: $breakpoint-large) {
       margin: 1% 25% 3% 25%;
     }
-    @media only screen and (max-width: $breakpoint-large) {
+    @media screen and (max-width: $breakpoint-large) {
       margin: 1% 20% 3% 20%;
     }
-    @media only screen and (max-width: $breakpoint-medium) {
+    @media  screen and (max-width: $breakpoint-medium) {
       margin: 1% 10% 3% 10%;
     }
-    @media only screen and (max-width: $breakpoint-small) {
+    @media screen and (max-width: $breakpoint-small) {
       margin: 1% 5% 3% 5%;
       min-width: 400px;
     }
@@ -61,6 +61,7 @@ $highlight: #800000;
   .dates {
     display: flex;
     justify-content: center;
+    height: 50px;
 
 
     button {
@@ -69,25 +70,27 @@ $highlight: #800000;
       font-size: 1em;
       font-weight: 300;
       background-color: #eee;
-      margin-right: 5px;
+      margin-right: 1%;
       width: 15%;
+      justify-content: center;
     }
 
-    .today-button {
+    .current-button {
       background-color: $screen-sf;
       color: white;
     }
 
-    .yesterday-button {
-      display: none;
-      @media only screen and (max-width: $breakpoint-small){
-        display: inherit;
+    .previous-button, .next-button {
+      display: inherit;
+      @media only screen and (min-width: $breakpoint-small){
+        display: none;
       }
     }
 
     .day-button {
-      @media only screen and (max-width: $breakpoint-small) {
-        display: none;
+      display: none;
+      @media only screen and (min-width: $breakpoint-small) {
+        display: inherit;
       }
     }
 
@@ -97,6 +100,9 @@ $highlight: #800000;
       height: 50px;
       background-image: url(https://cdn.iconscout.com/icon/premium/png-256-thumb/calendar-1770-588223.png);
       background-size: cover;
+      @media screen and (max-width: $breakpoint-small) {
+        display: none;
+      }
     }
 
     .date-calendar input {
@@ -133,24 +139,16 @@ $highlight: #800000;
 
     .featured-details {
       margin: 2%;
-      display: flex;
     }
 
     .featured-showtime {
-      margin-top: 1.5%;
-      width: 30%;
-      @media only screen and (max-width: $breakpoint-medium) {
-        width: 45%;
-      }
-      @media only screen and (max-width: $breakpoint-small) {
-        width: 50%;
-      }
+      margin: 1.5% 0% 2% 0%;
+      border-bottom: solid black .5px;
     }
 
 
     .featured-article {
       font-weight: 300;
-      width: 70%;
     }
 
     .paragraph {
@@ -175,40 +173,45 @@ $highlight: #800000;
 
   .shows-film {
     margin: 2% 0%;
-    flex: 0 0 50%;
-    @media only screen and (max-width: $breakpoint-small) {
-      flex: 0 0 100%;
+    flex: 0 0 100%;
+    @media only screen and (min-width: $breakpoint-small) {
+      flex: 0 0 50%;
     }
   }
 
   .film-series {
     font-weight: 300;
-    margin-bottom: 1.5%
+    margin-bottom: 1.5%;
+    text-decoration: underline;
   }
 
   .film-title {
     color: $highlight;
+    font-weight: 600;
   }
 
   .film-details {
     display: flex;
     font-weight: 300;
+    font-size: .8em; 
   }
 
   .film-details > div {
-    margin-right: 10px; 
+    margin-right: 1%;
   }
 
   .film-note {
     font-weight: 300;
+    font-size: .8em; 
   }
 
   .showtimes {
     display: flex;
     color: $highlight;
+    font-weight: 600;
   }
   .showtime {
-    margin-right: 10px;
+    margin-right: 2%;
   }
 
 }

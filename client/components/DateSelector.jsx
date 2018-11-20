@@ -6,21 +6,28 @@ const DateSelector = props => (
   <span className="dates">
     <button
       type="button"
-      className="yesterday-button"
+      className="previous-button"
       onClick={() => props.handleDateChange(props.dates.yesterday)}
     >
-      {props.dates.yesterday.format('ddd MMM D')}
+      Previous
     </button>
     <button
       type="button"
-      className="today-button"
+      className="current-button"
       onClick={() => props.handleDateChange(props.dates.today)}
     >
       {props.dates.today.format('ddd MMM D')}
     </button>
     <button
       type="button"
-      className="tomorrow-button"
+      className="next-button"
+      onClick={() => props.handleDateChange(props.dates.tomorrow)}
+    >
+      Next
+    </button>
+    <button
+      type="button"
+      className="day-button"
       onClick={() => props.handleDateChange(props.dates.tomorrow)}
     >
       {props.dates.tomorrow.format('ddd MMM D')}
@@ -45,20 +52,6 @@ const DateSelector = props => (
       onClick={() => props.handleDateChange(props.dates.todayPlusFour)}
     >
       {props.dates.todayPlusFour.format('ddd MMM D')}
-    </button>
-    <button
-      type="button"
-      className="day-button"
-      onClick={() => props.handleDateChange(props.dates.todayPlusFive)}
-    >
-      {props.dates.todayPlusFive.format('ddd MMM D')}
-    </button>
-    <button
-      type="button"
-      className="day-button"
-      onClick={() => props.handleDateChange(props.dates.todayPlusSix)}
-    >
-      {props.dates.todayPlusSix.format('ddd MMM D')}
     </button>
     <div className="date-calendar">
       <DatePicker
