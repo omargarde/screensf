@@ -19,13 +19,15 @@ $highlight: #800000;
 
 /* pixel density query */
 
-@media (min-resolution: 192dpi), 
-  (-webkit-min-device-pixel-ratio: 2), 
-  (min--moz-device-pixel-ratio: 2), 
-  (-o-min-device-pixel-ratio: 2/1), 
-  (min-device-pixel-ratio: 2), 
-  (min-resolution: 2dppx) { 
-    display: none;
+@mixin respondTo($media) {
+  @if $media == mobile {
+    @media (min-resolution: 192dpi), 
+    (-webkit-min-device-pixel-ratio: 2), 
+    (min--moz-device-pixel-ratio: 2), 
+    (-o-min-device-pixel-ratio: 2/1), 
+    (min-device-pixel-ratio: 2), 
+    (min-resolution: 2dppx) { @content; }
+  }
 }
 
 
@@ -65,12 +67,7 @@ $highlight: #800000;
       margin: 1% 10% 3% 10%;
     }
 
-    @media  (min-resolution: 192dpi), 
-      (-webkit-min-device-pixel-ratio: 2), 
-      (min--moz-device-pixel-ratio: 2), 
-      (-o-min-device-pixel-ratio: 2/1), 
-      (min-device-pixel-ratio: 2), 
-      (min-resolution: 2dppx) {
+    @include respondTo(mobile) {
         margin: 1% 10% 3% 10%;
     }
 
@@ -91,14 +88,9 @@ $highlight: #800000;
       margin-right: 1%;
       width: 15%;
       justify-content: center;
-      @media (min-resolution: 192dpi), 
-      (-webkit-min-device-pixel-ratio: 2), 
-      (min--moz-device-pixel-ratio: 2), 
-      (-o-min-device-pixel-ratio: 2/1), 
-      (min-device-pixel-ratio: 2), 
-      (min-resolution: 2dppx) {
+      @include respondTo(mobile) {
         width: 30%;
-        font-size: xx-large;
+        font-size: xx-large;      
       }
       @media screen and (max-width: $breakpoint-small) {
         width: 30%;
@@ -115,13 +107,8 @@ $highlight: #800000;
       @media only screen and (min-width: $breakpoint-small){
         display: none;
       }
-      @media (min-resolution: 192dpi), 
-      (-webkit-min-device-pixel-ratio: 2), 
-      (min--moz-device-pixel-ratio: 2), 
-      (-o-min-device-pixel-ratio: 2/1), 
-      (min-device-pixel-ratio: 2), 
-      (min-resolution: 2dppx) {
-        display: inherit;
+      @include respondTo(mobile) {
+      display: inherit;
       }
     }
 
@@ -130,12 +117,7 @@ $highlight: #800000;
       @media only screen and (min-width: $breakpoint-small) {
         display: inherit;
       }
-      @media (min-resolution: 192dpi), 
-      (-webkit-min-device-pixel-ratio: 2), 
-      (min--moz-device-pixel-ratio: 2), 
-      (-o-min-device-pixel-ratio: 2/1), 
-      (min-device-pixel-ratio: 2), 
-      (min-resolution: 2dppx) {
+      @include respondTo(mobile) {
         display: none;
       }
     }
@@ -149,12 +131,7 @@ $highlight: #800000;
       @media screen and (max-width: $breakpoint-small) {
         display: none;
       }
-      @media (min-resolution: 192dpi), 
-      (-webkit-min-device-pixel-ratio: 2), 
-      (min--moz-device-pixel-ratio: 2), 
-      (-o-min-device-pixel-ratio: 2/1), 
-      (min-device-pixel-ratio: 2), 
-      (min-resolution: 2dppx) {
+      @include respondTo(mobile) {
         display: none;
       }
     }
@@ -215,14 +192,15 @@ $highlight: #800000;
     margin: 5% 0% 2% 0;
   }
 
-  h2 {
+  .screenings-venues h2 {
     font-weight: 500;
-    margin: 2% 0% .5% 0%;
+    margin: 2% 0% 4% 0%;
   }
 
   .venue-shows {
     display: flex;
     flex-wrap: wrap;
+    font-size: medium;
   }
 
   .shows-film {
@@ -231,12 +209,7 @@ $highlight: #800000;
     @media only screen and (min-width: $breakpoint-small) {
       flex: 0 0 50%;
     }
-    @media (min-resolution: 192dpi), 
-    (-webkit-min-device-pixel-ratio: 2), 
-    (min--moz-device-pixel-ratio: 2), 
-    (-o-min-device-pixel-ratio: 2/1), 
-    (min-device-pixel-ratio: 2), 
-    (min-resolution: 2dppx) {
+    @include respondTo(mobile) {
       flex: 0 0 100%;
     }
   }
