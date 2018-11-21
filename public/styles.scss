@@ -45,7 +45,6 @@ $highlight: #800000;
 
     h2 {
       font-weight: 300;
-      font-size: large;
       margin: 0% 25%;
       font-size: xx-large;    }
   }
@@ -80,9 +79,6 @@ $highlight: #800000;
     @include respondTo(mobile) {
       height: 75px;
     }
-
-
-
 
     button {
       border: 0;
@@ -165,58 +161,78 @@ $highlight: #800000;
   }
 
   .featured {
-    margin-top: 2%;
+    margin: 2% 0% 2% 0%;
     padding: 0% 0% 2% 0%;
     background-color: #eee;
-  
-    .featured-image {
-      max-width: 100%
-    }
-
-    .featured-details {
-      margin: 2%;
-    }
-
-    .featured-showtime {
-      margin: 1.5% 0% 2% 0%;
-      border-bottom: solid black .5px;
-    }
-
-
-    .featured-article {
-      font-weight: 300;
-    }
-
-    .paragraph {
-      margin-top: 1.5%;
-    }
-
   }
 
-  .screenings-venues {
-    margin: 5% 0% 2% 0;
+  .featured-image {
+    max-width: 100%
   }
 
-  .screenings-venues h2 {
-    font-weight: 500;
-    margin: 2% 0% 4% 0%;
-  }
-
-  .venue-shows {
+  .featured-details {
+    margin: 2%;
     display: flex;
     flex-wrap: wrap;
-    font-size: medium;
   }
 
-  .shows-film {
-    margin-bottom: 5%;
-    flex: 0 0 100%;
+  .featured-showtime {
+    margin: 1.5% 0% 2% 0%;
     @media only screen and (min-width: $breakpoint-small) {
-      flex: 0 0 50%;
+      width: 200px;
+    }
+    @include respondTo(mobile) {
+      flex: 0 0 100%;
+      border-bottom: solid black .5px;
+    }
+  }
+
+
+  .featured-article {
+    font-weight: 300;
+
+    @media only screen and (min-width: $breakpoint-small) {
+      flex: 0 0 70%;
+    }
+    @media only screen and (max-width: $breakpoint-medium) {
+      flex: 0 0 100%;
     }
     @include respondTo(mobile) {
       flex: 0 0 100%;
     }
+  }
+
+  .writer {
+    font-weight: 500;
+    margin-top: 1%;
+  }
+
+  .paragraph {
+    margin-top: 1.5%;
+  }
+
+  .screenings-title {
+    font-weight: 500;
+  }
+
+  .screenings-venues h2 {
+    font-weight: 500;
+    margin: 2% 0% 2% 0%;
+  }
+
+  .venue-shows {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    @media only screen and (max-width: $breakpoint-small) {
+      grid-template-columns: 1fr;
+    }
+    @include respondTo(mobile) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .shows-film {
+    margin-bottom: 5%;
   }
 
   .film-series {
