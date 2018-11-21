@@ -77,6 +77,11 @@ $highlight: #800000;
     display: flex;
     justify-content: center;
     height: 50px;
+    @include respondTo(mobile) {
+      height: 75px;
+    }
+
+
 
 
     button {
@@ -90,7 +95,7 @@ $highlight: #800000;
       justify-content: center;
       @include respondTo(mobile) {
         width: 30%;
-        font-size: xx-large;      
+        font-size: xx-large;
       }
       @media screen and (max-width: $breakpoint-small) {
         width: 30%;
