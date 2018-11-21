@@ -17,9 +17,21 @@ $screen-sf: #008080;
 $highlight: #800000;
 
 
+/* pixel density query */
+
+@media (min-resolution: 192dpi), 
+  (-webkit-min-device-pixel-ratio: 2), 
+  (min--moz-device-pixel-ratio: 2), 
+  (-o-min-device-pixel-ratio: 2/1), 
+  (min-device-pixel-ratio: 2), 
+  (min-resolution: 2dppx) { 
+    display: none;
+}
+
+
 #frontpage{
   @import url('https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,600,600i,700,700i');
-  @import url('https://fonts.googleapis.com/css?family=Roboto');
+  @import url('https://fonts.googleapis.com/css?family=Roboto:300'); 
 
   .nav {
     font-family: 'Lato', sans-serif;
@@ -33,24 +45,35 @@ $highlight: #800000;
       font-weight: 300;
       font-size: large;
       margin: 0% 25%;
-      @media screen and (min-width: $breakpoint-small) {
-        font-size: xx-large;
-      }
-    }
+      font-size: xx-large;    }
   }
 
   .wrapper {
     font-family: 'Lato', sans-serif;
+    font-size: medium;
     margin: 1% 5% 3% 5%;
+
     @media  screen and (min-width: $breakpoint-large) {
       margin: 1% 25% 3% 25%;
     }
-    @media screen and (min-width: $breakpoint-medium) {
+    
+    @media screen and (max-width: $breakpoint-large) {
       margin: 1% 20% 3% 20%;
     }
-    @media  screen and (min-width: $breakpoint-small) {
+
+    @media screen and (max-width: $breakpoint-small) {
       margin: 1% 10% 3% 10%;
     }
+
+    @media  (min-resolution: 192dpi), 
+      (-webkit-min-device-pixel-ratio: 2), 
+      (min--moz-device-pixel-ratio: 2), 
+      (-o-min-device-pixel-ratio: 2/1), 
+      (min-device-pixel-ratio: 2), 
+      (min-resolution: 2dppx) {
+        margin: 1% 10% 3% 10%;
+    }
+
   }
 
   .dates {
@@ -68,6 +91,18 @@ $highlight: #800000;
       margin-right: 1%;
       width: 15%;
       justify-content: center;
+      @media (min-resolution: 192dpi), 
+      (-webkit-min-device-pixel-ratio: 2), 
+      (min--moz-device-pixel-ratio: 2), 
+      (-o-min-device-pixel-ratio: 2/1), 
+      (min-device-pixel-ratio: 2), 
+      (min-resolution: 2dppx) {
+        width: 30%;
+        font-size: xx-large;
+      }
+      @media screen and (max-width: $breakpoint-small) {
+        width: 30%;
+      }
     }
 
     .current-button {
@@ -80,12 +115,28 @@ $highlight: #800000;
       @media only screen and (min-width: $breakpoint-small){
         display: none;
       }
+      @media (min-resolution: 192dpi), 
+      (-webkit-min-device-pixel-ratio: 2), 
+      (min--moz-device-pixel-ratio: 2), 
+      (-o-min-device-pixel-ratio: 2/1), 
+      (min-device-pixel-ratio: 2), 
+      (min-resolution: 2dppx) {
+        display: inherit;
+      }
     }
 
     .day-button {
       display: none;
       @media only screen and (min-width: $breakpoint-small) {
         display: inherit;
+      }
+      @media (min-resolution: 192dpi), 
+      (-webkit-min-device-pixel-ratio: 2), 
+      (min--moz-device-pixel-ratio: 2), 
+      (-o-min-device-pixel-ratio: 2/1), 
+      (min-device-pixel-ratio: 2), 
+      (min-resolution: 2dppx) {
+        display: none;
       }
     }
 
@@ -96,6 +147,14 @@ $highlight: #800000;
       background-image: url(https://cdn.iconscout.com/icon/premium/png-256-thumb/calendar-1770-588223.png);
       background-size: cover;
       @media screen and (max-width: $breakpoint-small) {
+        display: none;
+      }
+      @media (min-resolution: 192dpi), 
+      (-webkit-min-device-pixel-ratio: 2), 
+      (min--moz-device-pixel-ratio: 2), 
+      (-o-min-device-pixel-ratio: 2/1), 
+      (min-device-pixel-ratio: 2), 
+      (min-resolution: 2dppx) {
         display: none;
       }
     }
@@ -167,19 +226,25 @@ $highlight: #800000;
   }
 
   .shows-film {
-    margin: 2% 0%;
+    margin-bottom: 5%;
     flex: 0 0 100%;
     @media only screen and (min-width: $breakpoint-small) {
       flex: 0 0 50%;
     }
+    @media (min-resolution: 192dpi), 
+    (-webkit-min-device-pixel-ratio: 2), 
+    (min--moz-device-pixel-ratio: 2), 
+    (-o-min-device-pixel-ratio: 2/1), 
+    (min-device-pixel-ratio: 2), 
+    (min-resolution: 2dppx) {
+      flex: 0 0 100%;
+    }
   }
 
   .film-series {
-    font-weight: 300;
     margin-bottom: 1.5%;
     font-size: small;
     font-family: 'Roboto', sans-serif;
-
   }
 
   .film-title {
@@ -198,7 +263,8 @@ $highlight: #800000;
 
   .film-note {
     font-weight: 300;
-    font-size: small; 
+    font-size: small;
+     
   }
 
   .showtimes {
