@@ -91,9 +91,9 @@ class App extends React.Component {
     return (
       <div>
         <div className="nav">
-          <h2>
+          <h1>
             Screen San Francisco
-          </h2>
+          </h1>
         </div>
         <div className="wrapper">
           <DateSelector
@@ -105,9 +105,9 @@ class App extends React.Component {
           <Screenings venues={showtimes} />
         </div>
         <div className="nav">
-          <h2>
+          <h1>
             Screen San Francisco
-          </h2>
+          </h1>
         </div>
       </div>
     );

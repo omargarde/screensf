@@ -44,7 +44,7 @@ $highlight: #800000;
     background-color: $screen-sf;
     color: #FFF;
 
-    h2 {
+    h1 {
       font-weight: 300;
       margin: 0% 25%;
       font-size: xx-large;    }
@@ -172,34 +172,28 @@ $highlight: #800000;
 
   .featured-details {
     margin: 2%;
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    @media only screen and (max-width: $breakpoint-small) {
+      grid-template-columns: 1fr;
+    }
+    @include respondTo(mobile) {
+      grid-template-columns: 1fr;
+    }
   }
 
   .featured-showtime {
-    margin: 1.5% 0% 2% 0%;
-    @media only screen and (min-width: $breakpoint-small) {
-      width: 200px;
-    }
-    @include respondTo(mobile) {
-      flex: 0 0 100%;
-      border-bottom: solid black .5px;
-    }
+    margin-top: 1.5%;
+  }
+
+  .featured-showtime .shows-film {
+    margin-bottom: 5%;
   }
 
 
   .featured-article {
     font-weight: 300;
 
-    @media only screen and (min-width: $breakpoint-small) {
-      flex: 0 0 70%;
-    }
-    @media only screen and (max-width: $breakpoint-medium) {
-      flex: 0 0 100%;
-    }
-    @include respondTo(mobile) {
-      flex: 0 0 100%;
-    }
   }
 
   .writer {
