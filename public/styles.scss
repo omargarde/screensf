@@ -170,6 +170,11 @@ $highlight: #800000;
     max-width: 100%
   }
 
+  .featured h3 {
+    margin: 2%;
+    font-weight: 500;
+  }
+
   .featured-details {
     margin: 2%;
     display: grid;
@@ -180,6 +185,11 @@ $highlight: #800000;
     @include respondTo(mobile) {
       grid-template-columns: 1fr;
     }
+  }
+
+  .featured-details h4 {
+    margin: 0% 2% 2% 0%;
+    font-weight: 500;
   }
 
   .featured-showtime {
@@ -193,7 +203,6 @@ $highlight: #800000;
 
   .featured-article {
     font-weight: 300;
-
   }
 
   .writer {
