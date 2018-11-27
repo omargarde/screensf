@@ -100,11 +100,15 @@ $highlight: #800000;
       }
     }
 
+    button:focus {
+      outline: thin dotted;
+    }
+
     .current-button {
       background-color: $screen-sf;
       color: white;
     }
-
+/*
     .previous-button, .next-button {
       display: inherit;
       @media only screen and (min-width: $breakpoint-small){
@@ -114,12 +118,12 @@ $highlight: #800000;
       display: inherit;
       }
     }
-
+*/
     .day-button {
       display: none;
-      @media only screen and (min-width: $breakpoint-small) {
+/*      @media only screen and (min-width: $breakpoint-small) {
         display: inherit;
-      }
+      }*/
       @include respondTo(mobile) {
         display: none;
       }
@@ -156,7 +160,7 @@ $highlight: #800000;
     }
 
     input:focus {
-      outline: none;
+      outline: thin dotted;
     }
 
   }

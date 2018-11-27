@@ -20,13 +20,6 @@ const DateSelector = props => (
     </button>
     <button
       type="button"
-      className="next-button"
-      onClick={() => props.handleDateChange(props.dates.tomorrow)}
-    >
-      Next
-    </button>
-    <button
-      type="button"
       className="day-button"
       onClick={() => props.handleDateChange(props.dates.tomorrow)}
     >
@@ -52,6 +45,13 @@ const DateSelector = props => (
       onClick={() => props.handleDateChange(props.dates.todayPlusFour)}
     >
       {props.dates.todayPlusFour.format('ddd MMM D')}
+    </button>
+    <button
+      type="button"
+      className="next-button"
+      onClick={() => props.handleDateChange(props.dates.tomorrow)}
+    >
+      Next
     </button>
     <div className="date-calendar">
       <DatePicker
