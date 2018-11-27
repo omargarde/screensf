@@ -101,7 +101,7 @@ class App extends React.Component {
             dates={dates}
             handleDateChange={this.dateChange.bind(this)}
             />
-          {featured ? <Recommended featured={featured} /> : ''}          
+          {featured ? <Recommended featured={featured} today={selectedDate} /> : ''}          
           <Screenings venues={showtimes} />
         </div>
         <div className="nav">

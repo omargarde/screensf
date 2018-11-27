@@ -90,6 +90,7 @@ $highlight: #800000;
       margin-right: 1%;
       width: 15%;
       justify-content: center;
+      cursor: pointer;
       @include respondTo(mobile) {
         width: 30%;
         font-size: xx-large;
@@ -171,8 +172,8 @@ $highlight: #800000;
   }
 
   .featured h3 {
-    margin: 2%;
-    font-weight: 500;
+    margin: 3% 2% 3% 2%;
+    font-weight: 300;
   }
 
   .featured-details {
@@ -215,7 +216,8 @@ $highlight: #800000;
   }
 
   .screenings-title {
-    font-weight: 500;
+    font-size: xx-large;
+    font-weight: 300;
     margin: 10% 0% 5% 0%;
   }
 
