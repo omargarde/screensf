@@ -41,7 +41,7 @@
     "eslint-plugin-import": "^2.13.0",
     "eslint-plugin-jsx-a11y": "^6.1.0",
     "eslint-plugin-react": "^7.10.0",
-    "node-sass": "^4.9.2",
+    "node-sass": "^4.11.0",
     "react-dev": "0.0.1",
     "react-dom": "^16.4.1",
     "webpack": "^4.15.1",
