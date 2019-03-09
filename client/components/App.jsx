@@ -16,12 +16,10 @@ class App extends React.Component {
     };
 
     this.dateChange = this.dateChange.bind(this);
-    this.fetchShowtimes = this.fetchShowtimes.bind(this);
-    this.fetchRecommended = this.fetchRecommended.bind(this);
   }
 
   componentDidMount() {
-    this.updateComponents();
+    this.fetchFrontPage();
   }
 
   dateChange(date) {
@@ -29,10 +27,10 @@ class App extends React.Component {
 
     this.setState({
       selectedDate: formatDate,
-    }, this.updateComponents);
+    }, this.fetchFrontPage);
   }
 
-  updateComponents() {
+  fetchFrontPage() {
     this.fetchRecommended();
     this.fetchShowtimes();
   }
@@ -78,14 +76,9 @@ class App extends React.Component {
     } = this.state;
 
     const dates = {
-      yesterday: moment(new Date(selectedDate)).subtract(1, 'days'),
+      yesterday: moment(new Date(selectedDate)).subtract( 1, 'days'),
       today: moment(new Date(selectedDate)),
       tomorrow: moment(new Date(selectedDate)).add(1, 'days'),
-      todayPlusTwo: moment(new Date(selectedDate)).add(2, 'days'),
-      todayPlusThree: moment(new Date(selectedDate)).add(3, 'days'),
-      todayPlusFour: moment(new Date(selectedDate)).add(4, 'days'),
-      todayPlusFive: moment(new Date(selectedDate)).add(5, 'days'),
-      todayPlusSix: moment(new Date(selectedDate)).add(6, 'days'),
     };
 
     return (

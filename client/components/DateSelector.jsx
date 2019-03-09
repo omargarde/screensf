@@ -7,9 +7,9 @@ const DateSelector = props => (
     <button
       type="button"
       className="previous-button"
-      onClick={() => props.handleDateChange(props.dates.yesterday)}
+      onClick={() => props.handleDateChange(moment('07142018', 'MMDDYYYY'))}
     >
-      Previous
+      Today
     </button>
     <button
       type="button"
@@ -20,31 +20,10 @@ const DateSelector = props => (
     </button>
     <button
       type="button"
-      className="day-button"
-      onClick={() => props.handleDateChange(props.dates.tomorrow)}
+      className="previous-button"
+      onClick={() => props.handleDateChange(props.dates.yesterday)}
     >
-      {props.dates.tomorrow.format('ddd MMM D')}
-    </button>
-    <button
-      type="button"
-      className="day-button"
-      onClick={() => props.handleDateChange(props.dates.todayPlusTwo)}
-    >
-      {props.dates.todayPlusTwo.format('ddd MMM D')}
-    </button>
-    <button
-      type="button"
-      className="day-button"
-      onClick={() => props.handleDateChange(props.dates.todayPlusThree)}
-    >
-      {props.dates.todayPlusThree.format('ddd MMM D')}
-    </button>
-    <button
-      type="button"
-      className="day-button"
-      onClick={() => props.handleDateChange(props.dates.todayPlusFour)}
-    >
-      {props.dates.todayPlusFour.format('ddd MMM D')}
+      Previous
     </button>
     <button
       type="button"
