@@ -1,30 +1,50 @@
 DROP DATABASE IF EXISTS screensf;
 CREATE DATABASE screensf;
 
-DROP TABLE screenings;
-
 CREATE TABLE screenings (
-  id int AUTO_INCREMENT PRIMARY KEY,
-  venue varchar(50),
-  series varchar(50),
-  link varchar(50),
+  id serial PRIMARY KEY,
+  movie FOREIGN KEY,
+  venue FOREIGN KEY,
+  screening_url text,
+  showtimes text,
+  format text,
+  screening_note text,
+);
+
+CREATE TABLE showtimes (
+  id serial PRIMARY KEY,
   showtime datetime,
-  trt varchar(50),
-  format varchar(50),
-  note varchar(50),
-  film FOREIGN KEY,
+  showtime_note text,
 );
 
 
 CREATE TABLE movies (
-  id SERIAL PRIMARY KEY,
-  film text,
+  id int PRIMARY KEY UNIQUE,
+  title text,
   director text,
-  year text,
-  ratio text,
-  country text,
-  language text,
+  year int,
+  duration int,
 );
 
--- Use SERIAL vs AUTOINCREMENT?
--- should date field be datetime? how do alternative APIs handle date and time? 
+CREATE TABLE series (
+  id serial PRIMARY KEY,
+  title text,
+);
+
+CREATE TABLE venues (
+  id serial PRIMARY KEY,
+  title text,
+  city text,
+  region text,
+);
+
+CREATE TABLE series_screenings (
+  screening_id FOREIGN KEY,
+  series_id FOREIGN KEY,
+);
+
+CREATE TABLE series_venues (
+  venue_id FOREIGN KEY,
+  series_id FOREIGN KEY,
+)
+
