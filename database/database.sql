@@ -23,7 +23,7 @@ CREATE TABLE venues (
 
 CREATE TABLE showtimes (
   id serial PRIMARY KEY,
-  showtime datetime,
+  showtime timestamp,
   showtime_note text
 );
 
@@ -44,7 +44,7 @@ CREATE TABLE series_screenings (
 );
 
 CREATE TABLE series_venues (
-  venue_id int REFERENCES venue (id),
+  venue_id int REFERENCES venues (id),
   series_id int REFERENCES series (id)
 );
 

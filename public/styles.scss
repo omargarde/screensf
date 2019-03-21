@@ -6,10 +6,9 @@ body {
 
 /* Breakpoints */
 
-$breakpoint-large: 1500px;
-$breakpoint-medium: 1230px;
-$breakpoint-small: 760px;
-$breakpoint-tiny: 540px;
+$breakpoint-large: 64em;
+$breakpoint-small: 40em;
+
 
 /* Colors */
 
@@ -19,15 +18,14 @@ $highlight: #800000;
 
 /* pixel density query */
 
-@mixin respondTo($media) {
-  @if $media == mobile {
-    @media (min-resolution: 192dpi), 
-    (-webkit-min-device-pixel-ratio: 2), 
-    (min--moz-device-pixel-ratio: 2), 
-    (-o-min-device-pixel-ratio: 2/1), 
-    (min-device-pixel-ratio: 2), 
-    (min-resolution: 2dppx) { @content; }
-  }
+@mixin pixelRatio {
+  @media only screen and (min-resolution: 192dpi), 
+  (-webkit-min-device-pixel-ratio: 2), 
+  (min--moz-device-pixel-ratio: 2), 
+  (-o-min-device-pixel-ratio: 2/1), 
+  (min-device-pixel-ratio: 2), 
+  (min-resolution: 2dppx) { @content; }
+
 }
 
 
@@ -68,7 +66,7 @@ $highlight: #800000;
       margin: 1% 10% 3% 10%;
     }
 
-    @include respondTo(mobile) {
+    @include pixelRatio {
         margin: 1% 10% 3% 10%;
     }
 
@@ -78,7 +76,7 @@ $highlight: #800000;
     display: flex;
     justify-content: center;
     height: 50px;
-    @include respondTo(mobile) {
+    @include pixelRatio {
       height: 75px;
     }
 
@@ -92,10 +90,10 @@ $highlight: #800000;
       width: 15%;
       justify-content: center;
       cursor: pointer;
-      @include respondTo(mobile) {
+/*      @include pixelRatio {
         width: 30%;
         font-size: xx-large;
-      }
+      }*/
       @media screen and (max-width: $breakpoint-small) {
         width: 30%;
       }
@@ -109,24 +107,15 @@ $highlight: #800000;
       background-color: $screen-sf;
       color: white;
     }
-/*
-    .previous-button, .next-button {
-      display: inherit;
-      @media only screen and (min-width: $breakpoint-small){
-        display: none;
-      }
-      @include respondTo(mobile) {
+/*      @include pixelRatio {
       display: inherit;
       }
     }
 */
     .day-button {
       display: none;
-/*      @media only screen and (min-width: $breakpoint-small) {
+      @media only screen and (min-width: $breakpoint-small) {
         display: inherit;
-      }*/
-      @include respondTo(mobile) {
-        display: none;
       }
     }
 
@@ -138,7 +127,7 @@ $highlight: #800000;
       @media screen and (max-width: $breakpoint-small) {
         display: none;
       }
-      @include respondTo(mobile) {
+      @include pixelRatio {
         display: none;
       }
     }
@@ -188,7 +177,7 @@ $highlight: #800000;
     @media only screen and (max-width: $breakpoint-small) {
       grid-template-columns: 1fr;
     }
-    @include respondTo(mobile) {
+    @include pixelRatio {
       grid-template-columns: 1fr;
     }
   }
@@ -237,10 +226,10 @@ $highlight: #800000;
     @media only screen and (max-width: $breakpoint-small) {
       grid-template-columns: 1fr;
     }
-    @include respondTo(mobile) {
+ /*   @include pixelRatio {
       grid-template-columns: 1fr;
       margin: 2% 0% 2% 0%;
-    }
+    }*/
   }
 
   .shows-film {
