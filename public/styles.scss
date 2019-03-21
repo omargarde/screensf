@@ -6,8 +6,8 @@ body {
 
 /* Breakpoints */
 
-$breakpoint-large: 64em;
-$breakpoint-small: 40em;
+$breakpoint-large: 70rem;
+$breakpoint-small: 63rem;
 
 
 /* Colors */
@@ -15,18 +15,6 @@ $breakpoint-small: 40em;
 $screen-sf: #008080;
 $highlight: #800000;
 
-
-/* pixel density query */
-
-@mixin pixelRatio {
-  @media only screen and (min-resolution: 192dpi), 
-  (-webkit-min-device-pixel-ratio: 2), 
-  (min--moz-device-pixel-ratio: 2), 
-  (-o-min-device-pixel-ratio: 2/1), 
-  (min-device-pixel-ratio: 2), 
-  (min-resolution: 2dppx) { @content; }
-
-}
 
 
 #frontpage{
@@ -66,19 +54,12 @@ $highlight: #800000;
       margin: 1% 10% 3% 10%;
     }
 
-    @include pixelRatio {
-        margin: 1% 10% 3% 10%;
-    }
-
   }
 
   .dates {
     display: flex;
     justify-content: center;
     height: 50px;
-    @include pixelRatio {
-      height: 75px;
-    }
 
     button {
       border: 0;
@@ -90,10 +71,6 @@ $highlight: #800000;
       width: 15%;
       justify-content: center;
       cursor: pointer;
-/*      @include pixelRatio {
-        width: 30%;
-        font-size: xx-large;
-      }*/
       @media screen and (max-width: $breakpoint-small) {
         width: 30%;
       }
@@ -107,11 +84,7 @@ $highlight: #800000;
       background-color: $screen-sf;
       color: white;
     }
-/*      @include pixelRatio {
-      display: inherit;
-      }
-    }
-*/
+
     .day-button {
       display: none;
       @media only screen and (min-width: $breakpoint-small) {
@@ -127,9 +100,7 @@ $highlight: #800000;
       @media screen and (max-width: $breakpoint-small) {
         display: none;
       }
-      @include pixelRatio {
-        display: none;
-      }
+
     }
 
     .date-calendar input {
@@ -175,9 +146,6 @@ $highlight: #800000;
     display: grid;
     grid-template-columns: 1fr 2fr;
     @media only screen and (max-width: $breakpoint-small) {
-      grid-template-columns: 1fr;
-    }
-    @include pixelRatio {
       grid-template-columns: 1fr;
     }
   }
@@ -226,10 +194,6 @@ $highlight: #800000;
     @media only screen and (max-width: $breakpoint-small) {
       grid-template-columns: 1fr;
     }
- /*   @include pixelRatio {
-      grid-template-columns: 1fr;
-      margin: 2% 0% 2% 0%;
-    }*/
   }
 
   .shows-film {
@@ -259,8 +223,7 @@ $highlight: #800000;
 
   .film-note {
     font-weight: 300;
-    font-size: small;
-     
+    font-size: small;  
   }
 
   .showtimes {
