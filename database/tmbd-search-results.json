@@ -1,0 +1,228 @@
+{
+    "adult": false,
+    "backdrop_path": "/95T3mZxzl82XyNg0SfDFTME2Z4q.jpg",
+    "belongs_to_collection": null,
+    "budget": 10000000,
+    "genres": [
+        {
+            "id": 35,
+            "name": "Comedy"
+        },
+        {
+            "id": 18,
+            "name": "Drama"
+        },
+        {
+            "id": 10749,
+            "name": "Romance"
+        }
+    ],
+    "homepage": null,
+    "id": 27322,
+    "imdb_id": "tt0119572",
+    "original_language": "en",
+    "original_title": "Love Jones",
+    "overview": "Darius Lovehall is a young black poet in Chicago who starts dating Nina Moseley, a beautiful and talented photographer. While trying to figure out if they've got a \"love thing\" or are just \"kicking it,\" they hang out with their friends, talking about love and sex. Then Nina tests the strength of Darius' feelings and sets a chain of romantic complications into motion.",
+    "popularity": 2.771,
+    "poster_path": "/ruBMPmpsm9DOmq3YLlfpdEJnMoW.jpg",
+    "production_companies": [
+        {
+            "id": 12,
+            "logo_path": "/iaYpEp3LQmb8AfAtmTvpqd4149c.png",
+            "name": "New Line Cinema",
+            "origin_country": "US"
+        },
+        {
+            "id": 4665,
+            "logo_path": null,
+            "name": "Addis Wechsler Pictures",
+            "origin_country": ""
+        }
+    ],
+    "production_countries": [
+        {
+            "iso_3166_1": "US",
+            "name": "United States of America"
+        }
+    ],
+    "release_date": "1997-03-14",
+    "revenue": 0,
+    "runtime": 104,
+    "spoken_languages": [
+        {
+            "iso_639_1": "en",
+            "name": "English"
+        }
+    ],
+    "status": "Released",
+    "tagline": "Get Together. Fall Apart. Start Over.",
+    "title": "Love Jones",
+    "video": false,
+    "vote_average": 8.2,
+    "vote_count": 24,
+    "credits": {
+        "cast": [
+            {
+                "cast_id": 1,
+                "character": "Darius Lovehall",
+                "credit_id": "52fe4541c3a368484e04fb87",
+                "gender": 2,
+                "id": 18291,
+                "name": "Larenz Tate",
+                "order": 0,
+                "profile_path": "/ApN0l0NF1fUp61PwffW09ZqEUMW.jpg"
+            },
+            {
+                "cast_id": 2,
+                "character": "Nina Mosley",
+                "credit_id": "52fe4541c3a368484e04fb8b",
+                "gender": 1,
+                "id": 9781,
+                "name": "Nia Long",
+                "order": 1,
+                "profile_path": "/q01J3WgNd96GR7CcSxx56N8qwSZ.jpg"
+            },
+            {
+                "cast_id": 3,
+                "character": "Savon Garrison",
+                "credit_id": "52fe4541c3a368484e04fb8f",
+                "gender": 2,
+                "id": 21353,
+                "name": "Isaiah Washington",
+                "order": 2,
+                "profile_path": "/kK4nEwvY0MFwCsQ17E0w0El7G9P.jpg"
+            },
+            {
+                "cast_id": 7,
+                "character": "Hollywood",
+                "credit_id": "52fe4541c3a368484e04fba3",
+                "gender": 2,
+                "id": 77896,
+                "name": "Bill Bellamy",
+                "order": 4,
+                "profile_path": "/khQmLcjaaIgVQr5d91drXVnMhzF.jpg"
+            },
+            {
+                "cast_id": 8,
+                "character": "Josie Nichols",
+                "credit_id": "52fe4541c3a368484e04fba7",
+                "gender": 1,
+                "id": 55274,
+                "name": "Lisa Nicole Carson",
+                "order": 5,
+                "profile_path": "/tBSQsDwvA7G4hLzsHwE2wCi2Yzy.jpg"
+            },
+            {
+                "cast_id": 9,
+                "character": "Tracey Powell",
+                "credit_id": "52fe4541c3a368484e04fbab",
+                "gender": 0,
+                "id": 1142326,
+                "name": "Marie-Françoise Theodore",
+                "order": 6,
+                "profile_path": "/khipwBSRSHbeYsIAZbla8mR4UFg.jpg"
+            }
+        ],
+        "crew": [
+            {
+                "credit_id": "52fe4541c3a368484e04fb95",
+                "department": "Directing",
+                "gender": 2,
+                "id": 120515,
+                "job": "Director",
+                "name": "Theodore Witcher",
+                "profile_path": null
+            },
+            {
+                "credit_id": "52fe4541c3a368484e04fb9b",
+                "department": "Writing",
+                "gender": 2,
+                "id": 120515,
+                "job": "Writer",
+                "name": "Theodore Witcher",
+                "profile_path": null
+            },
+            {
+                "credit_id": "5ace808ac3a3687e2704bcd7",
+                "department": "Art",
+                "gender": 2,
+                "id": 72632,
+                "job": "Leadman",
+                "name": "Paul Allen",
+                "profile_path": null
+            },
+            {
+                "credit_id": "5c15291792514132c90ab320",
+                "department": "Art",
+                "gender": 0,
+                "id": 2057972,
+                "job": "Title Designer",
+                "name": "Dan Perri",
+                "profile_path": null
+            },
+            {
+                "credit_id": "5c468fd60e0a26495dc8c042",
+                "department": "Production",
+                "gender": 2,
+                "id": 6468,
+                "job": "Producer",
+                "name": "Nick Wechsler",
+                "profile_path": "/1HeDC5sNgXBN09SiyoPs3VcUQsH.jpg"
+            },
+            {
+                "credit_id": "5c468fea0e0a26495dc8c11a",
+                "department": "Production",
+                "gender": 2,
+                "id": 60070,
+                "job": "Producer",
+                "name": "Jeremiah Samuels",
+                "profile_path": null
+            },
+            {
+                "credit_id": "5c4690050e0a264965c8bac8",
+                "department": "Sound",
+                "gender": 2,
+                "id": 4246,
+                "job": "Music",
+                "name": "Wyclef Jean",
+                "profile_path": "/7gsHQGAyQ5WzCP6iTwc9az46FVe.jpg"
+            },
+            {
+                "credit_id": "5c46901d9251410e1b4ff424",
+                "department": "Sound",
+                "gender": 2,
+                "id": 1179601,
+                "job": "Music",
+                "name": "Darryl Jones",
+                "profile_path": "/D5OSz9L8NsaY4DK6eIaLVXjjtU.jpg"
+            },
+            {
+                "credit_id": "5c46905bc3a368479384adc7",
+                "department": "Editing",
+                "gender": 1,
+                "id": 48443,
+                "job": "Editor",
+                "name": "Maysie Hoy",
+                "profile_path": null
+            },
+            {
+                "credit_id": "5c4690919251410e144fd389",
+                "department": "Costume & Make-Up",
+                "gender": 2,
+                "id": 75654,
+                "job": "Costume Designer",
+                "name": "Shawn Barton",
+                "profile_path": null
+            },
+            {
+                "credit_id": "5c4690ca0e0a26495dc8c257",
+                "department": "Crew",
+                "gender": 0,
+                "id": 2057990,
+                "job": "Cinematography",
+                "name": "Ernest Holzman",
+                "profile_path": null
+            }
+        ]
+    }
+}

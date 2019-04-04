@@ -4,58 +4,130 @@ body {
 
 }
 
+/* Breakpoints */
+
+$breakpoint-large: 110rem;
+$breakpoint-small: 63rem;
+
+
+/* Colors */
+
+$screen-sf: #008080;
+$highlight: #800000;
+
+
+
 #frontpage{
   @import url('https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,600,600i,700,700i');
+  @import url('https://fonts.googleapis.com/css?family=Roboto:300'); 
+
+  width: 100%;
 
   .nav {
     font-family: 'Lato', sans-serif;
-    width: 100%;
-    padding: 1% 20% 1% 20%;
+    padding: 1% 1%;
     display: flex;
-    justify-content: space-between;
-    background-color: #008080;
+    background-color: $screen-sf;
     color: #FFF;
-  }
 
-  .nav > h2 {
-    font-weight: 300;
-    font-size: 2.5em;
-    margin: 0%; 
-  }
-
-  .date-calendar {
-    margin-top: 0.5%;
-    margin-right: 35%;
-  }
-
-  input {
-    padding: 4%;
-    border-radius: 4px;
-    font-family: 'Lato', sans-serif;
-    font-size: 1.2em;
-    font-weight: 300;
-    width: 55%;
-    cursor: pointer;
-    border: none;
-  }
-
-  input:focus {
-    outline: none;
-  }
-
-
-  @media (min-width: 1230px) {
-    .wrapper {
-      margin: 1% 20% 3% 20%;
+    h1 {
+      font-weight: 300;
+      margin: 0% 25%;
+      font-size: xx-large;
     }
   }
 
   .wrapper {
     font-family: 'Lato', sans-serif;
+    font-size: medium;
+    margin: 1% 5% 3% 5%;
+
+    @media  screen and (min-width: $breakpoint-large) {
+      margin: 1% 25% 3% 25%;
+    }
+    
+    @media screen and (max-width: $breakpoint-large) {
+      margin: 1% 20% 3% 20%;
+    }
+
+    @media screen and (max-width: $breakpoint-small) {
+      margin: 1% 10% 3% 10%;
+    }
+
+  }
+
+  .dates {
+    display: flex;
+    justify-content: center;
+    height: 50px;
+
+    button {
+      border: 0;
+      font-family: inherit;
+      font-size: medium;
+      font-weight: 300;
+      background-color: #eee;
+      margin-right: 1%;
+      width: 15%;
+      justify-content: center;
+      cursor: pointer;
+      @media screen and (max-width: $breakpoint-small) {
+        width: 30%;
+      }
+    }
+
+    button:focus {
+      outline: thin dotted;
+    }
+
+    .current-button {
+      background-color: $screen-sf;
+      color: white;
+    }
+
+    .day-button {
+      display: none;
+      @media only screen and (min-width: $breakpoint-small) {
+        display: inherit;
+      }
+    }
+
+    .date-calendar {
+      width: 50px;
+      height: 50px;
+      background-image: url(https://cdn.iconscout.com/icon/premium/png-256-thumb/calendar-1770-588223.png);
+      background-size: cover;
+      @media screen and (max-width: $breakpoint-small) {
+        display: none;
+      }
+
+    }
+
+    .date-calendar input {
+      opacity: 0;
+      width: 50px;
+      height: 50px;
+    }
+
+    input {
+      padding: 4%;
+      border-radius: 4px;
+      font-family: 'Lato', sans-serif;
+      font-size: 1.2em;
+      font-weight: 300;
+      width: 55%;
+      cursor: pointer;
+      border: none;
+    }
+
+    input:focus {
+      outline: thin dotted;
+    }
+
   }
 
   .featured {
-    margin-top: 2%;
+    margin: 2% 0% 2% 0%;
     padding: 0% 0% 2% 0%;
     background-color: #eee;
   }
@@ -64,74 +136,102 @@ body {
     max-width: 100%
   }
 
+  .featured h3 {
+    margin: 3% 2% 3% 2%;
+    font-weight: 300;
+  }
+
   .featured-details {
     margin: 2%;
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    @media only screen and (max-width: $breakpoint-small) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .featured-details h4 {
+    margin: 0% 2% 2% 0%;
+    font-weight: 500;
   }
 
   .featured-showtime {
     margin-top: 1.5%;
-    width: 30%;
   }
+
+  .featured-showtime .shows-film {
+    margin-bottom: 5%;
+  }
+
 
   .featured-article {
     font-weight: 300;
-    width: 70%;
+  }
+
+  .writer {
+    font-weight: 500;
+    margin-top: 1%;
   }
 
   .paragraph {
     margin-top: 1.5%;
   }
 
-  .screenings-venues {
-    margin: 5% 0% 2% 0;
+  h2.screenings-title {
+    font-size: xx-large;
+    font-weight: 300;
+    margin: 10% 0% 5% 0%;
   }
 
-  h2 {
+  .screenings-venues h3 {
     font-weight: 500;
-    margin: 2% 0% .5% 0%;
+    margin-bottom: 3%;
   }
 
   .venue-shows {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    @media only screen and (max-width: $breakpoint-small) {
+      grid-template-columns: 1fr;
+    }
   }
 
   .shows-film {
-    margin: 2% 0%;
-    flex: 0 0 50%;
+    margin-bottom: 10%;
+    padding-right: 10%;
   }
 
   .film-series {
-    font-weight: 300;
-    font-size: .8em;
+    margin-bottom: 1.5%;
+    font-size: small;
+    font-family: 'Roboto', sans-serif;
   }
 
   .film-title {
-    color: #800000;
+    color: $highlight;
+    font-weight: 600;
   }
 
   .film-details {
-    display: flex;
     font-weight: 300;
-    font-size: .8em;
+    font-size: small; 
   }
 
-  .film-details > div {
-    margin-right: 10px; 
+  .film-details > span {
+    margin-right: 2%;
   }
 
   .film-note {
     font-weight: 300;
-    font-size: .8em;
+    font-size: small;  
   }
 
   .showtimes {
-    display: flex;
-    color: #800000;
+    color: $highlight;
+    font-weight: 600;
   }
   .showtime {
-    margin-right: 10px;
+    margin-right: 2%;
   }
 
 }

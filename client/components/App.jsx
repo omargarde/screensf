@@ -1,9 +1,9 @@
 import React from 'react';
-import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import axios from 'axios';
 import Recommended from './Recommended.jsx';
 import Screenings from './Screenings.jsx';
+import DateSelector from './DateSelector.jsx';
 import 'react-datepicker/dist/react-datepicker.css';
 
 class App extends React.Component {
@@ -12,79 +12,95 @@ class App extends React.Component {
     this.state = {
       showtimes: [],
       featured: null,
-      startDate: moment('07152018', 'MMDDYYYY'),
+      selectedDate: moment('07142018', 'MMDDYYYY'),
     };
 
     this.dateChange = this.dateChange.bind(this);
-    this.fetchShowtimes = this.fetchShowtimes.bind(this);
-    this.fetchRecommended = this.fetchRecommended.bind(this);
   }
 
   componentDidMount() {
-    this.updateComponents();
+    this.fetchFrontPage();
   }
 
   dateChange(date) {
+    const formatDate = moment(date);
+
     this.setState({
-      startDate: date,
-    }, this.updateComponents);
+      selectedDate: formatDate,
+    }, this.fetchFrontPage);
   }
 
-  updateComponents() {
+  fetchFrontPage() {
     this.fetchRecommended();
     this.fetchShowtimes();
   }
 
   fetchRecommended() {
     this.setState({ featured: null });
+    const { selectedDate } = this.state;
+    const query = `/recommended/${selectedDate.format('MMDDYYYY')}`;
 
     axios({
       method: 'get',
-      url: '/recommended/' + this.state.startDate.format('MMDDYYYY'),
+      url: query,
     })
       .then((response) => {
         this.setState({ featured: response.data });
       })
       .catch((error) => {
-        console.log(error);
+        throw new Error(error);
       });
   }
 
   fetchShowtimes() {
+    const { selectedDate } = this.state;
+    const query = `/showtimes/${selectedDate.format('MMDDYYYY')}`;
+
     axios({
       method: 'get',
-      url: '/showtimes/' + this.state.startDate.format('MMDDYYYY'),
+      url: query,
     })
       .then((response) => {
         this.setState({ showtimes: response.data });
       })
       .catch((error) => {
-        console.log(error);
+        throw new Error(error);
       });
   }
-.,.,.nn
+
   render() {
+    const {
+      selectedDate,
+      featured,
+      showtimes,
+    } = this.state;
+
+    const dates = {
+      yesterday: moment(new Date(selectedDate)).subtract( 1, 'days'),
+      today: moment(new Date(selectedDate)),
+      tomorrow: moment(new Date(selectedDate)).add(1, 'days'),
+    };
+
     return (
       <div>
         <div className="nav">
-          <h2>
-            Screen SF
-          </h2>
+          <h1>
+            Screen San Francisco
+          </h1>
         </div>
         <div className="wrapper">
-          <div className="date-calendar">
-            <DatePicker
-              selected={this.state.startDate}
-              onSelect={this.dateChange}
+          <DateSelector
+            today={selectedDate}
+            dates={dates}
+            handleDateChange={this.dateChange.bind(this)}
             />
-          </div>
-          {this.state.featured ? <Recommended featured={this.state.featured} /> : ''}
-          <Screenings venues={this.state.showtimes} />
+          {featured ? <Recommended featured={featured} today={selectedDate} /> : ''}          
+          <Screenings venues={showtimes} />
         </div>
         <div className="nav">
-          <h2>
-            Screen SF
-          </h2>
+          <h1>
+            Screen San Francisco
+          </h1>
         </div>
       </div>
     );
