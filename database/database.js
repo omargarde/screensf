@@ -43,37 +43,26 @@ const fetchRecommended = (date) => {
   }
 };
 
+//create
 
 
-const findMovieWithId = (movieid) => {
-  //take the id and search for the film against the database
-  //basically a select query
-  return
-}
+//read
 
-const findShowtimes = (date) => {
+//read based on date
+
+const findShowtimesOnDate = (date) => {
+  let showtimes = [];
+  //takes in date in text format
+  //should be converted to format useable by database query
+
+
   //should return string with all showtimes data for a single date
-
-  return
+  return showtimes
 }
 
+//update
+
+
+//delete
 
 module.exports = { fetchShowtimes, fetchRecommended };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
