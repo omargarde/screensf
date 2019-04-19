@@ -1,5 +1,7 @@
+const pgp = require('pg-promise')();
 const exampleData = require('./exampleData');
 const exampleFeature = require('./exampleFeature');
+const db = pgp('postgres://localhost:5432/screensf');
 
 const fetchShowtimes = (date) => {
   const nest = {};
@@ -30,7 +32,6 @@ const fetchShowtimes = (date) => {
       }
     }
   }
-
   return Object.values(nest);
 };
 
@@ -43,26 +44,47 @@ const fetchRecommended = (date) => {
   }
 };
 
-//create
-
-
-//read
-
-//read based on date
 
 const findShowtimesOnDate = (date) => {
-  let showtimes = [];
-  //takes in date in text format
-  //should be converted to format useable by database query
+  db.query(`SELECT 
+    venues.title AS venue_title,
+    venues.short_title AS venue_short_title,
+    movies.title,
+    movies.director,
+    movies.year,
+    movies.duration,
+    string_agg(DISTINCT series.title, ', ') AS series_title,
+    screenings.screening_url,
+    string_agg(DISTINCT showtimes.id::character varying, ', ') AS showtimes_id,
+    string_agg(DISTINCT showtimes.showtime, ', ') AS showtimes,
+    screenings.format,
+    screenings.screening_note
+    FROM
+    screenings
+    INNER JOIN movies ON screenings.movies_id=movies.id
+    INNER JOIN venues ON screenings.venues_id=venues.id
+    INNER JOIN series_screenings ON screenings.id = series_screenings.screenings_id
+    INNER JOIN series ON series.id = series_screenings.series_id 
+    INNER JOIN showtimes ON showtimes.screenings_id = screenings.id
+    WHERE
+    screenings.start_date <= $/today/ AND screenings.end_date >= $/today/
+    GROUP BY
+    venues.title,
+    movies.title,
+    movies.director,
+    movies.year,
+    movies.duration,
+    venues.short_title,
+    screenings.screening_url,
+    screenings.format,
+    screenings.screening_note;`, { today: date })
+    .then((data) => {
+      console.log(JSON.stringify(data));
+    })
+    .catch((error) => {
+      console.log('Error', error);
+    });
+};
 
 
-  //should return string with all showtimes data for a single date
-  return showtimes
-}
-
-//update
-
-
-//delete
-
-module.exports = { fetchShowtimes, fetchRecommended };
+module.exports = { fetchShowtimes, fetchRecommended, findShowtimesOnDate };

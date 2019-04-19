@@ -12,7 +12,7 @@ class App extends React.Component {
     this.state = {
       showtimes: [],
       featured: null,
-      selectedDate: moment('07142018', 'MMDDYYYY'),
+      selectedDate: moment('07152018', 'MMDDYYYY'),
     };
 
     this.dateChange = this.dateChange.bind(this);
