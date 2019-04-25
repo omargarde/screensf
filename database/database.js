@@ -1,40 +1,8 @@
 const pgp = require('pg-promise')();
-const exampleData = require('./exampleData');
-const exampleFeature = require('./exampleFeature');
+const moment = require('moment');
+
 const db = pgp('postgres://localhost:5432/screensf');
-
-const fetchShowtimes = (date) => {
-  const nest = {};
-
-  for (let i = 0; i < exampleData.length; i += 1) {
-    if (exampleData[i].date === date) {
-      if (!nest[exampleData[i].venue]) {
-        nest[exampleData[i].venue] = {
-          venue: exampleData[i].venue,
-          shows: [],
-        };
-      }
-
-      const showArray = nest[exampleData[i].venue].shows;
-      let match = 0;
-
-      for (let x = 0; x < showArray.length; x += 1) {
-        if (showArray[x].film === exampleData[i].film) {
-          showArray[x].showtimes.push(exampleData[i].showtime);
-          match += 1;
-        }
-      }
-
-      if (!match) {
-        const show = exampleData[i];
-        show.showtimes = [exampleData[i].showtime];
-        nest[exampleData[i].venue].shows.push(show);
-      }
-    }
-  }
-  return Object.values(nest);
-};
-
+const exampleFeature = require('./exampleFeature');
 
 const fetchRecommended = (date) => {
   for (let i = 0; i < exampleFeature.length; i += 1) {
@@ -42,20 +10,22 @@ const fetchRecommended = (date) => {
       return exampleFeature[i];
     }
   }
+  return null;
 };
 
 
-const findShowtimesOnDate = (date) => {
+const findShowtimesOnDate = (req, res) => {
+  const normalDate = moment(req.params.id, 'MMDDYYYY').format('YYYY-MM-DD');
   db.query(`SELECT 
-    venues.title AS venue_title,
-    venues.short_title AS venue_short_title,
-    movies.title,
+    venues.title AS venue,
+    venues.short_title AS venueShortTitle,
+    movies.title AS film,
     movies.director,
     movies.year,
     movies.duration,
-    string_agg(DISTINCT series.title, ', ') AS series_title,
+    string_agg(DISTINCT series.title, ', ') AS series,
     screenings.screening_url,
-    string_agg(DISTINCT showtimes.id::character varying, ', ') AS showtimes_id,
+    string_agg(DISTINCT showtimes.id::character varying, ', ') AS showtimesId,
     string_agg(DISTINCT showtimes.showtime, ', ') AS showtimes,
     screenings.format,
     screenings.screening_note
@@ -77,9 +47,32 @@ const findShowtimesOnDate = (date) => {
     venues.short_title,
     screenings.screening_url,
     screenings.format,
-    screenings.screening_note;`, { today: date })
+    screenings.screening_note;`, { today: normalDate })
     .then((data) => {
-      console.log(JSON.stringify(data));
+      const showsByVenue = {};
+
+      for (let i = 0; i < data.length; i += 1) {
+        const venueTitle = data[i].venue;
+        if (!showsByVenue[venueTitle]) {
+          showsByVenue[venueTitle] = {
+            venue: venueTitle,
+            shows: [],
+          };
+        }
+
+        const showData = data[i];
+        const showtimesArr = showData.showtimes.split(',');
+
+        for (let x = 0; x < showtimesArr.length; x += 1) {
+          const formatDate = moment(showtimesArr[x]).format('h:mm');
+          showtimesArr[x] = formatDate;
+        }
+
+        showData.showtimes = showtimesArr;
+        showsByVenue[venueTitle].shows.push(showData);
+      }
+
+      res.send(JSON.stringify(Object.values(showsByVenue)));
     })
     .catch((error) => {
       console.log('Error', error);
@@ -87,4 +80,4 @@ const findShowtimesOnDate = (date) => {
 };
 
 
-module.exports = { fetchShowtimes, fetchRecommended, findShowtimesOnDate };
+module.exports = { fetchRecommended, findShowtimesOnDate };

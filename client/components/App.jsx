@@ -76,7 +76,7 @@ class App extends React.Component {
     } = this.state;
 
     const dates = {
-      yesterday: moment(new Date(selectedDate)).subtract( 1, 'days'),
+      yesterday: moment(new Date(selectedDate)).subtract(1, 'days'),
       today: moment(new Date(selectedDate)),
       tomorrow: moment(new Date(selectedDate)).add(1, 'days'),
     };
@@ -93,8 +93,8 @@ class App extends React.Component {
             today={selectedDate}
             dates={dates}
             handleDateChange={this.dateChange.bind(this)}
-            />
-          {featured ? <Recommended featured={featured} today={selectedDate} /> : ''}          
+          />
+          {featured ? <Recommended featured={featured} today={selectedDate} /> : ''}
           <Screenings venues={showtimes} />
         </div>
         <div className="nav">
