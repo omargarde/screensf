@@ -73,6 +73,7 @@ const findShowtimesOnDate = (req, res) => {
       }
 
       res.send(JSON.stringify(Object.values(showsByVenue)));
+      res.end();
     })
     .catch((error) => {
       console.log('Error', error);
