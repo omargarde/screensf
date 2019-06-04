@@ -58,13 +58,14 @@ CREATE TABLE series_venues (
 );
 
 
-CREATE TABLE featured_films (
-  id serial PRIMARY KEY,
-  screenings_id int REFERENCES screenings (id),
-  ondate date,
-  author text,
-  article text
-)
+  CREATE TABLE featured_films (
+    id serial PRIMARY KEY,
+    screenings_id int REFERENCES screenings (id),
+    ondate date,
+    featured_image text,
+    author text,
+    article text
+  );
 
 
 --insert movie data
@@ -84,7 +85,7 @@ INSERT INTO screenings (id, movies_id, venues_id, screening_url, start_date, end
   (DEFAULT, 27322, 1, 'https://www.sfmoma.org/event/love-jones/', '2018-07-15', '2018-07-15', '35mm', 'Introduced by the film''s director');
 
 INSERT INTO showtimes (screenings_id, showtime, showtime_note) VALUES
-  (1, '2018-07-15 20:30:00 -8:00', '');
+  (1, '2018-07-15 20:30:00-8:00', '');
 
 INSERT INTO series_screenings (screenings_id, series_id) VALUES
   (1, 1);
