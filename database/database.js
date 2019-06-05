@@ -2,15 +2,13 @@ const pgp = require('pg-promise')();
 const moment = require('moment');
 
 const db = pgp('postgres://localhost:5432/screensf');
-const exampleFeature = require('./exampleFeature');
 
-const fetchRecommended = (date) => {
-  for (let i = 0; i < exampleFeature.length; i += 1) {
-    if (exampleFeature[i].date === date) {
-      return exampleFeature[i];
-    }
+const normalizeShowtimes = (showtimes) => {
+  const normalizedTimes = showtimes.split(',');
+  for (let x = 0; x < normalizedTimes.length; x += 1) {
+    normalizedTimes[x] = moment(normalizedTimes[x], 'YYYY-MM-DD HH:mm:ss').format('h:mm A');
   }
-  return null;
+  return normalizedTimes;
 };
 
 const findRecommendedOnDate = (req, res) => {
@@ -54,15 +52,13 @@ const findRecommendedOnDate = (req, res) => {
     screenings.format,
     screenings.screening_note;`, { today: req.params.id })
     .then((data) => {
-      console.log('recomended film data', data);
       const featuredData = data[0];
-      const showtimes = featuredData.showtimes.split(',');
-      featuredData.showtimes = showtimes;
+      featuredData.showtimes = normalizeShowtimes(featuredData.showtimes);
       res.send(JSON.stringify(featuredData));
       res.end();
     })
     .catch((error) => {
-      console.error(error);
+      throw new Error(error);
     });
 };
 
@@ -113,14 +109,8 @@ const findShowtimesOnDate = (req, res) => {
         }
 
         const showData = data[i];
-        const showtimesArr = showData.showtimes.split(',');
 
-        for (let x = 0; x < showtimesArr.length; x += 1) {
-          const formatDate = moment(showtimesArr[x]).format('h:mm A');
-          showtimesArr[x] = formatDate;
-        }
-
-        showData.showtimes = showtimesArr;
+        showData.showtimes = normalizeShowtimes(showData.showtimes);
         showsByVenue[venueTitle].shows.push(showData);
       }
 
@@ -128,9 +118,9 @@ const findShowtimesOnDate = (req, res) => {
       res.end();
     })
     .catch((error) => {
-      console.error(error);
+      throw new Error(error);
     });
 };
 
 
-module.exports = { fetchRecommended, findShowtimesOnDate, findRecommendedOnDate };
+module.exports = { findShowtimesOnDate, findRecommendedOnDate };
