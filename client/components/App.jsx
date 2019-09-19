@@ -12,7 +12,7 @@ class App extends React.Component {
     this.state = {
       showtimes: [],
       featured: null,
-      selectedDate: moment('07142018', 'MMDDYYYY'),
+      selectedDate: moment('2018-07-15', 'YYYY-MM-DD'),
     };
 
     this.dateChange = this.dateChange.bind(this);
@@ -38,7 +38,7 @@ class App extends React.Component {
   fetchRecommended() {
     this.setState({ featured: null });
     const { selectedDate } = this.state;
-    const query = `/recommended/${selectedDate.format('MMDDYYYY')}`;
+    const query = `/recommended/${selectedDate.format('YYYY-MM-DD')}`;
 
     axios({
       method: 'get',
@@ -54,7 +54,7 @@ class App extends React.Component {
 
   fetchShowtimes() {
     const { selectedDate } = this.state;
-    const query = `/showtimes/${selectedDate.format('MMDDYYYY')}`;
+    const query = `/showtimes/${selectedDate.format('YYYY-MM-DD')}`;
 
     axios({
       method: 'get',
@@ -76,7 +76,7 @@ class App extends React.Component {
     } = this.state;
 
     const dates = {
-      yesterday: moment(new Date(selectedDate)).subtract( 1, 'days'),
+      yesterday: moment(new Date(selectedDate)).subtract(1, 'days'),
       today: moment(new Date(selectedDate)),
       tomorrow: moment(new Date(selectedDate)).add(1, 'days'),
     };
@@ -93,8 +93,8 @@ class App extends React.Component {
             today={selectedDate}
             dates={dates}
             handleDateChange={this.dateChange.bind(this)}
-            />
-          {featured ? <Recommended featured={featured} today={selectedDate} /> : ''}          
+          />
+          {featured ? <Recommended featured={featured} today={selectedDate} /> : ''}
           <Screenings venues={showtimes} />
         </div>
         <div className="nav">
