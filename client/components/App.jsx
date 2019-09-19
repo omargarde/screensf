@@ -12,7 +12,7 @@ class App extends React.Component {
     this.state = {
       showtimes: [],
       featured: null,
-      selectedDate: moment('07152018', 'MMDDYYYY'),
+      selectedDate: moment('2018-07-15', 'YYYY-MM-DD'),
     };
 
     this.dateChange = this.dateChange.bind(this);
@@ -38,7 +38,7 @@ class App extends React.Component {
   fetchRecommended() {
     this.setState({ featured: null });
     const { selectedDate } = this.state;
-    const query = `/recommended/${selectedDate.format('MMDDYYYY')}`;
+    const query = `/recommended/${selectedDate.format('YYYY-MM-DD')}`;
 
     axios({
       method: 'get',
@@ -54,7 +54,7 @@ class App extends React.Component {
 
   fetchShowtimes() {
     const { selectedDate } = this.state;
-    const query = `/showtimes/${selectedDate.format('MMDDYYYY')}`;
+    const query = `/showtimes/${selectedDate.format('YYYY-MM-DD')}`;
 
     axios({
       method: 'get',

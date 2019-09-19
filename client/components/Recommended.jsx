@@ -18,7 +18,7 @@ const Recommended = props => (
         <ShowsList show={props.featured} />
       </div>
       <div className="featured-article">
-        {props.featured.article.short}
+        {props.featured.article}
         <div className="writer">
          {props.featured.writer}
         </div>
