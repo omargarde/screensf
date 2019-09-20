@@ -45,7 +45,7 @@
     "eslint-plugin-react": "^7.10.0",
     "node-sass": "^4.11.0",
     "react-dev": "0.0.1",
-    "react-dom": "^16.4.1",
+    "react-dom": "^16.4.2",
     "webpack": "^4.15.1",
     "webpack-cli": "^3.0.8"
   }
