@@ -1,22 +1,32 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Showtime from './Showtime.jsx';
 
-const ShowsList = (props) => (
+const ShowsList = ({ show }) => (
   <div className="shows-film">
-    {props.show.series ? <div className="film-series">{props.show.series}</div> : ''}
-    <div className="film-title">{props.show.film}</div>
+    {show.series ? <div className="film-series">{show.series}</div> : ''}
+    <div className="film-title">{show.film}</div>
     <div className="film-details">
-      {props.show.director ? <span>{props.show.director}</span> : ''}
-      {props.show.year ? <span>{props.show.year}</span> : ''}
-      {props.show.trt ? <span>{props.show.trt} min</span> : ''}
-      {props.show.format ? <span>{props.show.format}</span> : ''}
+      {show.director ? <span>{show.director}</span> : ''}
+      {show.year ? <span>{show.year}</span> : ''}
+      {show.trt ? <span>{show.trt} min</span> : ''}
+      {show.format ? <span>{show.format}</span> : ''}
     </div>
-    {props.show.note ? <div className="film-note">{props.show.note}</div> : ''}
-    <div className="showtimes">{props.show.showtimes.map(showtime => (
+    {show.note ? <div className="film-note">{show.note}</div> : ''}
+    <div className="showtimes">{show.showtimes.map(showtime => (
         <Showtime showtime={showtime} key={showtime} />
       ))}
     </div>
   </div>
-)
+);
+
+ShowsList.propTypes = {
+  show: PropTypes.shape,
+};
+
+ShowsList.defaultProps = {
+  show: '',
+};
+
 
 export default ShowsList;

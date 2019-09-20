@@ -1,9 +1,18 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-const Showtime = props => (
+const Showtime = ({ showtime }) => (
   <span className="showtime">
-    {props.showtime}
+    {showtime}
   </span>
 );
+
+Showtime.propTypes = {
+  showtime: PropTypes.string,
+};
+
+Showtime.defaultProps = {
+  showtime: '',
+};
 
 export default Showtime;

@@ -27,6 +27,7 @@
     "moment": "^2.22.2",
     "nodemon": "^1.18.10",
     "pg-promise": "^8.6.5",
+    "prop-types": "^15.7.2",
     "react": "^16.6.1",
     "react-datepicker": "^1.5.0",
     "react-router-dom": "^4.3.1",

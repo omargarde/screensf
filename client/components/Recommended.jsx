@@ -20,7 +20,7 @@ const Recommended = props => (
       <div className="featured-article">
         {props.featured.article}
         <div className="writer">
-         {props.featured.writer}
+          {props.featured.writer}
         </div>
       </div>
     </div>

@@ -1,13 +1,14 @@
-DROP DATABASE IF EXISTS screensf; 
-CREATE DATABASE screensf;
+-- DROP DATABASE IF EXISTS screensf; 
+-- CREATE DATABASE screensf;
 
 DROP TABLE movies CASCADE;
 DROP TABLE series CASCADE;
 DROP TABLE venues CASCADE;
 DROP TABLE showtimes CASCADE;
 DROP TABLE screenings CASCADE;
-DROP TABLE series_screenings CASCADE;
-DROP TABLE series_venues CASCADE;
+DROP TABLE screenings_series CASCADE;
+DROP TABLE venues_series CASCADE;
+DROP TABLE featured_films CASCADE;
 
 CREATE TABLE movies (
   id int PRIMARY KEY,
@@ -60,14 +61,14 @@ CREATE TABLE venues_series (
 );
 
 
-  CREATE TABLE featured_films (
-    id serial PRIMARY KEY,
-    screenings_id int REFERENCES screenings (id),
-    ondate date,
-    featured_image text,
-    author text,
-    article text
-  );
+CREATE TABLE featured_films (
+  id serial PRIMARY KEY,
+  screenings_id int REFERENCES screenings (id),
+  ondate date,
+  featured_image text,
+  author text,
+  article text
+);
 
 
 --insert movie data
@@ -91,6 +92,9 @@ INSERT INTO series (id, title) VALUES
 INSERT INTO series (id, title) VALUES
   (DEFAULT, 'Scary Stories SF');
 
+INSERT INTO series (id, title) VALUES
+  (DEFAULT, 'October 2019');
+
 --insert venue data
 INSERT INTO venues (id, title, short_title, city) VALUES 
   (DEFAULT, 'San Francisco Museum of Modern Art', 'SF MOMA', 'San Francisco'); 
@@ -106,7 +110,7 @@ INSERT INTO screenings (id, movies_id, venues_id, screening_url, start_date, end
   (DEFAULT, 27322, 1, 'https://www.sfmoma.org/event/love-jones/', '2018-07-15', '2018-07-15', '35mm', 'Introduced by the film''s director');
 
 INSERT INTO screenings (id, movies_id, venues_id, screening_url, start_date, end_date, format, screening_note) VALUES
-  (DEFAULT, 324857, 2, 'http://www.castrotheatre.com', '2018-07-15', '2018-07-15', '35mm', '');
+  (DEFAULT, 324857, 2, 'http://www.castrotheatre.com', '2018-07-15', '2018-07-15', 'DCP', '');
 
 INSERT INTO screenings (id, movies_id, venues_id, screening_url, start_date, end_date, format, screening_note) VALUES
   (DEFAULT, 361292, 3, 'http://www.roxie.come', '2018-07-15', '2018-07-16', '35mm', '');
@@ -128,18 +132,18 @@ INSERT INTO screenings_series (screenings_id, series_id) VALUES
   (1, 1);
 
 INSERT INTO screenings_series (screenings_id, series_id) VALUES
-  (2, 3);
+  (2, 4);
 
 INSERT INTO screenings_series (screenings_id, series_id) VALUES
-  (3, 2);
+  (3, 3);
 
-INSERT INTO screenings_venues (venues_id, series_id) VALUES
+INSERT INTO venues_series (venues_id, series_id) VALUES
   (1, 1);
 
-INSERT INTO screenings_venues (venues_id, series_id) VALUES
+INSERT INTO venues_series (venues_id, series_id) VALUES
   (2, 2);
 
-INSERT INTO screenings_venues (venues_id, series_id) VALUES
+INSERT INTO venues_series (venues_id, series_id) VALUES
   (3, 3);
 
 
