@@ -15,19 +15,24 @@ CREATE TABLE movies (
   title text,
   director text,
   year int,
-  duration int
+  duration int,
+  synopsis text,
 );
 
 CREATE TABLE series (
   id serial PRIMARY KEY,
-  title text
+  title text,
+  start_date date,
+  end_date date, 
+  description text
 );
 
 CREATE TABLE venues (
   id serial PRIMARY KEY,
   title text,
   short_title text,
-  city text
+  city text,
+  description text
 );
 
 CREATE TABLE screenings (
@@ -72,38 +77,38 @@ CREATE TABLE featured_films (
 
 
 --insert movie data
-INSERT INTO movies (id, title, director, year, duration) VALUES 
-  (27322, 'Love Jones', 'Theodore Witcher', 1997, 104);
+INSERT INTO movies (id, title, director, year, duration, synopsis) VALUES 
+  (27322, 'Love Jones', 'Theodore Witcher', 1997, 104, 'Forgotten gem from the 1990s');
 
-INSERT INTO movies (id, title, director, year, duration) VALUES 
-  (324857, 'Spider-Man: Into the Spider-Verse', 'Rodney Rothman', 2018, 117);
+INSERT INTO movies (id, title, director, year, duration, synopsis) VALUES 
+  (324857, 'Spider-Man: Into the Spider-Verse', 'Rodney Rothman', 2018, 117, 'Best Spider-Man ever made');
 
-INSERT INTO movies (id, title, director, year, duration) VALUES 
-  (361292, 'Suspiria', 'Dario Argento', 1977, 152);
+INSERT INTO movies (id, title, director, year, duration, synopsis) VALUES 
+  (361292, 'Suspiria', 'Dario Argento', 1977, 152, 'The classic Giallo film from master director Dario Argento');
 
 
 --insert series data
-INSERT INTO series (id, title) VALUES
-  (DEFAULT, 'Black Powers: Reframing Hollywood');
+INSERT INTO series (id, title, start_date, end_date, description) VALUES
+  (DEFAULT, 'Black Powers: Reframing Hollywood', '2018-07-15', '2018-07-15', 'African American film series at the MoMa');
 
-INSERT INTO series (id, title) VALUES
-  (DEFAULT, 'Everything in 35');
+INSERT INTO series (id, title, start_date, end_date, description) VALUES
+  (DEFAULT, 'Everything in 35', '2018-07-15', '2018-07-15', 'Jesse Ficks hosts this series of movies all presented in 35mm');
 
-INSERT INTO series (id, title) VALUES
-  (DEFAULT, 'Scary Stories SF');
+INSERT INTO series (id, title, start_date, end_date, description) VALUES
+  (DEFAULT, 'Scary Stories SF', '2018-07-15', '2018-07-15', 'Spooktacular series hosted by Kenny Redublo');
 
-INSERT INTO series (id, title) VALUES
-  (DEFAULT, 'October 2019');
+INSERT INTO series (id, title, start_date, end_date, description) VALUES
+  (DEFAULT, 'October 2019', '2018-07-15', '2018-07-15', 'This is the monthly calendar for the Castro Thetaer');
 
 --insert venue data
-INSERT INTO venues (id, title, short_title, city) VALUES 
-  (DEFAULT, 'San Francisco Museum of Modern Art', 'SF MOMA', 'San Francisco'); 
+INSERT INTO venues (id, title, short_title, city, description) VALUES 
+  (DEFAULT, 'San Francisco Museum of Modern Art', 'SF MOMA', 'San Francisco', 'San Francisco''s Modern Art Museum'); 
 
-INSERT INTO venues (id, title, short_title, city) VALUES 
-  (DEFAULT, 'Castro Theater', 'Castro Theater', 'San Francisco'); 
+INSERT INTO venues (id, title, short_title, city, description) VALUES 
+  (DEFAULT, 'Castro Theater', 'Castro Theater', 'San Francisco', 'The largest classic screen in San Francisco'); 
 
-INSERT INTO venues (id, title, short_title, city) VALUES 
-  (DEFAULT, 'Roxie Theater', 'Roxie', 'San Francisco'); 
+INSERT INTO venues (id, title, short_title, city, description) VALUES 
+  (DEFAULT, 'Roxie Theater', 'Roxie', 'San Francisco', 'The oldest and coolest theater in the Mission'); 
 
 --insert screening data
 INSERT INTO screenings (id, movies_id, venues_id, screening_url, start_date, end_date, format, screening_note) VALUES

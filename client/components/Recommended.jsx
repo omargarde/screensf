@@ -10,7 +10,7 @@ const Recommended = props => (
       alt="featured"
     />
     <h3>
-      Featured Film for {props.today.format('dddd MMMM D')}
+      Featured Film for {props.today.format('dddd, MMMM D YYYY')}
     </h3>
     <div className="featured-details">
       <div className="featured-showtime">
