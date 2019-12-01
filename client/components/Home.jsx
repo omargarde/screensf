@@ -84,16 +84,15 @@ class Home extends React.Component {
 
     return (
       <div>
-        <div className="wrapper">
-          <DateSelector
-            today={selectedDate}
-            dates={dates}
-            handleDateChange={this.dateChange.bind(this)}
-          />
-          {featured ? <Recommended featured={featured} today={selectedDate} /> : ''}
-          <Screenings venues={showtimes} />
-          <Link to="/submit">Submit</Link>
-        </div>
+        <DateSelector
+          today={selectedDate}
+          dates={dates}
+          handleDateChange={this.dateChange.bind(this)}
+        />
+        {featured ? <Recommended featured={featured} today={selectedDate} /> : ''}
+        <Screenings venues={showtimes} />
+        <Link to="/submit">Submit</Link>
+
       </div>
     );
   }

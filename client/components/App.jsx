@@ -9,10 +9,12 @@ function App() {
   return (
     <div>
       <Nav />
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route path="/submit" component={Submit} />
-      </Switch>
+      <div className="wrapper">
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/submit" component={Submit} />
+        </Switch>
+      </div>
       <Nav />
     </div>
   );

@@ -54,6 +54,11 @@ $highlight: #800000;
       margin: 1% 10% 3% 10%;
     }
 
+    input {
+      -webkit-appearance: none;
+      -webkit-border-radius: 0;
+    }
+
   }
 
   .dates {
@@ -232,6 +237,10 @@ $highlight: #800000;
   }
   .showtime {
     margin-right: 2%;
+  }
+
+  .submit {
+    margin: 2%;
   }
 
 }
