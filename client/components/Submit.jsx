@@ -15,9 +15,13 @@ class Submit extends React.Component {
       },
       venue: 'test',
       screening: {
-        name: '',
+        movies_id: 0,
+        venues_id: 0,
+        screening_url: '',
         startdate: moment(),
         enddate: moment(),
+        format: '',
+        screening_note: '',
       },
       showtimes: [],
       featuredfilm: [],
@@ -104,104 +108,106 @@ class Submit extends React.Component {
     } = this.state;
 
     return (
-        <div>
-          <form>
-            <div className="submit">
-              <h3>Submit Movie</h3>
-              <div>
-                ID:
-                <div>
-                <input type="text" />
-                </div>
-              </div>
-              <input type="submit" value="Submit Movie" />
-            </div>
-          </form>
 
-          <form>
-            <div className="submit">
-              <h3>Series</h3>
-              <div>
-                Name:
-                <div>
-                  <input type="text" />
-                </div>
-              </div>
-              <div>
-                Start Date:
-                <DatePicker
-                  selected={series.startdate}
-                  onChange={this.seriesStartChange.bind(this)}
-                />
-              </div>
-              <div>
-                End Date:
-                <DatePicker
-                  selected={series.enddate}
-                  onChange={this.seriesEndChange.bind(this)}
-                />
-              </div>
-              <input type="submit" value="Submit Series" />
-            </div>
-          </form>
+  <div>
+    <div className="submit">
+      <h3>Submit Movie</h3>
+        <form>
+            <label>
+              ID:
+              <input type="text" />
+            </label>
+          <label>
+            <input type="submit" value="Submit Movie" />
+          </label>
+        </form>
+    </div>
 
+    <div className="submit">
+      <form>
+          <h3>Submit Series</h3>
+            <label>
+              Name:
+              <input type="text" />
+            </label>
+          <label>
+            Start Date:
+            <DatePicker
+              selected={series.startdate}
+              onChange={this.seriesStartChange.bind(this)}
+            />
+          </label>
+          <label>
+            End Date:
+            <DatePicker
+              selected={series.enddate}
+              onChange={this.seriesEndChange.bind(this)}
+            />
+          </label>
+          <input type="submit" value="Submit Series" />
+      </form>
+    </div>
 
-          <form>
-            <div className="submit">
-              <h3>Screening</h3>
-              <div>
-                Start Date:
-                <DatePicker
-                  selected={screening.startdate}
-                  onChange={this.screeningStartChange.bind(this)}
-                />
-              </div>
-              <div>
-                End Date:
-                <DatePicker
-                  selected={screening.startdate}
-                  onChange={this.screeningEndChange.bind(this)}
-                />
-              </div>
-              <div>
-                  Format:
-                  <select>
-                    <option value="grapefruit">DCP</option>
-                    <option value="lime">35mm</option>
-                    <option value="coconut">16mm</option>
-                    <option value="mango">70mm</option>
-                    <option value="mango">DV</option>
-                    <option value="mango">VHS</option>
-                  </select>
-              </div>
-              <div>
-                URL:
-                <div>
-                  <input type="text" />
-                </div>
-              </div>
-              <div>
-                Screening Note:
-                <div>
-                  <textarea />
-                </div>
-              </div>
-                <div>
-                  <h4>Select Venue</h4>
-                </div>
-                <select>
-                  <option>The Castro Theater</option>
-                  <option>Roxie Theater</option>
-                  <option>Pacific Film Archive</option>
-                  <option>Artists Television Access</option>
-                </select>
-              <div>
-                <h4>Showtimes</h4>
-              </div>
-              <input type="submit" value="Submit Screening" />
-            </div>
-          </form>
-        </div>
+    <div className="submit">
+      <h3>Screening</h3>
+      <form>
+          <label>
+            Movie ID:
+            <input type="text" />
+          </label>
+          <label>
+            Series ID:
+            <input type="text" />
+          </label>
+          <label>
+            Start Date:
+            <DatePicker
+              selected={screening.startdate}
+              onChange={this.screeningStartChange.bind(this)}
+            />
+          </label>
+          <label>
+            End Date:
+            <DatePicker
+              selected={screening.enddate}
+              onChange={this.screeningEndChange.bind(this)}
+            />
+          </label>
+          <label>
+            Format:
+            <select>
+              <option value="grapefruit">DCP</option>
+              <option value="lime">35mm</option>
+              <option value="coconut">16mm</option>
+              <option value="mango">70mm</option>
+              <option value="mango">DV</option>
+              <option value="mango">VHS</option>
+            </select>
+          </label>
+          <label>
+            URL:
+            <input type="text" />
+          </label>
+          <label>
+            Screening Note:
+            <textarea />
+          </label>
+          <label>
+            <h4>Select Venue</h4>
+            <select>
+              <option>The Castro Theater</option>
+              <option>Roxie Theater</option>
+              <option>Pacific Film Archive</option>
+              <option>Artists Television Access</option>
+            </select>
+          </label>
+           <label>
+            <h4>Showtimes</h4>
+          <input type="submit" value="Submit Screening" />
+        </label>
+      </form>
+    </div>
+  </div>
     );
   }
 }

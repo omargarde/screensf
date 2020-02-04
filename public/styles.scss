@@ -53,11 +53,18 @@ $highlight: #800000;
     @media screen and (max-width: $breakpoint-small) {
       margin: 1% 10% 3% 10%;
     }
-
+  
     input {
       -webkit-appearance: none;
       -webkit-border-radius: 0;
     }
+
+    input[type=text] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
 
   }
 

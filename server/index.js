@@ -3,27 +3,34 @@ const path = require('path');
 
 const app = express();
 const db = require('../database/database.js');
+const post = require('../database/post.js');
 
 app.use('/', express.static(path.join(__dirname, '../public')));
 app.use(express.json());
+
+// Read
 
 app.get('/recommended/:id', db.getRecommendedOnDate);
 
 app.get('/showtimes/:id', db.getShowtimesOnDate);
 
-app.post('/movies/', db.postMovie);
+// Create
+app.post('/movies/', post.postMovie);
 
-app.post('/series/', db.postSeries);
+app.post('/series/', post.postSeries);
 
-app.post('/venues/', db.postVenue);
+app.post('/venues/', post.postVenue);
 
-app.post('/screenings/', db.postScreening);
+app.post('/screenings/', post.postScreening);
 
-app.post('/showtimes/', db.postShowtimes);
+app.post('/showtimes/', post.postShowtimes);
 
-app.post('/screenings-series/', db.postScreeningsSeries);
+app.post('/screenings-series/', post.postScreeningsSeries);
 
-app.post('/venues-series/', db.postVenuesSeries);
+app.post('/venues-series/', post.postVenuesSeries);
+
+// Update
+// Delete
 
 const port = process.env.PORT || 3000;
 
