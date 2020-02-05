@@ -22,10 +22,23 @@ class Submit extends React.Component {
         enddate: moment(),
         format: '',
         screening_note: '',
+        series_id: 0,
       },
       showtimes: [],
       featuredfilm: [],
     };
+  }
+
+  handleScreeningChange(e, key) {
+    const { screening } = this.state;
+    screening[key] = e;
+    this.setState({ screening: screening });
+  }
+
+  handleSeriesChange(e, key) {
+    const { series } = this.state;
+    series[key] = e;
+    this.setState({ series: series });
   }
 
   postMovie() {
@@ -73,30 +86,6 @@ class Submit extends React.Component {
       .catch();
   }
 
-  seriesStartChange(date) {
-    const { series } = this.state;
-    series.startdate = date;
-    this.setState({ series: series });
-  }
-
-  seriesEndChange(date) {
-    const { series } = this.state;
-    series.enddate = date;
-    this.setState({ series: series });
-  }
-
-  screeningStartChange(date) {
-    const { screening } = this.state;
-    screening.startdate = date;
-    this.setState({ screening: screening });
-  }
-
-  screeningEndChange(date) {
-    const { screening } = this.state;
-    screening.enddate = date;
-    this.setState({ screening: screening });
-  }
-
 
   render() {
     const {
@@ -128,20 +117,23 @@ class Submit extends React.Component {
           <h3>Submit Series</h3>
             <label>
               Name:
-              <input type="text" />
+              <input 
+                type="text" 
+                onChange={e => this.handleSeriesChange(e, 'name')}
+              />
             </label>
           <label>
             Start Date:
             <DatePicker
               selected={series.startdate}
-              onChange={this.seriesStartChange.bind(this)}
+              onChange={e => this.handleSeriesChange(e, 'startdate')}
             />
           </label>
           <label>
             End Date:
             <DatePicker
               selected={series.enddate}
-              onChange={this.seriesEndChange.bind(this)}
+              onChange={e => this.handleSeriesChange(e, 'enddate')}
             />
           </label>
           <input type="submit" value="Submit Series" />
@@ -151,60 +143,72 @@ class Submit extends React.Component {
     <div className="submit">
       <h3>Screening</h3>
       <form>
-          <label>
-            Movie ID:
-            <input type="text" />
-          </label>
-          <label>
-            Series ID:
-            <input type="text" />
-          </label>
-          <label>
-            Start Date:
-            <DatePicker
-              selected={screening.startdate}
-              onChange={this.screeningStartChange.bind(this)}
-            />
-          </label>
-          <label>
-            End Date:
-            <DatePicker
-              selected={screening.enddate}
-              onChange={this.screeningEndChange.bind(this)}
-            />
-          </label>
-          <label>
-            Format:
-            <select>
-              <option value="grapefruit">DCP</option>
-              <option value="lime">35mm</option>
-              <option value="coconut">16mm</option>
-              <option value="mango">70mm</option>
-              <option value="mango">DV</option>
-              <option value="mango">VHS</option>
-            </select>
-          </label>
-          <label>
-            URL:
-            <input type="text" />
-          </label>
-          <label>
-            Screening Note:
-            <textarea />
-          </label>
-          <label>
-            <h4>Select Venue</h4>
-            <select>
-              <option>The Castro Theater</option>
-              <option>Roxie Theater</option>
-              <option>Pacific Film Archive</option>
-              <option>Artists Television Access</option>
-            </select>
-          </label>
-           <label>
-            <h4>Showtimes</h4>
-          <input type="submit" value="Submit Screening" />
+        <label>
+          Movie ID:
+          <input
+            type="text"
+            onChange={e => this.handleScreeningChange(e.target.value, 'movies_id')}
+          />
         </label>
+        <label>
+          Series ID:
+          <input
+            type="text"
+            onChange={e => this.handleScreeningChange(e.target.value, 'series_id')}
+          />
+        </label>
+        <label>
+          Start Date:
+          <DatePicker
+            selected={screening.startdate}
+            onChange={e => this.handleScreeningChange(e, 'startdate')}
+          />
+        </label>
+        <label>
+          End Date:
+          <DatePicker
+            selected={screening.enddate}
+            onChange={e => this.handleScreeningChange(e, 'enddate')}
+          />
+        </label>
+        <label>
+          Format:
+          <select onChange={e => this.handleScreeningChange(e.target.value, 'format')}>
+            <option>DCP</option>
+            <option>35mm</option>
+            <option>16mm</option>
+            <option>70mm</option>
+            <option>DV</option>
+            <option>VHS</option>
+          </select>
+        </label>
+        <label>
+          URL:
+          <input
+            type="text"
+            onChange={e => this.handleScreeningChange(e.target.value, 'screening_url')}
+          />
+        </label>
+        <label>
+          Screening Note:
+          <input 
+            type="text"
+            onChange={e => this.handleScreeningChange(e.target.value, 'screening_url')}
+          />
+        </label>
+        <label>
+          <h4>Select Venue</h4>
+          <select>
+            <option>The Castro Theater</option>
+            <option>Roxie Theater</option>
+            <option>Pacific Film Archive</option>
+            <option>Artists Television Access</option>
+          </select>
+        </label>
+         <label>
+          <h4>Showtimes</h4>
+        <input type="submit" value="Submit Screening" />
+      </label>
       </form>
     </div>
   </div>
