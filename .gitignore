@@ -1,3 +1,4 @@
 node_modules/
 public/screensf-bundle.js
 .DS_Store
+Dockerfile

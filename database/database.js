@@ -1,5 +1,6 @@
 const pgp = require('pg-promise')();
 const moment = require('moment');
+
 const db = pgp('postgres://localhost:5432/screensf');
 
 const normalizeShowtimes = (showtimes) => {

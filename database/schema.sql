@@ -16,7 +16,7 @@ CREATE TABLE movies (
   director text,
   year int,
   duration int,
-  synopsis text,
+  synopsis text
 );
 
 CREATE TABLE series (
