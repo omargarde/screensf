@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "a daily listing of all repertory cinema in the san francisco bay area",
   "engines": {
-    "node": "9.10.1"
+    "node": "12.x.x"
   },
   "main": "index.js",
   "scripts": {

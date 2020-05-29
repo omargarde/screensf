@@ -1,7 +1,15 @@
 const pgp = require('pg-promise')();
 const moment = require('moment');
+const { Client } = require('pg')
 
-const db = pgp('postgres://localhost:5432/screensf');
+const client = new Client({
+  host:  `/cloudsql/${process.env.CLOUD_SQL_CONNECTION_NAME}`,
+  port: 5334,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+})
+
+const db = pgp(client);
 
 const normalizeShowtimes = (showtimes) => {
   const normalizedTimes = showtimes.split(',');

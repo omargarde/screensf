@@ -1,14 +1,14 @@
 -- DROP DATABASE IF EXISTS screensf; 
 -- CREATE DATABASE screensf;
 
-DROP TABLE movies CASCADE;
-DROP TABLE series CASCADE;
-DROP TABLE venues CASCADE;
-DROP TABLE showtimes CASCADE;
-DROP TABLE screenings CASCADE;
-DROP TABLE screenings_series CASCADE;
-DROP TABLE venues_series CASCADE;
-DROP TABLE featured_films CASCADE;
+-- DROP TABLE movies CASCADE;
+-- DROP TABLE series CASCADE;
+-- DROP TABLE venues CASCADE;
+-- DROP TABLE showtimes CASCADE;
+-- DROP TABLE screenings CASCADE;
+-- DROP TABLE screenings_series CASCADE;
+-- DROP TABLE venues_series CASCADE;
+-- DROP TABLE featured_films CASCADE;
 
 CREATE TABLE movies (
   id int PRIMARY KEY,
