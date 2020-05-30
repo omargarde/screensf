@@ -1,5 +1,9 @@
 node_modules/
+app.yaml
 public/screensf-bundle.js
 .DS_Store
 Dockerfile
 .gcloudignore
+cloud_sql_proxy
+dbstff
+screen-sf-85b8f51a1820.json

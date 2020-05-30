@@ -1,15 +1,20 @@
-const pgp = require('pg-promise')();
-const moment = require('moment');
 const { Client } = require('pg')
+const moment = require('moment');
 
 const client = new Client({
-  host:  `/cloudsql/${process.env.CLOUD_SQL_CONNECTION_NAME}`,
-  port: 5334,
+  host:  process.env.CLOUD_SQL_CONNECTION_NAME,
   user: process.env.DB_USER,
+  database: process.env.DB_NAME,
   password: process.env.DB_PASS,
 })
 
-const db = pgp(client);
+client.connect(err => {
+  if (err) {
+    console.error('connection error', err.stack)
+  } else {
+    console.log('connected')
+  }
+})
 
 const normalizeShowtimes = (showtimes) => {
   const normalizedTimes = showtimes.split(',');
@@ -20,7 +25,8 @@ const normalizeShowtimes = (showtimes) => {
 };
 
 const getRecommendedOnDate = (req, res) => {
-  db.query(`SELECT 
+  const recquery = {
+    text: `SELECT 
     featured_films.featured_image AS image,
     featured_films.author AS writer,
     featured_films.article,
@@ -45,7 +51,7 @@ const getRecommendedOnDate = (req, res) => {
     INNER JOIN series ON series.id = screenings_series.series_id 
     INNER JOIN showtimes ON showtimes.screenings_id = screenings.id
     WHERE 
-    featured_films.ondate = $/today/
+    featured_films.ondate = $1
     GROUP BY
     featured_films.featured_image,
     featured_films.author,
@@ -58,9 +64,12 @@ const getRecommendedOnDate = (req, res) => {
     venues.short_title,
     screenings.screening_url,
     screenings.format,
-    screenings.screening_note;`, { today: req.params.id })
+    screenings.screening_note;`,
+    values: [req.params.id],
+  }
+  client.query(recquery)
     .then((data) => {
-      const featuredData = data[0];
+      const featuredData = data.rows[0];
       featuredData.showtimes = normalizeShowtimes(featuredData.showtimes);
       res.send(JSON.stringify(featuredData));
       res.end();
@@ -72,7 +81,8 @@ const getRecommendedOnDate = (req, res) => {
 
 
 const getShowtimesOnDate = (req, res) => {
-  db.query(`SELECT 
+  const query = {
+    text: `SELECT 
     venues.title AS venue,
     venues.short_title AS venueShortTitle,
     movies.title AS film,
@@ -93,7 +103,7 @@ const getShowtimesOnDate = (req, res) => {
     INNER JOIN series ON series.id = screenings_series.series_id 
     INNER JOIN showtimes ON showtimes.screenings_id = screenings.id
     WHERE
-    screenings.start_date <= $/today/ AND screenings.end_date >= $/today/
+    screenings.start_date <= $1 AND screenings.end_date >= $1
     GROUP BY
     venues.title,
     movies.title,
@@ -103,25 +113,26 @@ const getShowtimesOnDate = (req, res) => {
     venues.short_title,
     screenings.screening_url,
     screenings.format,
-    screenings.screening_note;`, { today: req.params.id })
+    screenings.screening_note;`,
+    values: [req.params.id],
+  }
+  
+  client.query(query)
     .then((data) => {
+      const rows = data.rows;
       const showsByVenue = {};
-
-      for (let i = 0; i < data.length; i += 1) {
-        const venueTitle = data[i].venue;
+      for (let i = 0; i < rows.length ; i += 1) {
+        const venueTitle = rows[i].venue;
         if (!showsByVenue[venueTitle]) {
           showsByVenue[venueTitle] = {
             venue: venueTitle,
             shows: [],
           };
         }
-
-        const showData = data[i];
-
-        showData.showtimes = normalizeShowtimes(showData.showtimes);
-        showsByVenue[venueTitle].shows.push(showData);
+        const showData = rows[i];
+        showData.showtimes = normalizeShowtimes(rows[i].showtimes);
+        showsByVenue[venueTitle].shows.push(rows[i]);
       }
-
       res.send(JSON.stringify(Object.values(showsByVenue)));
       res.end();
     })
@@ -129,7 +140,6 @@ const getShowtimesOnDate = (req, res) => {
       throw new Error(error);
     });
 };
-
 
 module.exports = {
   getShowtimesOnDate,
