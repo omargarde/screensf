@@ -45,14 +45,16 @@ CREATE TABLE screenings (
   start_date date,
   end_date date, 
   format text,
-  screening_note text
+  screening_note text,
+  canceled int
 );
 
 CREATE TABLE showtimes (
   id serial PRIMARY KEY,
   screenings_id int REFERENCES screenings (id),
   showtime text,
-  showtime_note text
+  showtime_note text,
+  canceled int
 );
 
 CREATE TABLE screenings_series (
@@ -155,5 +157,5 @@ CREATE TABLE featured_films (
 
 
 -- INSERT INTO featured_films (id, screenings_id, ondate, featured_image, author, article) VALUES
---   (DEFAULT, 1, '2018-07-15', 'http://d1hz8coy0n2714.cloudfront.net/lovejones.jpg','Tre''vell Anderson', 'Before “Love Jones,” black romance on the big screen was hard to come by. Sure, “Mahogany,” starring Diana Ross and Billy Dee Williams, had paved the way, but that was in 1975. Since then, most of the movies featuring black people were about ‘hood life: poverty, gangs, drugs and guns. Someone was always dying by the time the credits rolled. \n \n Then, in 1997, came a simple movie about the love lives of black artists in Chicago. Starring Larenz Tate and Nia Long, writer-director Ted Witcher’s debut film followed the rise and fall, and rise again, of a relationship between a young poet named Darius Lovehall and Nina Mosley, a photographer. Set in the city’s spoken-word scene, “Love Jones” showcased a different aspect of black life, one where struggle and strife did not dictate one’s circumstances, where one’s group of friends, played by Isaiah Washington, Lisa Nicole Carson, Bill Bellamy and Leonard Roberts, were more like family.')
+--   (DEFAULT, 1, '2020-05-31', 'http://d1hz8coy0n2714.cloudfront.net/lovejones.jpg','Tre''vell Anderson', 'Before “Love Jones,” black romance on the big screen was hard to come by. Sure, “Mahogany,” starring Diana Ross and Billy Dee Williams, had paved the way, but that was in 1975. Since then, most of the movies featuring black people were about ‘hood life: poverty, gangs, drugs and guns. Someone was always dying by the time the credits rolled. \n \n Then, in 1997, came a simple movie about the love lives of black artists in Chicago. Starring Larenz Tate and Nia Long, writer-director Ted Witcher’s debut film followed the rise and fall, and rise again, of a relationship between a young poet named Darius Lovehall and Nina Mosley, a photographer. Set in the city’s spoken-word scene, “Love Jones” showcased a different aspect of black life, one where struggle and strife did not dictate one’s circumstances, where one’s group of friends, played by Isaiah Washington, Lisa Nicole Carson, Bill Bellamy and Leonard Roberts, were more like family.')
 

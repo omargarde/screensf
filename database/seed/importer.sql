@@ -1,60 +1,3 @@
-
-INSERT INTO screenings (id, movies_id, venues_id, screening_url, start_date, end_date, format, screening_note) VALUES
-    (DEFAULT, 601, 4, $$https://www.westwinddi.com/locations/capitol/movies/details?code=16689$$, $$2020-05-31$$, $$2020-03-06$$, $$DCP$$, $$Double feature with Jurassic Park$$ );
-INSERT INTO screenings (id, movies_id, venues_id, screening_url, start_date, end_date, format, screening_note) VALUES
-    (DEFAULT, 329, 4, $$https://www.westwinddi.com/locations/capitol/movies/details?code=207$$, $$2020-05-31$$, $$2020-03-06$$, $$DCP$$, $$Double feature with E.T.$$ );
-INSERT INTO screenings (id, movies_id, venues_id, screening_url, start_date, end_date, format, screening_note) VALUES
-    (DEFAULT, 555974, 4, $$https://www.westwinddi.com/locations/capitol/movies/details?code=289065$$, $$2020-05-31$$, $$2020-03-06$$, $$DCP$$, $$Double feature with Gretel and Hansel$$ );
-INSERT INTO screenings (id, movies_id, venues_id, screening_url, start_date, end_date, format, screening_note) VALUES
-    (DEFAULT, 542224, 4, $$https://www.westwinddi.com/locations/capitol/movies/details?code=291642$$, $$2020-05-31$$, $$2020-03-06$$, $$DCP$$, $$Double feature with Brahms: The Boy II$$ );
-INSERT INTO screenings (id, movies_id, venues_id, screening_url, start_date, end_date, format, screening_note) VALUES
-    (DEFAULT, 539537, 4, $$https://www.westwinddi.com/locations/capitol/movies/details?code=285307$$, $$2020-05-31$$, $$2020-03-06$$, $$DCP$$, $$Double feature with Zombieland$$ );
-INSERT INTO screenings (id, movies_id, venues_id, screening_url, start_date, end_date, format, screening_note) VALUES
-    (DEFAULT, 338967, 4, $$https://www.westwinddi.com/locations/capitol/movies/details?code=275948$$, $$2020-05-31$$, $$2020-03-06$$, $$DCP$$, $$Double feature with Fantasy Island$$ );
-INSERT INTO screenings (id, movies_id, venues_id, screening_url, start_date, end_date, format, screening_note) VALUES
-    (DEFAULT, 514847, 4, $$https://www.westwinddi.com/locations/capitol/movies/details?code=271023$$, $$2020-05-31$$, $$2020-03-06$$, $$DCP$$, $$Double feature with Invisible Man$$ );
-INSERT INTO screenings (id, movies_id, venues_id, screening_url, start_date, end_date, format, screening_note) VALUES
-    (DEFAULT, 570670, 4, $$https://www.westwinddi.com/locations/capitol/movies/details?code=293548$$, $$2020-05-31$$, $$2020-03-06$$, $$DCP$$, $$Double feature with The Hunt$$ );
-INSERT INTO screenings (id, movies_id, venues_id, screening_url, start_date, end_date, format, screening_note) VALUES
-    (DEFAULT, 446893, 4, $$https://www.westwinddi.com/locations/capitol/movies/details?code=240912$$, $$2020-05-31$$, $$2020-03-06$$, $$DCP$$, $$Double feature with Madagascar$$ );
-INSERT INTO screenings (id, movies_id, venues_id, screening_url, start_date, end_date, format, screening_note) VALUES
-    (DEFAULT, 953, 4, $$https://www.westwinddi.com/locations/capitol/movies/details?code=11329$$, $$2020-05-31$$, $$2020-03-06$$, $$DCP$$, $$Double feature with Trolls World Tour$$ );
-INSERT INTO screenings (id, movies_id, venues_id, screening_url, start_date, end_date, format, screening_note) VALUES
-    (DEFAULT, 564, 4, $$https://www.westwinddi.com/locations/capitol/movies/details?code=16623$$, $$2020-05-31$$, $$2020-03-06$$, $$DCP$$, $$Double feature with The Mummy Returns$$ );
-INSERT INTO screenings (id, movies_id, venues_id, screening_url, start_date, end_date, format, screening_note) VALUES
-    (DEFAULT, 1734, 4, $$https://www.westwinddi.com/locations/capitol/movies/details?code=29552$$, $$2020-05-31$$, $$2020-03-06$$, $$DCP$$, $$Double feature with The Mummy$$ );
-INSERT INTO showtimes (id, screenings_id, showtime, showtime_note) VALUES
-    (DEFAULT, 1, $$2020-05-31 20:50:00-8:00$$, $$null$$);
-INSERT INTO showtimes (id, screenings_id, showtime, showtime_note) VALUES
-    (DEFAULT, 2, $$2020-05-31 23:10:00-8:00$$, $$null$$);
-INSERT INTO showtimes (id, screenings_id, showtime, showtime_note) VALUES
-    (DEFAULT, 3, $$2020-05-31 20:50:00-8:00$$, $$null$$);
-INSERT INTO showtimes (id, screenings_id, showtime, showtime_note) VALUES
-    (DEFAULT, 4, $$2020-05-31 22:40:00-8:00$$, $$null$$);
-INSERT INTO showtimes (id, screenings_id, showtime, showtime_note) VALUES
-    (DEFAULT, 5, $$2020-05-31 20:50:00-8:00$$, $$null$$);
-INSERT INTO showtimes (id, screenings_id, showtime, showtime_note) VALUES
-    (DEFAULT, 6, $$2020-05-31 23:05:00-8:00$$, $$null$$);
-INSERT INTO showtimes (id, screenings_id, showtime, showtime_note) VALUES
-    (DEFAULT, 7, $$2020-05-31 20:50:00-8:00$$, $$null$$);
-INSERT INTO showtimes (id, screenings_id, showtime, showtime_note) VALUES
-    (DEFAULT, 8, $$2020-05-31 22:45:00-8:00$$, $$null$$);
-INSERT INTO showtimes (id, screenings_id, showtime, showtime_note) VALUES
-    (DEFAULT, 9, $$2020-05-31 20:50:00-8:00$$, $$null$$);
-INSERT INTO showtimes (id, screenings_id, showtime, showtime_note) VALUES
-    (DEFAULT, 10, $$2020-05-31 22:45:00-8:00$$, $$null$$);
-INSERT INTO showtimes (id, screenings_id, showtime, showtime_note) VALUES
-    (DEFAULT, 11, $$2020-05-31 20:50:00-8:00$$, $$null$$);
-INSERT INTO showtimes (id, screenings_id, showtime, showtime_note) VALUES
-    (DEFAULT, 12, $$2020-05-31 23:20:00-8:00$$, $$null$$);
-INSERT INTO venues (id, title, short_title, city, venue_description, address, currently_open) VALUES
-    (DEFAULT, $$San Francisco Musuem of Modern Art$$, $$SF MOMA$$, $$San Francisco$$, $$The San Francisco Museum of Modern Art (SFMOMA) is a modern art museum located in San Francisco, California. A nonprofit organization, SFMOMA holds an internationally recognized collection of modern and contemporary art, and was the first museum on the West Coast devoted solely to 20th-century art.$$,  $$151 3rd St, San Francisco, CA 94103$$, 1);
-INSERT INTO venues (id, title, short_title, city, venue_description, address, currently_open) VALUES
-    (DEFAULT, $$Castro Theater$$, $$Castro Theater$$, $$San Francisco$$, $$The Castro Theatre is a popular San Francisco movie palace.$$,  $$429 Castro St, San Francisco, CA 94114$$, 1);
-INSERT INTO venues (id, title, short_title, city, venue_description, address, currently_open) VALUES
-    (DEFAULT, $$Roxie Theater$$, $$Roxie Theater$$, $$San Francisco$$, $$The Roxie Theater, a San Francisco landmark in the Mission District, brings people together to meet and connect through distinctive cinematic experiences. Guided by the passionate belief that engaging with a movie doesn’t end with the credits, we invite filmmakers, curators, entertainers and educators to interact with our audiences. We provide inspiration and opportunity for the next generation, and serve as a forum for the independent film community reflecting the spirit of the diverse Bay Area population. We are a 501(c)(3) nonprofit organization.$$,  $$3117 16th St, San Francisco, CA 94103$$, 1);
-INSERT INTO venues (id, title, short_title, city, venue_description, address, currently_open) VALUES
-    (DEFAULT, $$West Wind Capitol Drive-In$$, $$West Wind Capitol Drive-In$$, $$San Jose$$, $$This retro drive-in movie theater screens the latest releases & pipes sound into cars via FM radio.$$,  $$3630 Hillcap Ave, San Jose, CA 95136$$, 1);
 INSERT INTO movies (id, title, director, year, runtime, synopsis) VALUES
     (601, $$E.T. the Extra-Terrestrial$$, $$Steven Spielberg$$, 1982, 115, $$"After a gentle alien becomes stranded on Earth, the being is discovered and befriended by a young boy named Elliott. Bringing the extraterrestrial into his suburban California house, Elliott introduces E.T., as the alien is dubbed, to his brother and his little sister, Gertie, and the children decide to keep its existence a secret. Soon, however, E.T. falls ill, resulting in government intervention and a dire situation for both Elliott and the alien."$$);
 INSERT INTO movies (id, title, director, year, runtime, synopsis) VALUES
@@ -86,28 +29,254 @@ INSERT INTO movies (id, title, director, year, runtime, synopsis) VALUES
 INSERT INTO movies (id, title, director, year, runtime, synopsis) VALUES
     (1734, $$The Mummy Returns$$, $$Stephen Sommers$$, 2001, 130, $$"Rick and Evelyn O’Connell, along with their 8-year-old son Alex, discover the key to the legendary Scorpion King’s might: the fabled Bracelet of Anubis. Unfortunately, a newly resurrected Imhotep has designs on the bracelet as well, and isn’t above kidnapping its new bearer, Alex, to gain control of Anubis’s otherworldly army."$$);
 
+INSERT INTO venues (id, title, short_title, city, venue_description, address, currently_open) VALUES
+    (DEFAULT, $$San Francisco Musuem of Modern Art$$, $$SF MOMA$$, $$San Francisco$$, $$The San Francisco Museum of Modern Art (SFMOMA) is a modern art museum located in San Francisco, California. A nonprofit organization, SFMOMA holds an internationally recognized collection of modern and contemporary art, and was the first museum on the West Coast devoted solely to 20th-century art.$$,  $$151 3rd St, San Francisco, CA 94103$$, 1);
+INSERT INTO venues (id, title, short_title, city, venue_description, address, currently_open) VALUES
+    (DEFAULT, $$Castro Theater$$, $$Castro Theater$$, $$San Francisco$$, $$The Castro Theatre is a popular San Francisco movie palace.$$,  $$429 Castro St, San Francisco, CA 94114$$, 1);
+INSERT INTO venues (id, title, short_title, city, venue_description, address, currently_open) VALUES
+    (DEFAULT, $$Roxie Theater$$, $$Roxie Theater$$, $$San Francisco$$, $$The Roxie Theater, a San Francisco landmark in the Mission District, brings people together to meet and connect through distinctive cinematic experiences. Guided by the passionate belief that engaging with a movie doesn’t end with the credits, we invite filmmakers, curators, entertainers and educators to interact with our audiences. We provide inspiration and opportunity for the next generation, and serve as a forum for the independent film community reflecting the spirit of the diverse Bay Area population. We are a 501(c)(3) nonprofit organization.$$,  $$3117 16th St, San Francisco, CA 94103$$, 1);
+INSERT INTO venues (id, title, short_title, city, venue_description, address, currently_open) VALUES
+    (DEFAULT, $$West Wind Capitol Drive-In$$, $$West Wind Capitol Drive-In$$, $$San Jose$$, $$This retro drive-in movie theater screens the latest releases & pipes sound into cars via FM radio.$$,  $$3630 Hillcap Ave, San Jose, CA 95136$$, 1);
+INSERT INTO venues (id, title, short_title, city, venue_description, address, currently_open) VALUES
+    (DEFAULT, $$Solano Drive-In$$, $$Solano Drive-In$$, $$Concord$$, $$This drive-in movie theater also offers a concession stand for snacks & a playground for kids.$$,  $$1611 Solano Way, Concord, CA 94520$$, 1);
+
+INSERT INTO screenings (id, movies_id, venues_id, screening_url, start_date, end_date, format, screening_note, canceled) VALUES
+    (DEFAULT, 601, 4, $$https://www.westwinddi.com/locations/capitol/movies/details?code=16689$$, $$2020-05-31$$, $$2020-06-04$$, $$DCP$$, $$Double feature with Jurassic Park$$, 1);
+INSERT INTO screenings (id, movies_id, venues_id, screening_url, start_date, end_date, format, screening_note, canceled) VALUES
+    (DEFAULT, 329, 4, $$https://www.westwinddi.com/locations/capitol/movies/details?code=207$$, $$2020-05-31$$, $$2020-06-04$$, $$DCP$$, $$Double feature with E.T.$$, 1);
+INSERT INTO screenings (id, movies_id, venues_id, screening_url, start_date, end_date, format, screening_note, canceled) VALUES
+    (DEFAULT, 555974, 4, $$https://www.westwinddi.com/locations/capitol/movies/details?code=289065$$, $$2020-05-31$$, $$2020-06-04$$, $$DCP$$, $$Double feature with Gretel and Hansel$$, 1);
+INSERT INTO screenings (id, movies_id, venues_id, screening_url, start_date, end_date, format, screening_note, canceled) VALUES
+    (DEFAULT, 542224, 4, $$https://www.westwinddi.com/locations/capitol/movies/details?code=291642$$, $$2020-05-31$$, $$2020-06-04$$, $$DCP$$, $$Double feature with Brahms: The Boy II$$, 1);
+INSERT INTO screenings (id, movies_id, venues_id, screening_url, start_date, end_date, format, screening_note, canceled) VALUES
+    (DEFAULT, 539537, 4, $$https://www.westwinddi.com/locations/capitol/movies/details?code=285307$$, $$2020-05-31$$, $$2020-06-04$$, $$DCP$$, $$Double feature with Zombieland$$, 1);
+INSERT INTO screenings (id, movies_id, venues_id, screening_url, start_date, end_date, format, screening_note, canceled) VALUES
+    (DEFAULT, 338967, 4, $$https://www.westwinddi.com/locations/capitol/movies/details?code=275948$$, $$2020-05-31$$, $$2020-06-04$$, $$DCP$$, $$Double feature with Fantasy Island$$, 1);
+INSERT INTO screenings (id, movies_id, venues_id, screening_url, start_date, end_date, format, screening_note, canceled) VALUES
+    (DEFAULT, 514847, 4, $$https://www.westwinddi.com/locations/capitol/movies/details?code=271023$$, $$2020-05-31$$, $$2020-06-04$$, $$DCP$$, $$Double feature with Invisible Man$$, 1);
+INSERT INTO screenings (id, movies_id, venues_id, screening_url, start_date, end_date, format, screening_note, canceled) VALUES
+    (DEFAULT, 570670, 4, $$https://www.westwinddi.com/locations/capitol/movies/details?code=293548$$, $$2020-05-31$$, $$2020-06-04$$, $$DCP$$, $$Double feature with The Hunt$$, 1);
+INSERT INTO screenings (id, movies_id, venues_id, screening_url, start_date, end_date, format, screening_note, canceled) VALUES
+    (DEFAULT, 446893, 4, $$https://www.westwinddi.com/locations/capitol/movies/details?code=240912$$, $$2020-05-31$$, $$2020-06-04$$, $$DCP$$, $$Double feature with Madagascar$$, 1);
+INSERT INTO screenings (id, movies_id, venues_id, screening_url, start_date, end_date, format, screening_note, canceled) VALUES
+    (DEFAULT, 953, 4, $$https://www.westwinddi.com/locations/capitol/movies/details?code=11329$$, $$2020-05-31$$, $$2020-06-04$$, $$DCP$$, $$Double feature with Trolls World Tour$$, 1);
+INSERT INTO screenings (id, movies_id, venues_id, screening_url, start_date, end_date, format, screening_note, canceled) VALUES
+    (DEFAULT, 564, 4, $$https://www.westwinddi.com/locations/capitol/movies/details?code=16623$$, $$2020-05-31$$, $$2020-06-04$$, $$DCP$$, $$Double feature with The Mummy Returns$$, 1);
+INSERT INTO screenings (id, movies_id, venues_id, screening_url, start_date, end_date, format, screening_note, canceled) VALUES
+    (DEFAULT, 1734, 4, $$https://www.westwinddi.com/locations/capitol/movies/details?code=29552$$, $$2020-05-31$$, $$2020-06-04$$, $$DCP$$, $$Double feature with The Mummy$$, 1);
+INSERT INTO screenings (id, movies_id, venues_id, screening_url, start_date, end_date, format, screening_note, canceled) VALUES
+    (DEFAULT, 514847, 5, $$https://www.westwinddi.com/locations/solano/movies/details?code=271023$$, $$2020-05-31$$, $$2020-06-04$$, $$DCP$$, $$Double feature with Invisible Man$$, 0);
+INSERT INTO screenings (id, movies_id, venues_id, screening_url, start_date, end_date, format, screening_note, canceled) VALUES
+    (DEFAULT, 570670, 5, $$https://www.westwinddi.com/locations/solano/movies/details?code=293548$$, $$2020-05-31$$, $$2020-06-04$$, $$DCP$$, $$Double feature with The Hunt$$, 0);
+INSERT INTO screenings (id, movies_id, venues_id, screening_url, start_date, end_date, format, screening_note, canceled) VALUES
+    (DEFAULT, 446893, 5, $$https://www.westwinddi.com/locations/capitol/movies/details?code=240912$$, $$2020-05-31$$, $$2020-06-04$$, $$DCP$$, $$Double feature with Madagascar$$, 0);
+INSERT INTO screenings (id, movies_id, venues_id, screening_url, start_date, end_date, format, screening_note, canceled) VALUES
+    (DEFAULT, 953, 5, $$https://www.westwinddi.com/locations/capitol/movies/details?code=11329$$, $$2020-05-31$$, $$2020-06-04$$, $$DCP$$, $$Double feature with Trolls World Tour$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 1, $$2020-05-31 20:50:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 1, $$2020-06-01 20:50:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 1, $$2020-06-02 20:50:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 1, $$2020-06-03 20:50:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 1, $$2020-06-04 20:50:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 2, $$2020-05-31 23:10:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 2, $$2020-06-01 23:10:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 2, $$2020-06-02 23:10:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 2, $$2020-06-03 23:10:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 2, $$2020-06-04 23:10:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 3, $$2020-05-31 20:50:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 3, $$2020-06-01 20:50:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 3, $$2020-06-02 20:50:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 3, $$2020-06-03 20:50:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 3, $$2020-06-04 20:50:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 4, $$2020-05-31 22:40:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 4, $$2020-06-01 22:40:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 4, $$2020-06-02 22:40:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 4, $$2020-06-03 22:40:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 4, $$2020-06-04 22:40:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 5, $$2020-05-31 20:50:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 5, $$2020-06-01 20:50:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 5, $$2020-06-02 20:50:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 5, $$2020-06-03 20:50:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 5, $$2020-06-04 20:50:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 6, $$2020-05-31 23:05:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 6, $$2020-06-01 23:05:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 6, $$2020-06-02 23:05:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 6, $$2020-06-03 23:05:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 6, $$2020-06-04 23:05:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 7, $$2020-05-31 20:50:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 7, $$2020-06-01 20:50:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 7, $$2020-06-02 20:50:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 7, $$2020-06-03 20:50:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 7, $$2020-06-04 20:50:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 8, $$2020-05-31 22:45:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 8, $$2020-06-01 22:45:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 8, $$2020-06-02 22:45:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 8, $$2020-06-03 22:45:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 8, $$2020-06-04 22:45:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 9, $$2020-05-31 20:50:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 9, $$2020-06-01 20:50:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 9, $$2020-06-02 20:50:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 9, $$2020-06-03 20:50:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 9, $$2020-06-04 20:50:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 10, $$2020-05-31 22:45:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 10, $$2020-06-01 22:45:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 10, $$2020-06-02 22:45:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 10, $$2020-06-03 22:45:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 10, $$2020-06-04 22:45:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 11, $$2020-05-31 20:50:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 11, $$2020-06-01 20:50:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 11, $$2020-06-02 20:50:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 11, $$2020-06-03 20:50:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 11, $$2020-06-04 20:50:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 12, $$2020-05-31 23:20:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 12, $$2020-06-01 23:20:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 12, $$2020-06-02 23:20:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 12, $$2020-06-03 23:20:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 12, $$2020-06-04 23:20:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 13, $$2020-05-31 20:50:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 13, $$2020-06-01 20:50:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 13, $$2020-06-02 20:50:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 13, $$2020-06-03 20:50:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 13, $$2020-06-04 20:50:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 14, $$2020-05-31 22:45:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 14, $$2020-06-01 22:45:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 14, $$2020-06-02 22:45:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 14, $$2020-06-03 22:45:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 14, $$2020-06-04 22:45:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 15, $$2020-05-31 20:50:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 15, $$2020-06-01 20:50:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 15, $$2020-06-02 20:50:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 15, $$2020-06-03 20:50:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 15, $$2020-06-04 20:50:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 16, $$2020-05-31 22:45:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 16, $$2020-06-01 22:45:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 16, $$2020-06-02 22:45:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 16, $$2020-06-03 22:45:00-8:00$$, $$null$$, 0);
+INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES
+    (DEFAULT, 16, $$2020-06-04 22:45:00-8:00$$, $$null$$, 0);
+
+INSERT INTO series (id, title, start_date, end_date, series_description) VALUES
+  (DEFAULT, null, null, null, null);
 
 INSERT INTO screenings_series (screenings_id, series_id) VALUES
-  (1, 1);
+    (1, 1);
 INSERT INTO screenings_series (screenings_id, series_id) VALUES
-  (2, 1);
+    (2, 1);
 INSERT INTO screenings_series (screenings_id, series_id) VALUES
-  (3, 1);
+    (3, 1);
 INSERT INTO screenings_series (screenings_id, series_id) VALUES
-  (4, 1);
+    (4, 1);
 INSERT INTO screenings_series (screenings_id, series_id) VALUES
-  (5, 1);
+    (5, 1);
 INSERT INTO screenings_series (screenings_id, series_id) VALUES
-  (6, 1);
+    (6, 1);
 INSERT INTO screenings_series (screenings_id, series_id) VALUES
-  (7, 1);
+    (7, 1);
 INSERT INTO screenings_series (screenings_id, series_id) VALUES
-  (8, 1);
+    (8, 1);
 INSERT INTO screenings_series (screenings_id, series_id) VALUES
-  (9, 1);
+    (9, 1);
 INSERT INTO screenings_series (screenings_id, series_id) VALUES
-  (10, 1);
+    (10, 1);
 INSERT INTO screenings_series (screenings_id, series_id) VALUES
-  (11, 1);
+    (11, 1);
 INSERT INTO screenings_series (screenings_id, series_id) VALUES
-  (12, 1);
+    (12, 1);
+INSERT INTO screenings_series (screenings_id, series_id) VALUES
+    (13, 1);
+INSERT INTO screenings_series (screenings_id, series_id) VALUES
+    (14, 1);
+INSERT INTO screenings_series (screenings_id, series_id) VALUES
+    (15, 1);
+INSERT INTO screenings_series (screenings_id, series_id) VALUES
+    (16, 1);
+
+
+INSERT INTO featured_films (id, screenings_id, ondate, featured_image, author, article) VALUES
+    (DEFAULT, 14, $$2020-05-31$$, $$https://image.tmdb.org/t/p/original/5DM1JEWvxJKORSjKTWjRwmLKIzu.jpg$$, $$Omar Rodriguez$$,  $$The Bay Area's only venue open amidst coronavirus and ongoing demonstrations is in Concord. Our pick is The Invisible Man, one of the last movies to come out in 2020.$$);
+INSERT INTO featured_films (id, screenings_id, ondate, featured_image, author, article) VALUES
+    (DEFAULT, 14, $$2020-06-01$$, $$https://image.tmdb.org/t/p/original/5DM1JEWvxJKORSjKTWjRwmLKIzu.jpg$$, $$Omar Rodriguez$$,  $$The Bay Area's only venue open amidst coronavirus and ongoing demonstrations is in Concord. Our pick is The Invisible Man, one of the last movies to come out in 2020.$$);
+INSERT INTO featured_films (id, screenings_id, ondate, featured_image, author, article) VALUES
+    (DEFAULT, 14, $$2020-06-02$$, $$https://image.tmdb.org/t/p/original/5DM1JEWvxJKORSjKTWjRwmLKIzu.jpg$$, $$Omar Rodriguez$$,  $$The Bay Area's only venue open amidst coronavirus and ongoing demonstrations is in Concord. Our pick is The Invisible Man, one of the last movies to come out in 2020.$$);
+INSERT INTO featured_films (id, screenings_id, ondate, featured_image, author, article) VALUES
+    (DEFAULT, 14, $$2020-06-03$$, $$https://image.tmdb.org/t/p/original/5DM1JEWvxJKORSjKTWjRwmLKIzu.jpg$$, $$Omar Rodriguez$$,  $$The Bay Area's only venue open amidst coronavirus and ongoing demonstrations is in Concord. Our pick is The Invisible Man, one of the last movies to come out in 2020.$$);
+INSERT INTO featured_films (id, screenings_id, ondate, featured_image, author, article) VALUES
+    (DEFAULT, 14, $$2020-06-04$$, $$https://image.tmdb.org/t/p/original/5DM1JEWvxJKORSjKTWjRwmLKIzu.jpg$$, $$Omar Rodriguez$$,  $$The Bay Area's only venue open amidst coronavirus and ongoing demonstrations is in Concord. Our pick is The Invisible Man, one of the last movies to come out in 2020.$$);

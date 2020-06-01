@@ -73,10 +73,12 @@ const getRecommendedOnDate = (req, res) => {
   }
   client.query(recquery)
     .then((data) => {
-      const featuredData = data.rows[0];
-      featuredData.showtimes = normalizeShowtimes(featuredData.showtimes);
-      res.send(JSON.stringify(featuredData));
-      res.end();
+      if (data.rows[0]) {
+        const featuredData = data.rows[0];
+        featuredData.showtimes = normalizeShowtimes(featuredData.showtimes);
+        res.send(JSON.stringify(featuredData));
+        res.end();  
+      }
     })
     .catch((error) => {
       throw new Error(error);
@@ -86,6 +88,8 @@ const getRecommendedOnDate = (req, res) => {
 
 
 const getShowtimesOnDate = (req, res) => {
+  const today = req.params.id
+  const tomorrow = moment(req.params.id).add(1,'days').format('YYYY-MM-DD')
   const query = {
     text: `SELECT 
     venues.title AS venue,
@@ -108,7 +112,7 @@ const getShowtimesOnDate = (req, res) => {
     INNER JOIN series ON series.id = screenings_series.series_id 
     INNER JOIN showtimes ON showtimes.screenings_id = screenings.id
     WHERE
-    showtimes.showtime >= $1 AND showtimes.showtime < $2
+    showtimes.showtime >= $1 AND showtimes.showtime < $2 AND screenings.canceled = 0
     GROUP BY
     venues.title,
     movies.title,
@@ -119,31 +123,33 @@ const getShowtimesOnDate = (req, res) => {
     screenings.screening_url,
     screenings.format,
     screenings.screening_note;`,
-    values: [req.params.id, moment(req.params.id).add(1,'days').format('YYYY-MM-DD')],
+    values: [today, tomorrow],
   }
-  
+
   client.query(query)
     .then((data) => {
-      const rows = data.rows;
-      console.log(rows)
-      const showsByVenue = {};
-      for (let i = 0; i < rows.length ; i += 1) {
-        const venueTitle = rows[i].venue;
-        if (!showsByVenue[venueTitle]) {
-          showsByVenue[venueTitle] = {
-            venue: venueTitle,
-            shows: [],
-          };
+      if (data.rows) {
+        const rows = data.rows;
+        const showsByVenue = {};
+        for (let i = 0; i < rows.length ; i += 1) {
+          const venueTitle = rows[i].venue;
+          if (!showsByVenue[venueTitle]) {
+            showsByVenue[venueTitle] = {
+              venue: venueTitle,
+              shows: [],
+            };
+          }
+          const showData = rows[i];
+          showData.showtimes = normalizeShowtimes(rows[i].showtimes);
+          showsByVenue[venueTitle].shows.push(rows[i]);
         }
-        const showData = rows[i];
-        showData.showtimes = normalizeShowtimes(rows[i].showtimes);
-        showsByVenue[venueTitle].shows.push(rows[i]);
+        res.send(JSON.stringify(Object.values(showsByVenue)));
       }
-      res.send(JSON.stringify(Object.values(showsByVenue)));
       res.end();
     })
     .catch((error) => {
       throw new Error(error);
+      res.end()
     });
 };
 
