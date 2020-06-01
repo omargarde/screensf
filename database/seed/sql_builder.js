@@ -16,7 +16,7 @@ fs.createReadStream('movies.csv')
   .on('data', (data) => {
     movies.push('INSERT INTO movies (id, title, director, year, runtime, synopsis) VALUES')
     movies.push(
-        '(' + data.id + ', "' + data.title + '", "' + data.director + '", ' + data.year + ', ' + data.runtime + ', ' + data.synopsis + ')'
+        '    (' + data.id + ', $$' + data.title + '$$, $$' + data.director + '$$, ' + data.year + ', ' + data.runtime + ', $$' + data.synopsis + '$$);'
     )
   })
   .on('end', () => {
@@ -32,9 +32,9 @@ fs.createReadStream('movies.csv')
 fs.createReadStream('venues.csv')
   .pipe(csv())
   .on('data', (data) => {
-    venues.push('INSERT INTO venues (id, title, short_title, city, venue_description, currently_open) VALUES')
+    venues.push('INSERT INTO venues (id, title, short_title, city, venue_description, address, currently_open) VALUES')
     venues.push(
-        '(' + data.id + ', "' + data.title + '", "' + data.short_title + '", "' + data.city + '", "' + data.venue_description + '", ' + data.currently_open + ')'
+        '    (' + data.id + ', $$' + data.title + '$$, $$' + data.short_title + '$$, $$' + data.city + '$$, $$' + data.venue_description + '$$, ' + ' $$' + data.address + '$$, ' + data.currently_open + ');'
     )
   })
   .on('end', () => {
@@ -54,11 +54,11 @@ fs.createReadStream('screenings.csv')
   .on('data', (data) => {
     screenings.push('INSERT INTO screenings (id, movies_id, venues_id, screening_url, start_date, end_date, format, screening_note) VALUES')
     screenings.push(
-        '(' + data.id + ', ' + data.movies_id + ', ' + data.venues_id + ', "' + data.screening_url + '", "' + data.start_date + '", "' + data.end_date + '", "' + data.format + '", "' + data.screening_note + '" )'
+        '    (' + data.id + ', ' + data.movies_id + ', ' + data.venues_id + ', $$' + data.screening_url + '$$, $$' + data.start_date + '$$, $$' + data.end_date + '$$, $$' + data.format + '$$, $$' + data.screening_note + '$$ );'
     )
     showtimes.push('INSERT INTO showtimes (id, screenings_id, showtime, showtime_note) VALUES')
     showtimes.push(
-        '(DEFAULT, ' + data.screen_val + ', "' + data.start_date + ' ' + data.showtime1 + ':00-8:00", "' + data.showtime_note1 + '")'
+        '    (DEFAULT, ' + data.screen_val + ', $$' + data.start_date + ' ' + data.showtime1 + ':00-8:00$$, $$' + data.showtime_note1 + '$$);'
     )
   })
   .on('end', () => {

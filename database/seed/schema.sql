@@ -1,5 +1,5 @@
 -- DROP DATABASE IF EXISTS screensf; 
-CREATE DATABASE screensf;
+-- CREATE DATABASE screensf;
 
 -- DROP TABLE movies CASCADE;
 -- DROP TABLE series CASCADE;
@@ -33,6 +33,7 @@ CREATE TABLE venues (
   short_title text,
   city text,
   venue_description text,
+  address text,
   currently_open int
 );
 
