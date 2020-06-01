@@ -1,6 +1,6 @@
 runtime: nodejs12
 env_variables:
   DB_USER: 'ssfeditor'
-  DB_NAME: 'postgres'
+  DB_NAME: 'screensf'
   DB_PASS: 'tpZJ#4ZyE3sLd3K'
   CLOUD_SQL_CONNECTION_NAME: 'screen-sf:us-west2:ssfpostgres2'
