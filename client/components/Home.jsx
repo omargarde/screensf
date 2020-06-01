@@ -13,7 +13,7 @@ class Home extends React.Component {
     this.state = {
       showtimes: [],
       featured: null,
-      selectedDate: moment('2018-07-15', 'YYYY-MM-DD'),
+      selectedDate: moment(),
     };
 
     this.dateChange = this.dateChange.bind(this);
@@ -91,7 +91,6 @@ class Home extends React.Component {
         />
         {featured ? <Recommended featured={featured} today={selectedDate} /> : ''}
         <Screenings venues={showtimes} />
-        <Link to="/submit">Submit</Link>
 
       </div>
     );

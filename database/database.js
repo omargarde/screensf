@@ -2,7 +2,7 @@ const { Client } = require('pg')
 const moment = require('moment');
 
 const client = new Client({
-  host:  process.env.CLOUD_SQL_CONNECTION_NAME,
+  host:  `/cloudsql/${process.env.CLOUD_SQL_CONNECTION_NAME}`,
   user: process.env.DB_USER,
   database: process.env.DB_NAME,
   password: process.env.DB_PASS,
@@ -77,6 +77,7 @@ const getRecommendedOnDate = (req, res) => {
     .catch((error) => {
       throw new Error(error);
     });
+    
 };
 
 

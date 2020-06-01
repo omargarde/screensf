@@ -1,0 +1,13 @@
+screen_val,id,movies_id,venues_id,screening_url,start_date,end_date,format,screening_note,showtime1,showtime_note1,showtime2,showtime_note2
+1,DEFAULT,601,4,https://www.westwinddi.com/locations/capitol/movies/details?code=16689,2020-31-05,2020-03-06,DCP,Double feature with Jurassic Park,20:50,this is a showtime note,,
+2,DEFAULT,329,4,https://www.westwinddi.com/locations/capitol/movies/details?code=207,2020-31-05,2020-03-06,DCP,Double feature with E.T.,23:10,,,
+3,DEFAULT,555974,4,https://www.westwinddi.com/locations/capitol/movies/details?code=289065,2020-31-05,2020-03-06,DCP,Double feature with Gretel and Hansel,20:50,,,
+4,DEFAULT,542224,4,https://www.westwinddi.com/locations/capitol/movies/details?code=291642,2020-31-05,2020-03-06,DCP,Double feature with Brahms: The Boy II,22:40,,,
+5,DEFAULT,539537,4,https://www.westwinddi.com/locations/capitol/movies/details?code=285307,2020-31-05,2020-03-06,DCP,Double feature with Zombieland,20:50,,,
+6,DEFAULT,338967,4,https://www.westwinddi.com/locations/capitol/movies/details?code=275948,2020-31-05,2020-03-06,DCP,Double feature with Fantasy Island,23:05,,,
+7,DEFAULT,514847,4,https://www.westwinddi.com/locations/capitol/movies/details?code=271023,2020-31-05,2020-03-06,DCP,Double feature with Invisible Man,20:50,,,
+8,DEFAULT,570670,4,https://www.westwinddi.com/locations/capitol/movies/details?code=293548,2020-31-05,2020-03-06,DCP,Double feature with The Hunt,22:45,,,
+9,DEFAULT,446893,4,https://www.westwinddi.com/locations/capitol/movies/details?code=240912,2020-31-05,2020-03-06,DCP,Double feature with Madagascar,20:50,,,
+10,DEFAULT,953,4,https://www.westwinddi.com/locations/capitol/movies/details?code=11329,2020-31-05,2020-03-06,DCP,Double feature with Trolls World Tour,22:45,,,
+11,DEFAULT,564,4,https://www.westwinddi.com/locations/capitol/movies/details?code=16623,2020-31-05,2020-03-06,DCP,Double feature with The Mummy Returns,20:50,,,
+12,DEFAULT,1734,4,https://www.westwinddi.com/locations/capitol/movies/details?code=29552,2020-31-05,2020-03-06,DCP,Double feature with The Mummy,23:20,,,

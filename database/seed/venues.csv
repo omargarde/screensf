@@ -1,0 +1,5 @@
+id,title,short_title,city,venue_description,address,currently_open
+DEFAULT,San Francisco Musuem of Modern Art,SF MOMA,San Francisco,,"151 3rd St, San Francisco, CA 94103",1
+DEFAULT,Castro Theater,Castro Theater,San Francisco,,"429 Castro St, San Francisco, CA 94114",1
+DEFAULT,Roxie Theater,Roxie Theater,San Francisco,,"3117 16th St, San Francisco, CA 94103",1
+DEFAULT,West Wind Capitol Drive-In,West Wind Capitol Drive-In,San Jose,,"3630 Hillcap Ave, San Jose, CA 95136",1

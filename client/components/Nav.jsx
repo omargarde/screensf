@@ -3,7 +3,7 @@ import React from 'react';
 const Nav = () => (
   <div className="nav">
     <h1>
-      zoetropia
+      Screen San Francisco
     </h1>
   </div>
 );
