@@ -2,10 +2,14 @@ const { Client } = require('pg')
 const moment = require('moment');
 
 const client = new Client({
-  host:  `/cloudsql/${process.env.CLOUD_SQL_CONNECTION_NAME}`,
-  user: process.env.DB_USER,
-  database: process.env.DB_NAME,
-  password: process.env.DB_PASS,
+  // host:  `/cloudsql/${process.env.CLOUD_SQL_CONNECTION_NAME}`,
+  host: `localhost`,
+  user: process.env.USER,
+  database: 'screensf',
+  // user: process.env.DB_USER,
+  // database: process.env.DB_NAME,
+  // database: 'screensf'
+  // password: process.env.DB_PASS,
 })
 
 client.connect(err => {
@@ -35,7 +39,7 @@ const getRecommendedOnDate = (req, res) => {
     movies.title AS film,
     movies.director,
     movies.year,
-    movies.duration,
+    movies.runtime,
     string_agg(DISTINCT series.title, ', ') AS series,
     screenings.screening_url,
     string_agg(DISTINCT showtimes.id::character varying, ', ') AS showtimesId,
@@ -60,7 +64,7 @@ const getRecommendedOnDate = (req, res) => {
     movies.title,
     movies.director,
     movies.year,
-    movies.duration,
+    movies.runtime,
     venues.short_title,
     screenings.screening_url,
     screenings.format,
@@ -89,7 +93,7 @@ const getShowtimesOnDate = (req, res) => {
     movies.title AS film,
     movies.director,
     movies.year,
-    movies.duration,
+    movies.runtime,
     string_agg(DISTINCT series.title, ', ') AS series,
     screenings.screening_url,
     string_agg(DISTINCT showtimes.id::character varying, ', ') AS showtimesId,
@@ -104,23 +108,24 @@ const getShowtimesOnDate = (req, res) => {
     INNER JOIN series ON series.id = screenings_series.series_id 
     INNER JOIN showtimes ON showtimes.screenings_id = screenings.id
     WHERE
-    screenings.start_date <= $1 AND screenings.end_date >= $1
+    showtimes.showtime >= $1 AND showtimes.showtime < $2
     GROUP BY
     venues.title,
     movies.title,
     movies.director,
     movies.year,
-    movies.duration,
+    movies.runtime,
     venues.short_title,
     screenings.screening_url,
     screenings.format,
     screenings.screening_note;`,
-    values: [req.params.id],
+    values: [req.params.id, moment(req.params.id).add(1,'days').format('YYYY-MM-DD')],
   }
   
   client.query(query)
     .then((data) => {
       const rows = data.rows;
+      console.log(rows)
       const showsByVenue = {};
       for (let i = 0; i < rows.length ; i += 1) {
         const venueTitle = rows[i].venue;

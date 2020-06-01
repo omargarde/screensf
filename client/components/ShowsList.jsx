@@ -9,10 +9,10 @@ const ShowsList = ({ show }) => (
     <div className="film-details">
       {show.director ? <span>{show.director}</span> : ''}
       {show.year ? <span>{show.year}</span> : ''}
-      {show.trt ? <span>{show.trt} min</span> : ''}
+      {show.runtime ? <span>{show.runtime} min</span> : ''}
       {show.format ? <span>{show.format}</span> : ''}
     </div>
-    {show.note ? <div className="film-note">{show.note}</div> : ''}
+    {show.screening_note ? <div className="film-note">{show.screening_note}</div> : ''}
     <div className="showtimes">{show.showtimes.map(showtime => (
         <Showtime showtime={showtime} key={showtime} />
       ))}
