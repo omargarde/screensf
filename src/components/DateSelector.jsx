@@ -32,7 +32,7 @@ const DateSelector = props => (
     >
       Next
     </button>
-    <div className="date-calendar">
+    <div>
       <DatePicker
         selected={props.today}
         onChange={props.handleDateChange}

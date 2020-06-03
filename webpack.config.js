@@ -65,10 +65,23 @@ module.exports = {
           }
         ]
       },
+      {
+        test: [/react-datepicker.css/],
+        loader: [
+          isDevelopment ? 'style-loader' : MiniCssExtractPlugin.loader,
+          'css-loader',
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: isDevelopment
+            }
+          }
+        ]
+      },
     ]
   },
   resolve: {
-    extensions: ['*', '.js', '.jsx', '.scss']
+    extensions: ['*', '.js', '.jsx', '.scss', '.css']
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
