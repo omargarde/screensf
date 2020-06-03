@@ -9,7 +9,7 @@ function App() {
   return (
     <div>
       <Nav />
-      <div className={styles.wrapper}>
+      <div className="wrapper">
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/submit" component={Submit} />

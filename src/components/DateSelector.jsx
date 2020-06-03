@@ -1,6 +1,6 @@
 import React from 'react';
 import DatePicker from 'react-datepicker';
-import moment from 'moment';
+
 
 const DateSelector = props => (
   <span className="dates">

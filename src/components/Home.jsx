@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import Recommended from './Recommended.jsx';
 import Screenings from './Screenings.jsx';
 import DateSelector from './DateSelector.jsx';
-//import 'react-datepicker/dist/react-datepicker.css';
+import "react-datepicker/dist/react-datepicker";
 
 class Home extends React.Component {
   constructor(props) {
