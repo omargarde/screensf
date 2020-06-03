@@ -19,16 +19,23 @@ client.connect(err => {
   }
 })
 
-const normalizeShowtimes = (showtimes) => {
-  const normalizedTimes = showtimes.split(',');
-  for (let x = 0; x < normalizedTimes.length; x += 1) {
-    normalizedTimes[x] = moment(normalizedTimes[x], 'YYYY-MM-DD HH:mm:ss').format('h:mm A');
+const normalizeShowtimes = (showtimes, date) => {
+  const today = new Date(date)
+  const tomorrow = new Date(today)
+  tomorrow.setDate(tomorrow.getDate() + 1)
+  const times = showtimes.split(',');
+  const newTimes = [];
+  for (let x = 0; x < times.length; x += 1) {
+    const showtime = new Date(times[x])
+    if(showtime >= today && showtime < tomorrow){
+      newTimes.push(moment(times[x], 'YYYY-MM-DD HH:mm:ss').format('h:mm A'));
+    }
   }
-  return normalizedTimes;
+  return newTimes;
 };
 
 const getRecommendedOnDate = (req, res) => {
-  const recquery = {
+  const query = {
     text: `SELECT 
     featured_films.featured_image AS image,
     featured_films.author AS writer,
@@ -40,6 +47,7 @@ const getRecommendedOnDate = (req, res) => {
     movies.year,
     movies.runtime,
     string_agg(DISTINCT series.title, ', ') AS series,
+    screenings.id,
     screenings.screening_url,
     string_agg(DISTINCT showtimes.id::character varying, ', ') AS showtimesId,
     string_agg(DISTINCT showtimes.showtime, ', ') AS showtimes,
@@ -65,16 +73,17 @@ const getRecommendedOnDate = (req, res) => {
     movies.year,
     movies.runtime,
     venues.short_title,
+    screenings.id,
     screenings.screening_url,
     screenings.format,
     screenings.screening_note;`,
     values: [req.params.id],
   }
-  client.query(recquery)
+  client.query(query)
     .then((data) => {
       if (data.rows[0]) {
         const featuredData = data.rows[0];
-        featuredData.showtimes = normalizeShowtimes(featuredData.showtimes);
+        featuredData.showtimes = normalizeShowtimes(featuredData.showtimes, req.params.id);
         res.send(JSON.stringify(featuredData));
         res.end();  
       }
@@ -85,6 +94,29 @@ const getRecommendedOnDate = (req, res) => {
     
 };
 
+const getTodaysShowtime = (screening, today, tomorrow) => {
+  let showtimes = []
+  const query = {
+    text: `SELECT
+      showtime,
+      showtime_note,
+      FROM
+      showtimes
+      WHERE
+      screenings_id = $1
+      AND
+      showtime >= $2
+      AND
+      showtime < $3`,
+    values: [screening, today, tomorrow]
+  }
+  client.query(query)
+    .then((data) => {
+      console.log(data.rows)
+    })
+  //database query returns showtimes for specified date
+  return showtimes
+}
 
 const getShowtimesOnDate = (req, res) => {
   const today = req.params.id
@@ -111,7 +143,7 @@ const getShowtimesOnDate = (req, res) => {
     INNER JOIN series ON series.id = screenings_series.series_id 
     INNER JOIN showtimes ON showtimes.screenings_id = screenings.id
     WHERE
-    showtimes.showtime >= $1 AND showtimes.showtime < $2 AND screenings.canceled = 0
+    screenings.start_date <= $1 AND screenings.end_date >= $1 AND screenings.canceled = 0
     GROUP BY
     venues.title,
     movies.title,
@@ -122,7 +154,7 @@ const getShowtimesOnDate = (req, res) => {
     screenings.screening_url,
     screenings.format,
     screenings.screening_note;`,
-    values: [today, tomorrow],
+    values: [today],
   }
 
   client.query(query)
@@ -139,7 +171,7 @@ const getShowtimesOnDate = (req, res) => {
             };
           }
           const showData = rows[i];
-          showData.showtimes = normalizeShowtimes(rows[i].showtimes);
+          showData.showtimes = normalizeShowtimes(rows[i].showtimes, today);
           showsByVenue[venueTitle].shows.push(rows[i]);
         }
         res.send(JSON.stringify(Object.values(showsByVenue)));

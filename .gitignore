@@ -10,3 +10,4 @@ screen-sf-85b8f51a1820.json
 .eslintrc.js
 .prettierrc.js
 dist/
+app.yaml
