@@ -16,12 +16,8 @@ class Home extends React.Component {
       featured: null,
       selectedDate: new Date(),
     };
-
-    this.dateChange = this.dateChange.bind(this);
-  }
-
-  componentDidMount() {
     this.fetchFrontPage();
+    this.dateChange = this.dateChange.bind(this);
   }
 
   dateChange(date) {
@@ -88,11 +84,10 @@ class Home extends React.Component {
           dates={dates}
           selected={this.state.selectedDate}
           onChange={this.dateChange}
+          handleDateChange={this.dateChange.bind(this)}
         />
         {featured ? <Recommended featured={featured} today={selectedDate} /> : ''}
         <Screenings venues={showtimes} />
-        <DatePicker/>
-
       </div>
     );
   }

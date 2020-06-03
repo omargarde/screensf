@@ -52,7 +52,18 @@ body {
       @media screen and (max-width: $breakpoint-small) {
         margin: 1% 10% 3% 10%;
       }
-
+    
+      input {
+        -webkit-appearance: none;
+        -webkit-border-radius: 0;
+      }
+  
+      .submit input[type=text] {
+      width: 100%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      box-sizing: border-box;
+      }
   
       label {
         display: block;
@@ -65,7 +76,6 @@ body {
       height: 50px;
   
       button {
-        border: 0;
         font-family: inherit;
         font-size: medium;
         font-weight: 300;
@@ -83,28 +93,36 @@ body {
         outline: thin dotted;
       }
   
-      .current-button {
-        background-color: $screen-sf;
-        color: white;
-      }
-  
       .day-button {
         display: none;
         @media only screen and (min-width: $breakpoint-small) {
           display: inherit;
         }
       }
+
+      .date-calendar {
+        width: 15%;
+        margin-right: 3%;
+        @media screen and (max-width: $breakpoint-small) {
+          width: 30%;
+        }
+      }
+
+      .date-calendar button {
+          border: 1;
+      }
   
-   
       input {
-        padding: 4%;
+        padding: 10% 0% 10% 15%;
         border-radius: 4px;
         font-family: 'Lato', sans-serif;
         font-size: 1.2em;
         font-weight: 300;
-        width: 55%;
+        width: 100%;
         cursor: pointer;
         border: none;
+        background-color: $screen-sf;
+        color: white;
       }
   
       input:focus {
