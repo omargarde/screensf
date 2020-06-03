@@ -4,7 +4,7 @@ const app = express();
 const db = require('../database/database.js');
 const post = require('../database/post.js');
 
-app.use('/', express.static(path.join(__dirname, '../public')));
+app.use('/', express.static(path.join(__dirname, '../dist')));
 app.use(express.json());
 
 // Read

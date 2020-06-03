@@ -1,6 +1,6 @@
 import React from 'react';
 import ShowsList from './ShowsList.jsx';
-
+import moment from 'moment';
 
 const Recommended = props => (
   <div className="featured">
@@ -10,7 +10,7 @@ const Recommended = props => (
       alt="featured"
     />
     <h3>
-      Featured Film for {props.today.format('dddd, MMMM D YYYY')}
+      Featured Film for {moment(props.today).format('dddd, MMMM D YYYY')}
     </h3>
     <div className="featured-details">
       <div className="featured-showtime">

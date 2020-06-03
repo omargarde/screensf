@@ -7,4 +7,4 @@ ReactDOM.render((
   <BrowserRouter>
     <App />
   </BrowserRouter>
-), document.getElementById('frontpage'));
+), document.getElementById('root'));

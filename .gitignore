@@ -1,5 +1,5 @@
 node_modules/
-app.yaml
+apps.yaml
 public/screensf-bundle.js
 .DS_Store
 Dockerfile
@@ -7,3 +7,5 @@ Dockerfile
 cloud_sql_proxy
 dbstff
 screen-sf-85b8f51a1820.json
+.eslintrc.js
+.prettierrc.js

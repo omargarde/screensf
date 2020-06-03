@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import Recommended from './Recommended.jsx';
 import Screenings from './Screenings.jsx';
 import DateSelector from './DateSelector.jsx';
-import 'react-datepicker/dist/react-datepicker.css';
+//import 'react-datepicker/dist/react-datepicker.css';
 
 class Home extends React.Component {
   constructor(props) {
@@ -13,7 +13,7 @@ class Home extends React.Component {
     this.state = {
       showtimes: [],
       featured: null,
-      selectedDate: moment(),
+      selectedDate: new Date(),
     };
 
     this.dateChange = this.dateChange.bind(this);
@@ -24,10 +24,8 @@ class Home extends React.Component {
   }
 
   dateChange(date) {
-    const formatDate = moment(date);
-
     this.setState({
-      selectedDate: formatDate,
+      selectedDate: date,
     }, this.fetchFrontPage);
   }
 
@@ -39,7 +37,7 @@ class Home extends React.Component {
   fetchRecommended() {
     this.setState({ featured: null });
     const { selectedDate } = this.state;
-    const query = `/recommended/${selectedDate.format('YYYY-MM-DD')}`;
+    const query = `/recommended/${moment(selectedDate).format('YYYY-MM-DD')}`;
 
     axios({
       method: 'get',
@@ -55,7 +53,7 @@ class Home extends React.Component {
 
   fetchShowtimes() {
     const { selectedDate } = this.state;
-    const query = `/showtimes/${selectedDate.format('YYYY-MM-DD')}`;
+    const query = `/showtimes/${moment(selectedDate).format('YYYY-MM-DD')}`;
 
     axios({
       method: 'get',
@@ -87,7 +85,8 @@ class Home extends React.Component {
         <DateSelector
           today={selectedDate}
           dates={dates}
-          handleDateChange={this.dateChange.bind(this)}
+          selected={this.state.selectedDate}
+          onChange={this.dateChange}
         />
         {featured ? <Recommended featured={featured} today={selectedDate} /> : ''}
         <Screenings venues={showtimes} />

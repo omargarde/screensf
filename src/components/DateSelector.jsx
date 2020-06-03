@@ -7,7 +7,7 @@ const DateSelector = props => (
     <button
       type="button"
       className="previous-button"
-      onClick={() => props.handleDateChange(moment())}
+      onClick={() => props.handleDateChange(new Date())}
     >
       Today
     </button>
