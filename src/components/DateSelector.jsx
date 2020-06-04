@@ -1,12 +1,11 @@
 import React from 'react';
 import DatePicker from 'react-datepicker';
 
-
 const DateSelector = props => (
   <span className="dates">
     <button
       type="button"
-      className="previous-button"
+      className="ssf-button"
       onClick={() => props.handleDateChange(new Date())}
     >
       Today
@@ -19,14 +18,14 @@ const DateSelector = props => (
     </div>
     <button
       type="button"
-      className="previous-button"
+      className="ssf-button"
       onClick={() => props.handleDateChange(props.dates.yesterday.toDate())}
     >
       Previous
     </button>
     <button
       type="button"
-      className="next-button"
+      className="ssf-button"
       onClick={() => props.handleDateChange(props.dates.tomorrow.toDate())}
     >
       Next

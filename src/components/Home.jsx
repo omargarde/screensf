@@ -1,12 +1,10 @@
 import React from 'react';
 import moment from 'moment';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
-import Recommended from './Recommended.jsx';
+import Featured from './Featured.jsx';
 import Screenings from './Screenings.jsx';
 import DateSelector from './DateSelector.jsx';
 import "react-datepicker/dist/react-datepicker.css";
-import DatePicker from 'react-datepicker';
 
 class Home extends React.Component {
   constructor(props) {
@@ -86,7 +84,7 @@ class Home extends React.Component {
           onChange={this.dateChange}
           handleDateChange={this.dateChange.bind(this)}
         />
-        {featured ? <Recommended featured={featured} today={selectedDate} /> : ''}
+        {featured ? <Featured featured={featured} today={selectedDate} /> : ''}
         <Screenings venues={showtimes} />
       </div>
     );

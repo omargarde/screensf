@@ -2,7 +2,7 @@ import React from 'react';
 import ShowsList from './ShowsList.jsx';
 import moment from 'moment';
 
-const Recommended = props => (
+const Featured = props => (
   <div className="featured">
     <img
       src={props.featured.image}
@@ -19,12 +19,10 @@ const Recommended = props => (
       </div>
       <div className="featured-article">
         {props.featured.article}
-        <div className="writer">
-          {props.featured.writer}
-        </div>
+        <div className="writer">{props.featured.writer}</div>
       </div>
     </div>
   </div>
 );
 
-export default Recommended;
+export default Featured;
