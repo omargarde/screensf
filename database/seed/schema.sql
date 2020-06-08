@@ -23,7 +23,7 @@ CREATE TABLE series (
   id serial PRIMARY KEY,
   title text,
   start_date date,
-  end_date date, 
+  end_date date,
   series_description text
 );
 
@@ -43,7 +43,7 @@ CREATE TABLE screenings (
   venues_id int REFERENCES venues (id),
   screening_url text,
   start_date date,
-  end_date date, 
+  end_date date,
   format text,
   screening_note text,
   canceled int
