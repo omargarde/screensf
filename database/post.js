@@ -1,19 +1,19 @@
-const screensf = require('../database/database.js');
+const screensf = require('./database.js');
 
 const postMovie = (req, res) => {
-  screensf.db.query(`
-    INSERT INTO 
-    movies 
-    (id, title, director, year, duration) 
-    VALUES 
-    ($/id/, $/title/, $/director/, $/year/, $/duration/);`,
-  {
-    id: req.body.id,
-    title: req.body.title,
-    director: req.body.director,
-    year: req.body.year,
-    duration: req.body.duration,
-  })
+  screensf.db.query(
+      `INSERT INTO 
+      movies 
+      (id, title, director, year, duration) 
+      VALUES 
+      ($/id/, $/title/, $/director/, $/year/, $/duration/);`,
+      {
+        id: req.body.id,
+        title: req.body.title,
+        director: req.body.director,
+        year: req.body.year,
+        duration: req.body.duration,
+      })
     .then(() => {
       console.log('successful post');
       res.end();

@@ -1,15 +1,16 @@
 import React from 'react';
-import VenueList from './VenueList.jsx';
+import VenueList from './VenueList';
 
-const Screenings = props => (
-  <div>
-    <h2 className="screenings-title">
-      Showtimes
-    </h2>
-    {props.venues.map(item => (
-      <VenueList venue={item} key={item.venue} />
-    ))}
-  </div>
-);
+const Screenings = (props) => {
+  const { venues } = props;
+  return (
+    <div>
+      <h2 className="screenings-title">Showtimes</h2>
+      {venues.map((item) => (
+        <VenueList venue={item} key={item.venue} />
+      ))}
+    </div>
+  );
+};
 
 export default Screenings;

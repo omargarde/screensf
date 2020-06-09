@@ -1,33 +1,33 @@
-const { Client } = require('pg')
+const { Client } = require('pg');
 const moment = require('moment');
 
 const client = new Client({
-  // host: `localhost`,
-  // user: process.env.USER,
-  // database: 'screensf',
-  host:  `/cloudsql/${process.env.CLOUD_SQL_CONNECTION_NAME}`,
-  user: process.env.DB_USER,
-  database: process.env.DB_NAME,
-  password: process.env.DB_PASS,
-})
+  host: `localhost`,
+  user: process.env.USER,
+  database: 'screensf',
+  // host: `/cloudsql/${process.env.CLOUD_SQL_CONNECTION_NAME}`,
+  // user: process.env.DB_USER,
+  // database: process.env.DB_NAME,
+  // password: process.env.DB_PASS,
+});
 
-client.connect(err => {
+client.connect((err) => {
   if (err) {
-    console.error('connection error', err.stack)
+    console.error('connection error', err.stack);
   } else {
-    console.log('connected')
+    console.log('connected');
   }
-})
+});
 
 const normalizeShowtimes = (showtimes, date) => {
-  const today = new Date(date)
-  const tomorrow = new Date(today)
-  tomorrow.setDate(tomorrow.getDate() + 1)
+  const today = new Date(date);
+  const tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1);
   const times = showtimes.split(',');
   const newTimes = [];
   for (let x = 0; x < times.length; x += 1) {
-    const showtime = new Date(times[x])
-    if(showtime >= today && showtime < tomorrow){
+    const showtime = new Date(times[x]);
+    if (showtime >= today && showtime < tomorrow) {
       newTimes.push(moment(times[x], 'YYYY-MM-DD HH:mm:ss').format('h:mm A'));
     }
   }
@@ -78,49 +78,27 @@ const getRecommendedOnDate = (req, res) => {
     screenings.format,
     screenings.screening_note;`,
     values: [req.params.id],
-  }
-  client.query(query)
+  };
+  client
+    .query(query)
     .then((data) => {
       if (data.rows[0]) {
         const featuredData = data.rows[0];
-        featuredData.showtimes = normalizeShowtimes(featuredData.showtimes, req.params.id);
+        featuredData.showtimes = normalizeShowtimes(
+          featuredData.showtimes,
+          req.params.id,
+        );
         res.send(JSON.stringify(featuredData));
-        res.end();  
+        res.end();
       }
     })
     .catch((error) => {
       throw new Error(error);
     });
-    
 };
 
-const getTodaysShowtime = (screening, today, tomorrow) => {
-  let showtimes = []
-  const query = {
-    text: `SELECT
-      showtime,
-      showtime_note,
-      FROM
-      showtimes
-      WHERE
-      screenings_id = $1
-      AND
-      showtime >= $2
-      AND
-      showtime < $3`,
-    values: [screening, today, tomorrow]
-  }
-  client.query(query)
-    .then((data) => {
-      console.log(data.rows)
-    })
-  //database query returns showtimes for specified date
-  return showtimes
-}
-
 const getShowtimesOnDate = (req, res) => {
-  const today = req.params.id
-  const tomorrow = moment(req.params.id).add(1,'days').format('YYYY-MM-DD')
+  const today = req.params.id;
   const query = {
     text: `SELECT 
     venues.title AS venue,
@@ -155,14 +133,15 @@ const getShowtimesOnDate = (req, res) => {
     screenings.format,
     screenings.screening_note;`,
     values: [today],
-  }
+  };
 
-  client.query(query)
+  client
+    .query(query)
     .then((data) => {
       if (data.rows) {
-        const rows = data.rows;
+        const { rows } = data;
         const showsByVenue = {};
-        for (let i = 0; i < rows.length ; i += 1) {
+        for (let i = 0; i < rows.length; i += 1) {
           const venueTitle = rows[i].venue;
           if (!showsByVenue[venueTitle]) {
             showsByVenue[venueTitle] = {
@@ -180,7 +159,6 @@ const getShowtimesOnDate = (req, res) => {
     })
     .catch((error) => {
       throw new Error(error);
-      res.end()
     });
 };
 

@@ -1,10 +1,10 @@
 import React from 'react';
 import moment from 'moment';
 import axios from 'axios';
-import Featured from './Featured.jsx';
-import Screenings from './Screenings.jsx';
-import DateSelector from './DateSelector.jsx';
-import "react-datepicker/dist/react-datepicker.css";
+import Featured from './Featured';
+import Screenings from './Screenings';
+import DateSelector from './DateSelector';
+import 'react-datepicker/dist/react-datepicker.css';
 
 class Home extends React.Component {
   constructor(props) {
@@ -12,6 +12,7 @@ class Home extends React.Component {
     this.state = {
       showtimes: [],
       featured: null,
+      today: new Date(),
       selectedDate: new Date(),
     };
     this.fetchFrontPage();
@@ -19,9 +20,12 @@ class Home extends React.Component {
   }
 
   dateChange(date) {
-    this.setState({
-      selectedDate: date,
-    }, this.fetchFrontPage);
+    this.setState(
+      {
+        selectedDate: date,
+      },
+      this.fetchFrontPage,
+    );
   }
 
   fetchFrontPage() {
@@ -63,11 +67,7 @@ class Home extends React.Component {
   }
 
   render() {
-    const {
-      selectedDate,
-      featured,
-      showtimes,
-    } = this.state;
+    const { today, selectedDate, featured, showtimes } = this.state;
 
     const dates = {
       yesterday: moment(new Date(selectedDate)).subtract(1, 'days'),
@@ -80,7 +80,7 @@ class Home extends React.Component {
         <DateSelector
           today={selectedDate}
           dates={dates}
-          selected={this.state.selectedDate}
+          selected={today}
           onChange={this.dateChange}
           handleDateChange={this.dateChange.bind(this)}
         />

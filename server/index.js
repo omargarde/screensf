@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+
 const app = express();
 const db = require('../database/database.js');
 const post = require('../database/post.js');

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Showtime from './Showtime.jsx';
+import Showtime from './Showtime';
 
 const ShowsList = ({ show }) => (
   <div className="shows-film">
@@ -12,8 +12,13 @@ const ShowsList = ({ show }) => (
       {show.runtime ? <span>{show.runtime} min</span> : ''}
       {show.format ? <span>{show.format}</span> : ''}
     </div>
-    {show.screening_note ? <div className="film-note">{show.screening_note}</div> : ''}
-    <div className="showtimes">{show.showtimes.map(showtime => (
+    {show.screening_note ? (
+      <div className="film-note">{show.screening_note}</div>
+    ) : (
+      ''
+    )}
+    <div className="showtimes">
+      {show.showtimes.map((showtime) => (
         <Showtime showtime={showtime} key={showtime} />
       ))}
     </div>
@@ -27,6 +32,5 @@ ShowsList.propTypes = {
 ShowsList.defaultProps = {
   show: '',
 };
-
 
 export default ShowsList;
