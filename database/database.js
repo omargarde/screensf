@@ -22,7 +22,8 @@ client.connect((err) => {
 const normalizeShowtimes = (showtimes, date) => {
   const today = new Date(date);
   const tomorrow = new Date(today);
-  tomorrow.setDate(tomorrow.getDate() + 1);
+  today.setDate(today.getDate() + 1);
+  tomorrow.setDate(tomorrow.getDate() + 2);
   const times = showtimes.split(',');
   const newTimes = [];
   for (let x = 0; x < times.length; x += 1) {
@@ -35,6 +36,7 @@ const normalizeShowtimes = (showtimes, date) => {
 };
 
 const getRecommendedOnDate = (req, res) => {
+  const today = req.params.id;
   const query = {
     text: `SELECT 
     featured_films.featured_image AS image,
@@ -77,7 +79,7 @@ const getRecommendedOnDate = (req, res) => {
     screenings.screening_url,
     screenings.format,
     screenings.screening_note;`,
-    values: [req.params.id],
+    values: [today],
   };
   client
     .query(query)
@@ -99,6 +101,7 @@ const getRecommendedOnDate = (req, res) => {
 
 const getShowtimesOnDate = (req, res) => {
   const today = req.params.id;
+  const tomorrow = moment(req.params.id).add(1,'days').format('YYYY-MM-DD');
   const query = {
     text: `SELECT 
     venues.title AS venue,
@@ -121,7 +124,7 @@ const getShowtimesOnDate = (req, res) => {
     INNER JOIN series ON series.id = screenings_series.series_id 
     INNER JOIN showtimes ON showtimes.screenings_id = screenings.id
     WHERE
-    screenings.start_date <= $1 AND screenings.end_date >= $1 AND screenings.canceled = 0
+    showtimes.showtime >= $1 AND showtimes.showtime < $2 AND screenings.canceled = 0
     GROUP BY
     venues.title,
     movies.title,
@@ -132,7 +135,7 @@ const getShowtimesOnDate = (req, res) => {
     screenings.screening_url,
     screenings.format,
     screenings.screening_note;`,
-    values: [today],
+    values: [today, tomorrow],
   };
 
   client

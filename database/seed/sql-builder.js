@@ -1,6 +1,6 @@
 const fs = require('fs');
 const csv = require('csv-parser');
-// const moment = require('moment');
+const moment = require('moment');
 
 const movies = [];
 const venues = [];
@@ -20,12 +20,12 @@ fs.createReadStream('movies.csv')
     );
   })
   .on('end', () => {
-    const importer = fs.createWriteStream('./importer.sql', { flags: 'a' });
+    const importer = fs.createWriteStream('./movies.sql', { flags: 'a' });
     movies.forEach((row) => importer.write(`${row}\n`));
     importer.end();
   });
-// venues
 
+// venues
 fs.createReadStream('venues.csv')
   .pipe(csv())
   .on('data', (data) => {
@@ -37,12 +37,10 @@ fs.createReadStream('venues.csv')
     );
   })
   .on('end', () => {
-    const importer = fs.createWriteStream('./importer.sql', { flags: 'a' });
+    const importer = fs.createWriteStream('./venues.sql', { flags: 'a' });
     venues.forEach((row) => importer.write(`${row}\n`));
     importer.end();
   });
-
-// screenings
 
 fs.createReadStream('screenings.csv')
   .pipe(csv())
@@ -61,55 +59,55 @@ fs.createReadStream('screenings.csv')
     series.push(`    (${data.screen_val}, ${data.series_id});`);
 
     // needs to create showtime for every day from start date to end date
-    // let showdate = moment(data.start_date);
-    // const enddate = moment(data.end_date);
+    let showdate = moment(data.start_date);
+    const enddate = moment(data.end_date);
 
-    // while (showdate.isSameOrBefore(enddate)) {
-    //   // need to convert showdate .format('YYYY-MM-DD')
-    //   if (data.showtime1) {
-    //     showtimes.push(
-    //       'INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES',
-    //     );
-    //     showtimes.push(
-    //       `    (DEFAULT, ${data.screen_val}, $$${showdate} ${data.showtime1}:00-8:00$$, $$${data.showtime_note1}$$, 0);`,
-    //     );
-    //   }
-    //   if (data.showtime2) {
-    //     showtimes.push(
-    //       'INSERT INTO showtimes (id, screenings_id, showtime, showtime_note) VALUES',
-    //     );
-    //     showtimes.push(
-    //       `    (DEFAULT, ${data.screen_val}, $$${showdate} ${data.showtime2}:00-8:00$$, $$${data.showtime_note2}$$, 0);`,
-    //     );
-    //   }
-    //   if (data.showtime3) {
-    //     showtimes.push(
-    //       'INSERT INTO showtimes (id, screenings_id, showtime, showtime_note) VALUES',
-    //     );
-    //     showtimes.push(
-    //       `    (DEFAULT, ${data.screen_val}, $$${showdate} ${data.showtime3}:00-8:00$$, $$${data.showtime_note3}$$, 0);`,
-    //     );
-    //   }
-    //   if (data.showtime4) {
-    //     showtimes.push(
-    //       'INSERT INTO showtimes (id, screenings_id, showtime, showtime_note) VALUES');
-    //     showtimes.push(
-    //       `    (DEFAULT, ${data.screen_val}, $$${showdate} ${data.showtime4}:00-8:00$$, $$${data.showtime_note4}$$, 0);`,
-    //     );
-    //   }
-    //   if (data.showtime5) {
-    //     showtimes.push(
-    //       'INSERT INTO showtimes (id, screenings_id, showtime, showtime_note) VALUES',
-    //     );
-    //     showtimes.push(
-    //       `    (DEFAULT, ${data.screen_val}, $$${showdate} ${data.showtime5}:00-8:00$$, $$${data.showtime_note5}$$, 0);`,
-    //     );
-    //   }
-    //   showdate = moment(showdate).add(1, 'days');
-    // }
+    while (showdate.isSameOrBefore(enddate)) {
+      // need to convert showdate .format('YYYY-MM-DD')
+      if (data.showtime1) {
+        showtimes.push(
+          'INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES',
+        );
+        showtimes.push(
+          `    (DEFAULT, ${data.screen_val}, $$${moment(showdate).format('YYYY-MM-DD')} ${data.showtime1}:00-8:00$$, $$${data.showtime_note1}$$, 0);`,
+        );
+      }
+      if (data.showtime2) {
+        showtimes.push(
+          'INSERT INTO showtimes (id, screenings_id, showtime, showtime_note) VALUES',
+        );
+        showtimes.push(
+          `    (DEFAULT, ${data.screen_val}, $$${moment(showdate).format('YYYY-MM-DD')} ${data.showtime2}:00-8:00$$, $$${data.showtime_note2}$$, 0);`,
+        );
+      }
+      if (data.showtime3) {
+        showtimes.push(
+          'INSERT INTO showtimes (id, screenings_id, showtime, showtime_note) VALUES',
+        );
+        showtimes.push(
+          `    (DEFAULT, ${data.screen_val}, $$${moment(showdate).format('YYYY-MM-DD')} ${data.showtime3}:00-8:00$$, $$${data.showtime_note3}$$, 0);`,
+        );
+      }
+      if (data.showtime4) {
+        showtimes.push(
+          'INSERT INTO showtimes (id, screenings_id, showtime, showtime_note) VALUES');
+        showtimes.push(
+          `    (DEFAULT, ${data.screen_val}, $$${moment(showdate).format('YYYY-MM-DD')} ${data.showtime4}:00-8:00$$, $$${data.showtime_note4}$$, 0);`,
+        );
+      }
+      if (data.showtime5) {
+        showtimes.push(
+          'INSERT INTO showtimes (id, screenings_id, showtime, showtime_note) VALUES',
+        );
+        showtimes.push(
+          `    (DEFAULT, ${data.screen_val}, $$${moment(showdate).format('YYYY-MM-DD')} ${data.showtime5}:00-8:00$$, $$${data.showtime_note5}$$, 0);`,
+        );
+      }
+      showdate = moment(showdate).add(1, 'days');
+    }
   })
   .on('end', () => {
-    const importer = fs.createWriteStream('./importer.sql', { flags: 'a' });
+    const importer = fs.createWriteStream('./screenings.sql', { flags: 'a' });
     screenings.forEach((row) => importer.write(`${row}\n`));
     showtimes.forEach((row) => importer.write(`${row}\n`));
     series.forEach((row) => importer.write(`${row}\n`));
@@ -130,7 +128,7 @@ fs.createReadStream('recommended.csv')
     );
   })
   .on('end', () => {
-    const importer = fs.createWriteStream('./importer.sql', { flags: 'a' });
+    const importer = fs.createWriteStream('./recommended.sql', { flags: 'a' });
     venues.forEach((row) => importer.write(`${row}\n`));
     importer.end();
   });
