@@ -2,13 +2,13 @@ const { Client } = require('pg');
 const moment = require('moment');
 
 const client = new Client({
-  host: `localhost`,
-  user: process.env.USER,
-  database: 'screensf',
-  // host: `/cloudsql/${process.env.CLOUD_SQL_CONNECTION_NAME}`,
-  // user: process.env.DB_USER,
-  // database: process.env.DB_NAME,
-  // password: process.env.DB_PASS,
+  // host: `localhost`,
+  // user: process.env.USER,
+  // database: 'screensf',
+  host: `/cloudsql/${process.env.CLOUD_SQL_CONNECTION_NAME}`,
+  user: process.env.DB_USER,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASS,
 });
 
 client.connect((err) => {
@@ -19,16 +19,15 @@ client.connect((err) => {
   }
 });
 
-const normalizeShowtimes = (showtimes, date) => {
-  const today = new Date(date);
+const normalizeShowtimes = (showtimes, showtimesDisplay, date) => {
+  const today = new Date(`${date} 00:00:00-8:00`);
   const tomorrow = new Date(today);
-  today.setDate(today.getDate() + 1);
-  tomorrow.setDate(tomorrow.getDate() + 2);
+  tomorrow.setDate(tomorrow.getDate() + 1);
   const times = showtimes.split(',');
   const newTimes = [];
   for (let x = 0; x < times.length; x += 1) {
     const showtime = new Date(times[x]);
-    if (showtime >= today && showtime < tomorrow) {
+    if (showtime >= today && showtime < tomorrow && showtimesDisplay[x] === 0) {
       newTimes.push(moment(times[x], 'YYYY-MM-DD HH:mm:ss').format('h:mm A'));
     }
   }
@@ -53,6 +52,7 @@ const getRecommendedOnDate = (req, res) => {
     screenings.screening_url,
     string_agg(DISTINCT showtimes.id::character varying, ', ') AS showtimesId,
     string_agg(DISTINCT showtimes.showtime, ', ') AS showtimes,
+    array_agg(showtimes.display) AS showtimes_display,
     screenings.format,
     screenings.screening_note
     FROM 
@@ -88,6 +88,7 @@ const getRecommendedOnDate = (req, res) => {
         const featuredData = data.rows[0];
         featuredData.showtimes = normalizeShowtimes(
           featuredData.showtimes,
+          featuredData.showtimes_display,
           req.params.id,
         );
         res.send(JSON.stringify(featuredData));
@@ -101,7 +102,7 @@ const getRecommendedOnDate = (req, res) => {
 
 const getShowtimesOnDate = (req, res) => {
   const today = req.params.id;
-  const tomorrow = moment(req.params.id).add(1,'days').format('YYYY-MM-DD');
+  const tomorrow = moment(req.params.id).add(1, 'days').format('YYYY-MM-DD');
   const query = {
     text: `SELECT 
     venues.title AS venue,
@@ -114,6 +115,7 @@ const getShowtimesOnDate = (req, res) => {
     screenings.screening_url,
     string_agg(DISTINCT showtimes.id::character varying, ', ') AS showtimesId,
     string_agg(DISTINCT showtimes.showtime, ', ') AS showtimes,
+    array_agg(showtimes.display) AS showtimes_display,
     screenings.format,
     screenings.screening_note
     FROM
@@ -153,7 +155,11 @@ const getShowtimesOnDate = (req, res) => {
             };
           }
           const showData = rows[i];
-          showData.showtimes = normalizeShowtimes(rows[i].showtimes, today);
+          showData.showtimes = normalizeShowtimes(
+            rows[i].showtimes,
+            rows[i].showtimes_display,
+            today,
+          );
           showsByVenue[venueTitle].shows.push(rows[i]);
         }
         res.send(JSON.stringify(Object.values(showsByVenue)));

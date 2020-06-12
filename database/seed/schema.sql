@@ -46,7 +46,8 @@ CREATE TABLE screenings (
   end_date date,
   format text,
   screening_note text,
-  canceled int
+  canceled int,
+  display int
 );
 
 CREATE TABLE showtimes (
@@ -54,7 +55,8 @@ CREATE TABLE showtimes (
   screenings_id int REFERENCES screenings (id),
   showtime text,
   showtime_note text,
-  canceled int
+  canceled int,
+  display int
 );
 
 CREATE TABLE screenings_series (
@@ -81,3 +83,6 @@ CREATE TABLE featured_films (
 
 INSERT INTO series (id, title, start_date, end_date, series_description) VALUES
   (DEFAULT, '', null, null, '');
+
+INSERT INTO series (id, title, start_date, end_date, series_description) VALUES
+  (DEFAULT, 'Stay-At-Home Movie Night', '2020-06-13', '2020-08-01', '');
