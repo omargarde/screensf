@@ -9,38 +9,38 @@ const showtimes = [];
 const series = [];
 
 // movies
-// fs.createReadStream('movies.csv')
-//   .pipe(csv())
-//   .on('data', (data) => {
-//     movies.push(
-//       'INSERT INTO movies (id, title, director, year, runtime, synopsis) VALUES',
-//     );
-//     movies.push(
-//       `    (${data.id}, $$${data.title}$$, $$${data.director}$$, ${data.year}, ${data.runtime}, $$${data.synopsis}$$);`,
-//     );
-//   })
-//   .on('end', () => {
-//     const importer = fs.createWriteStream('./movies.sql', { flags: 'a' });
-//     movies.forEach((row) => importer.write(`${row}\n`));
-//     importer.end();
-//   });
+fs.createReadStream('movies.csv')
+  .pipe(csv())
+  .on('data', (data) => {
+    movies.push(
+      'INSERT INTO movies (id, title, director, year, runtime, synopsis) VALUES',
+    );
+    movies.push(
+      `    (${data.id}, $$${data.title}$$, $$${data.director}$$, ${data.year}, ${data.runtime}, $$${data.synopsis}$$);`,
+    );
+  })
+  .on('end', () => {
+    const importer = fs.createWriteStream('./movies.sql', { flags: 'a' });
+    movies.forEach((row) => importer.write(`${row}\n`));
+    importer.end();
+  });
 
-// // venues
-// fs.createReadStream('venues.csv')
-//   .pipe(csv())
-//   .on('data', (data) => {
-//     venues.push(
-//       'INSERT INTO venues (id, title, short_title, city, venue_description, address, currently_open) VALUES',
-//     );
-//     venues.push(
-//       `    (${data.id}, $$${data.title}$$, $$${data.short_title}$$, $$${data.city}$$, $$${data.venue_description}$$, $$${data.address}$$, ${data.currently_open});`,
-//     );
-//   })
-//   .on('end', () => {
-//     const importer = fs.createWriteStream('./venues.sql', { flags: 'a' });
-//     venues.forEach((row) => importer.write(`${row}\n`));
-//     importer.end();
-//   });
+// venues
+fs.createReadStream('venues.csv')
+  .pipe(csv())
+  .on('data', (data) => {
+    venues.push(
+      'INSERT INTO venues (id, title, short_title, city, venue_description, address, currently_open) VALUES',
+    );
+    venues.push(
+      `    (${data.id}, $$${data.title}$$, $$${data.short_title}$$, $$${data.city}$$, $$${data.venue_description}$$, $$${data.address}$$, ${data.currently_open});`,
+    );
+  })
+  .on('end', () => {
+    const importer = fs.createWriteStream('./venues.sql', { flags: 'a' });
+    venues.forEach((row) => importer.write(`${row}\n`));
+    importer.end();
+  });
 
 fs.createReadStream('screenings.csv')
   .pipe(csv())
@@ -119,19 +119,19 @@ fs.createReadStream('screenings.csv')
 
 // recommended
 
-// fs.createReadStream('recommended.csv')
-//   .pipe(csv())
-//   .on('data', (data) => {
-//     const article = data.article.slice(1, -1);
-//     venues.push(
-//       'INSERT INTO featured_films (id, screenings_id, ondate, featured_image, author, article) VALUES',
-//     );
-//     venues.push(
-//       `    (${data.id}, ${data.screenings_id}, $$${data.ondate}$$, $$${data.featured_image}$$, $$${data.author}$$, $$${article}$$);`,
-//     );
-//   })
-//   .on('end', () => {
-//     const importer = fs.createWriteStream('./recommended.sql', { flags: 'a' });
-//     venues.forEach((row) => importer.write(`${row}\n`));
-//     importer.end();
-//   });
+fs.createReadStream('recommended.csv')
+  .pipe(csv())
+  .on('data', (data) => {
+    const article = data.article.slice(1, -1);
+    venues.push(
+      'INSERT INTO featured_films (id, screenings_id, ondate, featured_image, author, article) VALUES',
+    );
+    venues.push(
+      `    (${data.id}, ${data.screenings_id}, $$${data.ondate}$$, $$${data.featured_image}$$, $$${data.author}$$, $$${article}$$);`,
+    );
+  })
+  .on('end', () => {
+    const importer = fs.createWriteStream('./recommended.sql', { flags: 'a' });
+    venues.forEach((row) => importer.write(`${row}\n`));
+    importer.end();
+  });

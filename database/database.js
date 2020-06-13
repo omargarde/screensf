@@ -43,6 +43,7 @@ const getRecommendedOnDate = (req, res) => {
     featured_films.article,
     venues.title AS venue,
     venues.short_title AS venueShortTitle,
+    venues.address AS venue_address,
     movies.title AS film,
     movies.director,
     movies.year,
@@ -75,6 +76,7 @@ const getRecommendedOnDate = (req, res) => {
     movies.year,
     movies.runtime,
     venues.short_title,
+    venues.address,
     screenings.id,
     screenings.screening_url,
     screenings.format,
@@ -107,6 +109,7 @@ const getShowtimesOnDate = (req, res) => {
     text: `SELECT 
     venues.title AS venue,
     venues.short_title AS venueShortTitle,
+    venues.address AS venue_address,
     movies.title AS film,
     movies.director,
     movies.year,
@@ -134,6 +137,7 @@ const getShowtimesOnDate = (req, res) => {
     movies.year,
     movies.runtime,
     venues.short_title,
+    venues.address,
     screenings.screening_url,
     screenings.format,
     screenings.screening_note;`,
@@ -148,9 +152,12 @@ const getShowtimesOnDate = (req, res) => {
         const showsByVenue = {};
         for (let i = 0; i < rows.length; i += 1) {
           const venueTitle = rows[i].venue;
+          const venueAdd = rows[i].venue_address.split(',');
+          const newAdd = `${venueAdd[0]}, ${venueAdd[1]}`;
           if (!showsByVenue[venueTitle]) {
             showsByVenue[venueTitle] = {
               venue: venueTitle,
+              address: newAdd,
               shows: [],
             };
           }
@@ -162,7 +169,8 @@ const getShowtimesOnDate = (req, res) => {
           );
           showsByVenue[venueTitle].shows.push(rows[i]);
         }
-        res.send(JSON.stringify(Object.values(showsByVenue)));
+        const showsByVenueStr = JSON.stringify(Object.values(showsByVenue));
+        res.send(showsByVenueStr);
       }
       res.end();
     })
