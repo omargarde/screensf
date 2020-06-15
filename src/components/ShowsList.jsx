@@ -17,10 +17,10 @@ const ShowsList = ({ show }) => (
       </a>
     </div>
     <div className="film-details">
-      {show.director ? <span>{show.director}</span> : ''}
-      {show.year ? <span>{show.year}</span> : ''}
-      {show.runtime ? <span>{show.runtime} min</span> : ''}
-      {show.format ? <span>{show.format}</span> : ''}
+      {show.director ? <div>{show.director}</div> : ''}
+      {show.year ? <div>{show.year}</div> : ''}
+      {show.runtime ? <div>{show.runtime} min</div> : ''}
+      {show.format ? <div>{show.format}</div> : ''}
     </div>
     {show.screening_note ? (
       <div className="film-note">{show.screening_note}</div>
@@ -36,7 +36,16 @@ const ShowsList = ({ show }) => (
 );
 
 ShowsList.propTypes = {
-  show: PropTypes.shape,
+  show: PropTypes.shape({
+    film: PropTypes.string,
+    director: PropTypes.string,
+    runtime: PropTypes.string,
+    format: PropTypes.string,
+    screening_note: PropTypes.string,
+    showtimes: PropTypes.array,
+    showtimes_display: PropTypes.array,
+    showtimesid: PropTypes.string,
+  }),
 };
 
 ShowsList.defaultProps = {

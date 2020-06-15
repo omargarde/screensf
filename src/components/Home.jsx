@@ -4,6 +4,7 @@ import axios from 'axios';
 import Featured from './Featured';
 import Screenings from './Screenings';
 import DateSelector from './DateSelector';
+import Welcome from './Welcome';
 import 'react-datepicker/dist/react-datepicker.css';
 
 class Home extends React.Component {
@@ -34,7 +35,6 @@ class Home extends React.Component {
   }
 
   fetchRecommended() {
-    this.setState({ featured: null });
     const { selectedDate } = this.state;
     const query = `/recommended/${moment(selectedDate).format('YYYY-MM-DD')}`;
 
@@ -84,7 +84,11 @@ class Home extends React.Component {
           onChange={this.dateChange}
           handleDateChange={this.dateChange.bind(this)}
         />
-        {featured ? <Featured featured={featured} today={selectedDate} /> : ''}
+        {featured ? (
+          <Featured featured={featured} today={selectedDate} />
+        ) : (
+          <Welcome />
+        )}
         <Screenings venues={showtimes} />
       </div>
     );

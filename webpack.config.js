@@ -84,6 +84,8 @@ module.exports = {
     extensions: ['*', '.js', '.jsx', '.scss', '.css']
   },
   plugins: [
+    new webpack.optimize.ModuleConcatenationPlugin(),
+    new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /en/),
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       template: SRC_DIR + '/index.html',
@@ -94,26 +96,4 @@ module.exports = {
       chunkFilename: isDevelopment ? '[id].css' : '[id].[hash].css'
     }),
   ],
-  optimization: {
-    splitChunks: {
-      chunks: 'async',
-      minSize: 30000,
-      maxSize: 0,
-      minChunks: 1,
-      maxAsyncRequests: 6,
-      maxInitialRequests: 4,
-      automaticNameDelimiter: '~',
-      cacheGroups: {
-        defaultVendors: {
-          test: /[\\/]node_modules[\\/]/,
-          priority: -10
-        },
-        default: {
-          minChunks: 2,
-          priority: -20,
-          reuseExistingChunk: true
-        }
-      }
-    }
-  },
 };

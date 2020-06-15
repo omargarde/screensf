@@ -20,11 +20,11 @@ client.connect((err) => {
 });
 
 const normalizeShowtimes = (showtimes, showtimesDisplay, date) => {
+  const newTimes = [];
   const today = new Date(`${date} 00:00:00-8:00`);
   const tomorrow = new Date(today);
   tomorrow.setDate(tomorrow.getDate() + 1);
   const times = showtimes.split(',');
-  const newTimes = [];
   for (let x = 0; x < times.length; x += 1) {
     const showtime = new Date(times[x]);
     if (showtime >= today && showtime < tomorrow && showtimesDisplay[x] === 0) {
@@ -152,12 +152,12 @@ const getShowtimesOnDate = (req, res) => {
         const showsByVenue = {};
         for (let i = 0; i < rows.length; i += 1) {
           const venueTitle = rows[i].venue;
-          const venueAdd = rows[i].venue_address.split(',');
-          const newAdd = `${venueAdd[0]}, ${venueAdd[1]}`;
+          const venueAddress = rows[i].venue_address.split(',');
+          const shortAddress = `${venueAddress[0]}, ${venueAddress[1]}`;
           if (!showsByVenue[venueTitle]) {
             showsByVenue[venueTitle] = {
               venue: venueTitle,
-              address: newAdd,
+              address: shortAddress,
               shows: [],
             };
           }

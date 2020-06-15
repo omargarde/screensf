@@ -1,6 +1,6 @@
 html {
-  font-size: 16px;
   background-color: #466995;
+  font-size: 1.75vh;
 }
 
 body {
@@ -40,18 +40,13 @@ $highlight: #8B2635;
     background-color: $screen-sf;
     color: #FFF;
     line-height: 2;
-    margin-top: .5%;
+    margin: .5% 0% .5% 0%;
 
     h1 {
       font-weight: 300;
       text-align: center;
       font-size: 1.5em;
       margin: 0;
-    }
-    h2 {
-      font-weight: 300;
-      text-align: center;
-      font-size: 1em;
     }
   }
 
@@ -65,7 +60,7 @@ $highlight: #8B2635;
     }
     
     @media screen and (max-width: $breakpoint-large) {
-      margin: 1% 20% 3% 20%;
+      margin: 0% 20% 0% 20%;
     }
  
     @media screen and (max-width: $breakpoint-small) {
@@ -73,11 +68,12 @@ $highlight: #8B2635;
     }
 
     @media screen 
-      and (max-width: $breakpoint-small) 
-      and (min-device-width: 320px) 
+      and (max-width: $breakpoint-large) 
+      and (max-device-width: 1024px) 
       and (min-resolution: 1dppx) 
       and (max-resolution: 4dppx) {
-      margin: 1% 3% 3% 3%;
+      max-width: 90%;
+      margin: 0 auto;
     }
 
     input {
@@ -107,7 +103,7 @@ $highlight: #8B2635;
     button.ssf-button {
       font-family: inherit;
       font-weight: 300;
-      font-size: 1.1em;
+      font-size: 1.8vh;
       background-color: #F5F6F4;
       width: 100%;
       justify-content: center;
@@ -116,9 +112,6 @@ $highlight: #8B2635;
       border-style: solid;
       border-color: rgb(216, 216, 216) rgb(209, 209, 209) rgb(186, 186, 186);
       border-radius: 4px;
-      @media screen and (max-width: $breakpoint-small) and (min-resolution: 1dppx) {
-        font-size: 1.5em;
-      }
     }
 
     button:focus {
@@ -137,7 +130,7 @@ $highlight: #8B2635;
       padding: 0%;
       border-radius: 4px;
       font-family: 'Lato', sans-serif;
-      font-size: 1.1em;
+      font-size: 1.8vh;
       font-weight: 300;
       text-align: center;
       width: 100%;
@@ -146,9 +139,6 @@ $highlight: #8B2635;
       border: none;
       background-color: $screen-sf;
       color: white;
-      @media screen and (max-width: $breakpoint-small) and (min-resolution: 2dppx) {
-        font-size: 1.5em;
-      }
     }
 
     input:focus {
@@ -170,7 +160,7 @@ $highlight: #8B2635;
   .featured h3 {
     margin: 3% 2% 3% 2%;
     font-weight: 300;
-    font-size: larger;
+    font-size: 1.1em;
   }
 
   .featured-details {
@@ -199,6 +189,7 @@ $highlight: #8B2635;
 
   .featured-article {
     font-weight: 300;
+    font-size: 1em;
   }
 
   .writer {
@@ -208,12 +199,14 @@ $highlight: #8B2635;
     margin-top: 1%;
   }
 
-  .paragraph {
-    margin-top: 1.5%;
+  .welcome-details {
+    font-weight: 300;
+    font-size: 1em;
+    margin: 2%;
   }
 
+
   h2.screenings-title {
-    font-size: xx-large;
     font-weight: 300;
     margin: 10% 0% 5% 0%;
   }
@@ -221,16 +214,16 @@ $highlight: #8B2635;
   .screenings-venues h3 {
     font-weight: 500;
     margin: 0%;
-    font-size: larger;
+    font-size: 1.3em;
   }
 
   .venue-block {
-    margin-bottom: 3%;
+    margin: 4% 0%;
   }
 
   .venue-address {
     font-weight: 300;
-    font-size: inherit
+    font-size: 1em;
   }
 
   .venue-shows {
@@ -248,7 +241,7 @@ $highlight: #8B2635;
 
   .film-series {
     margin-bottom: 1.5%;
-    font-size: small;
+    font-size: 1.8vh;
     font-family: 'Roboto', sans-serif;
   }
 
@@ -259,11 +252,13 @@ $highlight: #8B2635;
   }
 
   .film-details {
+    display: flex;
+    flex-wrap: wrap;
     font-weight: 300;
-    font-size: smaller; 
+    font-size: 1.8vh; 
   }
 
-  .film-details > span {
+  .film-details > div {
     margin-right: 2%;
   }
 
