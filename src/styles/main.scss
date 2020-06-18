@@ -1,6 +1,17 @@
 html {
   background-color: #466995;
-  font-size: 1.75vh;
+}
+
+@media only screen and (orientation: portrait) {
+  html {
+    font-size: 1.75vh;
+  }
+}
+
+@media only screen and (orientation: landscape) and (max-width: 1200px) {
+  html {
+    font-size: 3vw;
+  }
 }
 
 body {
@@ -22,7 +33,7 @@ body {
 
 $breakpoint-large: 110em;
 $breakpoint-small: 63em;
-$breakpoint-phone: 600px;
+// $breakpoint-phone: 600px;
 
 /* Colors */
 
@@ -103,7 +114,7 @@ $highlight: #8B2635;
     button.ssf-button {
       font-family: inherit;
       font-weight: 300;
-      font-size: 1.8vh;
+      font-size: .9em;
       background-color: #F5F6F4;
       width: 100%;
       justify-content: center;
@@ -130,7 +141,7 @@ $highlight: #8B2635;
       padding: 0%;
       border-radius: 4px;
       font-family: 'Lato', sans-serif;
-      font-size: 1.8vh;
+      font-size: .9em;
       font-weight: 300;
       text-align: center;
       width: 100%;
@@ -241,7 +252,7 @@ $highlight: #8B2635;
 
   .film-series {
     margin-bottom: 1.5%;
-    font-size: 1.8vh;
+    font-size: .9em;
     font-family: 'Roboto', sans-serif;
   }
 
@@ -255,7 +266,7 @@ $highlight: #8B2635;
     display: flex;
     flex-wrap: wrap;
     font-weight: 300;
-    font-size: 1.8vh; 
+    font-size: .9em; 
   }
 
   .film-details > div {
