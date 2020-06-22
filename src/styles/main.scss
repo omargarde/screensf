@@ -8,9 +8,9 @@ html {
   }
 }
 
-@media only screen and (orientation: landscape) and (max-width: 1200px) {
+@media only screen and (orientation: landscape) and (max-width: 1000px) {
   html {
-    font-size: 3vw;
+    font-size: 2.5vw;
   }
 }
 
@@ -33,7 +33,6 @@ body {
 
 $breakpoint-large: 110em;
 $breakpoint-small: 63em;
-// $breakpoint-phone: 600px;
 
 /* Colors */
 
@@ -158,6 +157,10 @@ $highlight: #8B2635;
 
   }
 
+  .welcome-hide {
+    display: none;
+  }
+
   .featured {
     margin: 2% 0% 2% 0%;
     padding: 0% 0% 2% 0%;
@@ -212,7 +215,7 @@ $highlight: #8B2635;
 
   .welcome-details {
     font-weight: 300;
-    font-size: 1em;
+    font-size: .9em;
     margin: 2%;
   }
 

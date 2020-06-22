@@ -96,9 +96,10 @@ const getRecommendedOnDate = (req, res) => {
         res.send(JSON.stringify(featuredData));
         res.end();
       }
+      res.end();
     })
     .catch((error) => {
-      throw new Error(error);
+      res.end(error);
     });
 };
 
@@ -175,7 +176,7 @@ const getShowtimesOnDate = (req, res) => {
       res.end();
     })
     .catch((error) => {
-      throw new Error(error);
+      res.end(error);
     });
 };
 

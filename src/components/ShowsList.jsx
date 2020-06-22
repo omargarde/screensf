@@ -39,7 +39,7 @@ ShowsList.propTypes = {
   show: PropTypes.shape({
     film: PropTypes.string,
     director: PropTypes.string,
-    runtime: PropTypes.string,
+    runtime: PropTypes.number,
     format: PropTypes.string,
     screening_note: PropTypes.string,
     showtimes: PropTypes.array,

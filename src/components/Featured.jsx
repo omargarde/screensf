@@ -7,18 +7,28 @@ const Featured = (props) => {
   return (
     <div className="featured">
       <img src={featured.image} className="featured-image" alt="featured" />
-      <h3>Featured Film for { moment(today).format('dddd, MMMM D YYYY') }</h3>
-      <div className="featured-details">
-        <div className="featured-showtime">
+      <h3>
+        {featured.welcome
+          ? 'Welcome to the SF Bay Film Calendar - '
+          : 'Featured Film for '}
+        {moment(today).format('dddd, MMMM D YYYY')}
+      </h3>
+      <div
+        className={featured.welcome ? 'welcome-details' : 'featured-details'}
+      >
+        <div
+          className={featured.welcome ? 'welcome-hide' : 'featured-showtime'}
+        >
           <h4>{featured.venue}</h4>
           <ShowsList show={featured} />
         </div>
-        <div className="featured-article">
+        <div className={featured.welcome ? '' : 'featured-article'}>
           {featured.article}
           <div className="writer">{featured.writer}</div>
         </div>
       </div>
     </div>
   );
-}
+};
+
 export default Featured;

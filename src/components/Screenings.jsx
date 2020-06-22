@@ -5,7 +5,7 @@ const Screenings = (props) => {
   const { venues } = props;
   return (
     <div>
-      <h2 className="screenings-title">Showings</h2>
+      <h2 className="screenings-title">Showtimes</h2>
       {venues.map((item) => (
         <VenueList venue={item} key={item.venue} />
       ))}
