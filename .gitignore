@@ -13,4 +13,5 @@ dist/
 app.yaml
 gn.js
 gn-builder.js
+keys.js
 importer.sql

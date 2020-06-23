@@ -19,20 +19,26 @@ client.connect((err) => {
   }
 });
 
-const normalizeShowtimes = (showtimes, showtimesDisplay, date) => {
+const normalizeShowtimes = (showtimes, showtimesHide, date) => {
   const newTimes = [];
+  if (showtimes === null) return newTimes;
   const today = new Date(`${date} 00:00:00-8:00`);
   const tomorrow = new Date(today);
   tomorrow.setDate(tomorrow.getDate() + 1);
   const times = showtimes.split(',');
   for (let x = 0; x < times.length; x += 1) {
     const showtime = new Date(times[x]);
-    if (showtime >= today && showtime < tomorrow && showtimesDisplay[x] === 0) {
+    if (showtime >= today && showtime < tomorrow && showtimesHide[x] === 0) {
       newTimes.push(moment(times[x], 'YYYY-MM-DD HH:mm:ss').format('h:mm A'));
     }
   }
   return newTimes;
 };
+
+const getYear = (releaseDate) => {
+  if (releaseDate === null) return '';
+  return releaseDate.getFullYear();
+}
 
 const getRecommendedOnDate = (req, res) => {
   const today = req.params.id;
@@ -46,14 +52,15 @@ const getRecommendedOnDate = (req, res) => {
     venues.address AS venue_address,
     movies.title AS film,
     movies.director,
-    movies.year,
+    movies.release_date,
     movies.runtime,
     string_agg(DISTINCT series.title, ', ') AS series,
     screenings.id,
+    screenings.alt_title,
     screenings.screening_url,
     string_agg(DISTINCT showtimes.id::character varying, ', ') AS showtimesId,
     string_agg(DISTINCT showtimes.showtime, ', ') AS showtimes,
-    array_agg(showtimes.display) AS showtimes_display,
+    array_agg(showtimes.hide) AS showtimes_hide,
     screenings.format,
     screenings.screening_note
     FROM 
@@ -63,7 +70,7 @@ const getRecommendedOnDate = (req, res) => {
     INNER JOIN venues ON screenings.venues_id=venues.id
     INNER JOIN screenings_series ON screenings.id = screenings_series.screenings_id
     INNER JOIN series ON series.id = screenings_series.series_id 
-    INNER JOIN showtimes ON showtimes.screenings_id = screenings.id
+    LEFT JOIN showtimes ON showtimes.screenings_id = screenings.id
     WHERE 
     featured_films.ondate = $1
     GROUP BY
@@ -73,11 +80,12 @@ const getRecommendedOnDate = (req, res) => {
     venues.title,
     movies.title,
     movies.director,
-    movies.year,
+    movies.release_date,
     movies.runtime,
     venues.short_title,
     venues.address,
     screenings.id,
+    screenings.alt_title,
     screenings.screening_url,
     screenings.format,
     screenings.screening_note;`,
@@ -90,7 +98,7 @@ const getRecommendedOnDate = (req, res) => {
         const featuredData = data.rows[0];
         featuredData.showtimes = normalizeShowtimes(
           featuredData.showtimes,
-          featuredData.showtimes_display,
+          featuredData.showtimes_hide,
           req.params.id,
         );
         res.send(JSON.stringify(featuredData));
@@ -105,7 +113,6 @@ const getRecommendedOnDate = (req, res) => {
 
 const getShowtimesOnDate = (req, res) => {
   const today = req.params.id;
-  const tomorrow = moment(req.params.id).add(1, 'days').format('YYYY-MM-DD');
   const query = {
     text: `SELECT 
     venues.title AS venue,
@@ -113,13 +120,14 @@ const getShowtimesOnDate = (req, res) => {
     venues.address AS venue_address,
     movies.title AS film,
     movies.director,
-    movies.year,
+    movies.release_date,
     movies.runtime,
     string_agg(DISTINCT series.title, ', ') AS series,
+    screenings.alt_title,
     screenings.screening_url,
     string_agg(DISTINCT showtimes.id::character varying, ', ') AS showtimesId,
     string_agg(DISTINCT showtimes.showtime, ', ') AS showtimes,
-    array_agg(showtimes.display) AS showtimes_display,
+    array_agg(showtimes.hide) AS showtimes_hide,
     screenings.format,
     screenings.screening_note
     FROM
@@ -128,21 +136,22 @@ const getShowtimesOnDate = (req, res) => {
     INNER JOIN venues ON screenings.venues_id=venues.id
     INNER JOIN screenings_series ON screenings.id = screenings_series.screenings_id
     INNER JOIN series ON series.id = screenings_series.series_id 
-    INNER JOIN showtimes ON showtimes.screenings_id = screenings.id
+    LEFT JOIN showtimes ON showtimes.screenings_id = screenings.id
     WHERE
-    showtimes.showtime >= $1 AND showtimes.showtime < $2 AND screenings.canceled = 0
+    screenings.start_date <= $1 AND screenings.end_date >= $1 AND screenings.canceled = 0
     GROUP BY
     venues.title,
     movies.title,
     movies.director,
-    movies.year,
+    movies.release_date,
     movies.runtime,
     venues.short_title,
     venues.address,
+    screenings.alt_title,
     screenings.screening_url,
     screenings.format,
     screenings.screening_note;`,
-    values: [today, tomorrow],
+    values: [today],
   };
 
   client
@@ -165,17 +174,30 @@ const getShowtimesOnDate = (req, res) => {
           const showData = rows[i];
           showData.showtimes = normalizeShowtimes(
             rows[i].showtimes,
-            rows[i].showtimes_display,
+            rows[i].showtimes_hide,
             today,
           );
-          showsByVenue[venueTitle].shows.push(rows[i]);
+          showData.year = getYear(showData.release_date);
+          if (
+            showData.showtimes.length > 0 ||
+            showData.format === 'Virtual Screening'
+          ) {
+            showsByVenue[venueTitle].shows.push(showData);
+          }
         }
-        const showsByVenueStr = JSON.stringify(Object.values(showsByVenue));
-        res.send(showsByVenueStr);
+        const showsFinal = {};
+        Object.keys(showsByVenue).forEach((item) => {
+          if (showsByVenue[item].shows.length > 0) {
+            showsFinal[item] = showsByVenue[item];
+          }
+        });
+        const showsStr = JSON.stringify(Object.values(showsFinal));
+        res.send(showsStr);
       }
       res.end();
     })
     .catch((error) => {
+      console.log('error', error);
       res.end(error);
     });
 };

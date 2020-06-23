@@ -14,7 +14,7 @@ CREATE TABLE movies (
   id int PRIMARY KEY,
   title text,
   director text,
-  year int,
+  release_date date,
   runtime int,
   synopsis text
 );
@@ -24,7 +24,8 @@ CREATE TABLE series (
   title text,
   start_date date,
   end_date date,
-  series_description text
+  series_description text,
+  series_url text
 );
 
 CREATE TABLE venues (
@@ -41,6 +42,7 @@ CREATE TABLE screenings (
   id serial PRIMARY KEY,
   movies_id int REFERENCES movies (id),
   venues_id int REFERENCES venues (id),
+  alt_title text,
   screening_url text,
   start_date date,
   end_date date,
@@ -56,7 +58,7 @@ CREATE TABLE showtimes (
   showtime text,
   showtime_note text,
   canceled int,
-  display int
+  hide int
 );
 
 CREATE TABLE screenings_series (
@@ -80,9 +82,3 @@ CREATE TABLE featured_films (
   author text,
   article text
 );
-
-INSERT INTO series (id, title, start_date, end_date, series_description) VALUES
-  (DEFAULT, '', null, null, '');
-
-INSERT INTO series (id, title, start_date, end_date, series_description) VALUES
-  (DEFAULT, 'Stay-At-Home Movie Night', '2020-06-13', '2020-08-01', '');

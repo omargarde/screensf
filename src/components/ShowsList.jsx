@@ -13,7 +13,7 @@ const ShowsList = ({ show }) => (
         rel="noreferrer"
         aria-describedby="new-window-2"
       >
-        {show.film}
+        {show.film ? show.film : show.alt_title}
       </a>
     </div>
     <div className="film-details">
