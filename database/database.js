@@ -38,7 +38,7 @@ const normalizeShowtimes = (showtimes, showtimesHide, date) => {
 const getYear = (releaseDate) => {
   if (releaseDate === null) return '';
   return releaseDate.getFullYear();
-}
+};
 
 const getRecommendedOnDate = (req, res) => {
   const today = req.params.id;
@@ -123,6 +123,7 @@ const getShowtimesOnDate = (req, res) => {
     movies.release_date,
     movies.runtime,
     string_agg(DISTINCT series.title, ', ') AS series,
+    string_agg(DISTINCT series.series_url, ', ') AS series_url,
     screenings.alt_title,
     screenings.screening_url,
     string_agg(DISTINCT showtimes.id::character varying, ', ') AS showtimesId,
@@ -185,6 +186,7 @@ const getShowtimesOnDate = (req, res) => {
             showsByVenue[venueTitle].shows.push(showData);
           }
         }
+
         const showsFinal = {};
         Object.keys(showsByVenue).forEach((item) => {
           if (showsByVenue[item].shows.length > 0) {

@@ -13,6 +13,9 @@ const boilerplate = {
   welcome: true,
 };
 
+const loading = 'https://storage.googleapis.com/filmcans/filmreel2.png';
+
 module.exports = {
   data: boilerplate,
+  loading,
 };

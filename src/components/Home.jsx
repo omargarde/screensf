@@ -16,6 +16,7 @@ class Home extends React.Component {
       isLoading: true,
       today: new Date(),
       selectedDate: new Date(),
+      loading: boilerplate.loading,
     };
     this.fetchFrontPage();
     this.dateChange = this.dateChange.bind(this);
@@ -73,14 +74,26 @@ class Home extends React.Component {
   }
 
   render() {
-    const { today, selectedDate, featured, isLoading, showtimes } = this.state;
+    const {
+      today,
+      selectedDate,
+      featured,
+      isLoading,
+      showtimes,
+      loading,
+    } = this.state;
 
     const dates = {
       yesterday: moment(new Date(selectedDate)).subtract(1, 'days'),
       today: moment(new Date(selectedDate)),
       tomorrow: moment(new Date(selectedDate)).add(1, 'days'),
     };
-    if (isLoading) return <div>Loading...</div>;
+    if (isLoading)
+      return (
+        <div className="loading">
+          <img src={loading} alt="loading" />
+        </div>
+      );
     return (
       <div>
         <DateSelector
@@ -91,7 +104,7 @@ class Home extends React.Component {
           handleDateChange={this.dateChange.bind(this)}
         />
         <Featured featured={featured} today={selectedDate} />
-        <Screenings venues={showtimes} />
+        <Screenings venues={showtimes} today={selectedDate} />
       </div>
     );
   }

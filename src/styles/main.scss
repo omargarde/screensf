@@ -14,6 +14,15 @@ html {
   }
 }
 
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
+
 body {
   margin: 0%;
   cursor: default;
@@ -66,7 +75,7 @@ $highlight: #8B2635;
     min-height: 50em;
 
     @media  screen and (min-width: $breakpoint-large) {
-      margin: 1% 25% 3% 25%;
+      margin: 1% 30% 3% 30%;
     }
     
     @media screen and (max-width: $breakpoint-large) {
@@ -156,6 +165,15 @@ $highlight: #8B2635;
     }
 
   }
+  
+  .loading {
+    text-align: center;
+    img {
+      animation: rotation 1s infinite linear;
+      height: 5em;
+      margin-top: 15%;
+    }
+  }
 
   .welcome-hide {
     display: none;
@@ -219,10 +237,11 @@ $highlight: #8B2635;
     margin: 2%;
   }
 
-
+// removed this h2
   h2.screenings-title {
     font-weight: 300;
     margin: 10% 0% 5% 0%;
+    text-align: center;
   }
 
   .screenings-venues h3 {
@@ -255,8 +274,9 @@ $highlight: #8B2635;
 
   .film-series {
     margin-bottom: 1.5%;
-    font-size: .9em;
-    font-family: 'Roboto', sans-serif;
+    font-size: .75em;
+    font-family: 'Courier', monospace;
+    color: gray;
   }
 
   .film-title {
@@ -276,9 +296,13 @@ $highlight: #8B2635;
     margin-right: 2%;
   }
 
+  .film-details > div:empty {
+    display: none;
+  }
+  
   .film-note {
     font-weight: 300;
-    font-size: smaller;  
+    font-size: .85em;
   }
 
   .showtimes {

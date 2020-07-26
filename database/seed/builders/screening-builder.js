@@ -32,10 +32,10 @@ fs.createReadStream('../data/screenings.csv')
 
       if (data.showtime1) {
         showtimes.push(
-          'INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled) VALUES',
+          'INSERT INTO showtimes (id, screenings_id, showtime, showtime_note, canceled, hide) VALUES',
         );
         showtimes.push(
-          `    (DEFAULT, ${data.screen_val}, $$${showdateFormat} ${data.showtime1}:00-8:00$$, $$${data.showtime_note1}$$, 0);`,
+          `    (DEFAULT, ${data.screen_val}, $$${showdateFormat} ${data.showtime1}:00-8:00$$, $$${data.showtime_note1}$$, 0, 0);`,
         );
       }
       if (data.showtime2) {
