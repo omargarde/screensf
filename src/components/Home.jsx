@@ -101,7 +101,7 @@ class Home extends React.Component {
           dates={dates}
           selected={today}
           onChange={this.dateChange}
-          handleDateChange={this.dateChange.bind(this)}
+          handleDateChange={this.dateChange}
         />
         <Featured featured={featured} today={selectedDate} />
         <Screenings venues={showtimes} today={selectedDate} />

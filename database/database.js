@@ -1,14 +1,15 @@
 const { Client } = require('pg');
 const moment = require('moment');
+const read = require('./sql/read');
 
 const client = new Client({
-  // host: `localhost`,
-  // user: process.env.USER,
-  // database: 'screensf',
-  host: `/cloudsql/${process.env.CLOUD_SQL_CONNECTION_NAME}`,
-  user: process.env.DB_USER,
-  database: process.env.DB_NAME,
-  password: process.env.DB_PASS,
+  host: `localhost`,
+  user: process.env.USER,
+  database: 'screensf',
+  // host: `/cloudsql/${process.env.CLOUD_SQL_CONNECTION_NAME}`,
+  // user: process.env.DB_USER,
+  // database: process.env.DB_NAME,
+  // password: process.env.DB_PASS,
 });
 
 client.connect((err) => {
@@ -19,13 +20,18 @@ client.connect((err) => {
   }
 });
 
+function addDays(date, days) {
+  const result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return result;
+}
+
 const normalizeShowtimes = (showtimes, showtimesHide, date) => {
   const newTimes = [];
-  if (showtimes === null) return newTimes;
-  const today = new Date(`${date} 00:00:00-8:00`);
-  const tomorrow = new Date(today);
-  tomorrow.setDate(tomorrow.getDate() + 1);
   const times = showtimes.split(',');
+  const today = new Date(`${date} 00:00:00-8:00`);
+  const tomorrow = addDays(today, 1);
+  if (showtimes === null) return newTimes;
   for (let x = 0; x < times.length; x += 1) {
     const showtime = new Date(times[x]);
     if (showtime >= today && showtime < tomorrow && showtimesHide[x] === 0) {
@@ -43,52 +49,7 @@ const getYear = (releaseDate) => {
 const getRecommendedOnDate = (req, res) => {
   const today = req.params.id;
   const query = {
-    text: `SELECT 
-    featured_films.featured_image AS image,
-    featured_films.author AS writer,
-    featured_films.article,
-    venues.title AS venue,
-    venues.short_title AS venueShortTitle,
-    venues.address AS venue_address,
-    movies.title AS film,
-    movies.director,
-    movies.release_date,
-    movies.runtime,
-    string_agg(DISTINCT series.title, ', ') AS series,
-    screenings.id,
-    screenings.alt_title,
-    screenings.screening_url,
-    string_agg(DISTINCT showtimes.id::character varying, ', ') AS showtimesId,
-    string_agg(DISTINCT showtimes.showtime, ', ') AS showtimes,
-    array_agg(showtimes.hide) AS showtimes_hide,
-    screenings.format,
-    screenings.screening_note
-    FROM 
-    featured_films
-    INNER JOIN screenings ON featured_films.screenings_id=screenings.id
-    INNER JOIN movies ON screenings.movies_id=movies.id
-    INNER JOIN venues ON screenings.venues_id=venues.id
-    INNER JOIN screenings_series ON screenings.id = screenings_series.screenings_id
-    INNER JOIN series ON series.id = screenings_series.series_id 
-    LEFT JOIN showtimes ON showtimes.screenings_id = screenings.id
-    WHERE 
-    featured_films.ondate = $1
-    GROUP BY
-    featured_films.featured_image,
-    featured_films.author,
-    featured_films.article,
-    venues.title,
-    movies.title,
-    movies.director,
-    movies.release_date,
-    movies.runtime,
-    venues.short_title,
-    venues.address,
-    screenings.id,
-    screenings.alt_title,
-    screenings.screening_url,
-    screenings.format,
-    screenings.screening_note;`,
+    text: read.recommendedOnDate,
     values: [today],
   };
   client
@@ -99,7 +60,7 @@ const getRecommendedOnDate = (req, res) => {
         featuredData.showtimes = normalizeShowtimes(
           featuredData.showtimes,
           featuredData.showtimes_hide,
-          req.params.id,
+          today,
         );
         res.send(JSON.stringify(featuredData));
         res.end();
@@ -114,47 +75,9 @@ const getRecommendedOnDate = (req, res) => {
 const getShowtimesOnDate = (req, res) => {
   const today = req.params.id;
   const query = {
-    text: `SELECT 
-    venues.title AS venue,
-    venues.short_title AS venueShortTitle,
-    venues.address AS venue_address,
-    movies.title AS film,
-    movies.director,
-    movies.release_date,
-    movies.runtime,
-    string_agg(DISTINCT series.title, ', ') AS series,
-    string_agg(DISTINCT series.series_url, ', ') AS series_url,
-    screenings.alt_title,
-    screenings.screening_url,
-    string_agg(DISTINCT showtimes.id::character varying, ', ') AS showtimesId,
-    string_agg(DISTINCT showtimes.showtime, ', ') AS showtimes,
-    array_agg(showtimes.hide) AS showtimes_hide,
-    screenings.format,
-    screenings.screening_note
-    FROM
-    screenings
-    INNER JOIN movies ON screenings.movies_id=movies.id
-    INNER JOIN venues ON screenings.venues_id=venues.id
-    INNER JOIN screenings_series ON screenings.id = screenings_series.screenings_id
-    INNER JOIN series ON series.id = screenings_series.series_id 
-    LEFT JOIN showtimes ON showtimes.screenings_id = screenings.id
-    WHERE
-    screenings.start_date <= $1 AND screenings.end_date >= $1 AND screenings.canceled = 0
-    GROUP BY
-    venues.title,
-    movies.title,
-    movies.director,
-    movies.release_date,
-    movies.runtime,
-    venues.short_title,
-    venues.address,
-    screenings.alt_title,
-    screenings.screening_url,
-    screenings.format,
-    screenings.screening_note;`,
+    text: read.showtimesOnDate,
     values: [today],
   };
-
   client
     .query(query)
     .then((data) => {
@@ -207,4 +130,5 @@ const getShowtimesOnDate = (req, res) => {
 module.exports = {
   getShowtimesOnDate,
   getRecommendedOnDate,
+  client,
 };
