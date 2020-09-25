@@ -82,16 +82,16 @@ const postScreening = (req, res) => {
       screenings 
       (id, movies_id, venues_id, screening_url, start_date, end_date, format, screening_note) 
       VALUES 
-      (DEFAULT, $/movies_id/, $/venues_id/, $/screening_url/, $/start_date/, $/end_date/, $/format/, $/screening_note/);`,
-      {
-        movies_id: req.body.movies_id,
-        venues_id: req.body.venues_id,
-        screening_url: req.body.screening_url,
-        start_date: req.body.start_date,
-        end_date: req.body.end_date,
-        format: req.body.format,
-        screening_note: req.body.screening_note,
-      },
+      (DEFAULT, $1, $2, $3, $4, $4, $5, $6);`,
+      [
+        req.body.movies_id,
+        req.body.venues_id,
+        req.body.screening_url,
+        req.body.start_date,
+        req.body.end_date,
+        req.body.format,
+        req.body.screening_note,
+      ],
     )
     .then(() => {
       console.log('successful post');
@@ -109,17 +109,19 @@ const postShowtimes = (req, res) => {
     .query(
       `INSERT INTO 
       showtimes 
-      (id, screenings_id, showtime, showtime_note)
+      (id, screenings_id, showtime, showtime_note, canceled, hide)
       VALUES 
-      (DEFAULT, $/screenings_id/, $/showtime/, $/showtime_note/);`,
-      {
-        screenings_id: req.body.screenings_id,
-        showtime: req.body.showtime,
-        showtime_note: req.body.showtime_note,
-      },
+      (DEFAULT, $1, $2, $3, $4, $5);`,
+      [
+        req.body.screenings_id,
+        req.body.showtime,
+        req.body.showtime_note,
+        req.body.canceled,
+        req.body.hide,
+      ],
     )
     .then(() => {
-      console.log('successful post');
+      console.log('successful showtime post');
       res.end();
     })
     .catch((error) => {
@@ -143,7 +145,7 @@ const postScreeningsSeries = (req, res) => {
       },
     )
     .then(() => {
-      console.log('successful post');
+      console.log('successful screening post');
       res.end();
     })
     .catch((error) => {
@@ -167,7 +169,7 @@ const postVenuesSeries = (req, res) => {
       },
     )
     .then(() => {
-      console.log('successful post');
+      console.log('successful venue post');
       res.end();
     })
     .catch((error) => {
@@ -194,7 +196,7 @@ const postFeaturedScreening = (req, res) => {
       },
     )
     .then(() => {
-      console.log('successful post');
+      console.log('successful featured screening post');
       res.end();
     })
     .catch((error) => {

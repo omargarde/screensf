@@ -28,10 +28,10 @@ function addDays(date, days) {
 
 const normalizeShowtimes = (showtimes, showtimesHide, date) => {
   const newTimes = [];
+  if (showtimes === null) return newTimes;
   const times = showtimes.split(',');
   const today = new Date(`${date} 00:00:00-8:00`);
   const tomorrow = addDays(today, 1);
-  if (showtimes === null) return newTimes;
   for (let x = 0; x < times.length; x += 1) {
     const showtime = new Date(times[x]);
     if (showtime >= today && showtime < tomorrow && showtimesHide[x] === 0) {

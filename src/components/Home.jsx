@@ -14,6 +14,7 @@ class Home extends React.Component {
       showtimes: [],
       featured: boilerplate.data,
       isLoading: true,
+      isSubmit: true,
       today: new Date(),
       selectedDate: new Date(),
       loading: boilerplate.loading,
@@ -79,6 +80,7 @@ class Home extends React.Component {
       selectedDate,
       featured,
       isLoading,
+      isSubmit,
       showtimes,
       loading,
     } = this.state;
@@ -104,7 +106,7 @@ class Home extends React.Component {
           handleDateChange={this.dateChange}
         />
         <Featured featured={featured} today={selectedDate} />
-        <Screenings venues={showtimes} today={selectedDate} />
+        <Screenings venues={showtimes} today={selectedDate} submit={isSubmit} />
       </div>
     );
   }
