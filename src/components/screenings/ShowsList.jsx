@@ -1,12 +1,11 @@
-/* eslint-disable react/jsx-one-expression-per-line */
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Showtime from './Showtime';
-import ShowtimesEditor from './submit/ShowtimesEditor';
+import ShowtimesEditor from '../submit/ShowtimesEditor';
 
 const ShowsList = (props) => {
   const { show, submit, today } = props;
-  const [expand, setExpand] = useState(false);
+  const runtime = `${show.runtime}min`;
   return (
     <div className="shows-film">
       <div className="film-series">
@@ -32,7 +31,7 @@ const ShowsList = (props) => {
       <div className="film-details">
         <div>{show.director}</div>
         <div>{show.year}</div>
-        {show.runtime ? <div>{show.runtime}min</div> : ''}
+        {show.runtime ? <div>{runtime}</div> : ''}
         <div>{show.format}</div>
       </div>
       <div className="film-note">{show.screening_note}</div>
@@ -40,26 +39,9 @@ const ShowsList = (props) => {
         {show.showtimes.map((showtime) => (
           <Showtime showtime={showtime} key={showtime} />
         ))}
-        {submit ? (
-          <span>
-            <button
-              type="button"
-              className="submit-showtime"
-              onClick={() => setExpand(!expand)}
-            >
-              {expand ? '-' : '+'}
-            </button>
-            <div>
-              {expand ? (
-                <ShowtimesEditor today={today} show={show} submit={submit} />
-              ) : (
-                ''
-              )}
-            </div>
-          </span>
-        ) : (
-          ''
-        )}
+        <span>
+          <ShowtimesEditor today={today} show={show} submit={submit} />
+        </span>
       </div>
     </div>
   );

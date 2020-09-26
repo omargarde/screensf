@@ -25,8 +25,7 @@ function ShowtimesEditor(props) {
 
   const postShowtime = () => {
     let twentyFour = hour;
-    if (ampm === 'PM') twentyFour = Number(hour) + 12;
-    if (twentyFour === 24) twentyFour = '12';
+    if (ampm === 'PM' && twentyFour < 12) twentyFour = Number(hour) + 12;
     if (ampm === 'AM' && hour === '12') twentyFour = '00';
     const newShowtime = `${today} ${twentyFour}:${minute}:00-8:00`;
     axios({
@@ -52,47 +51,51 @@ function ShowtimesEditor(props) {
   if (!submit) return <div />;
 
   return (
-    <div className="submit">
-      <span>
-        <button
-          type="button"
-          className="submit-showtime"
-          onClick={() => setExpand(!expand)}
-        >
-          {expand ? '-' : '+'}
-        </button>
-        <div>
-          <select value={hour} onChange={(e) => setHour(e.target.value)}>
-            {digitsList(1, 12, 'hour').map((time) => (
-              <option key={time.id} value={time.hour}>
-                {time.hour}
-              </option>
-            ))}
-          </select>
-          <select value={minute} onChange={(e) => setMinute(e.target.value)}>
-            {digitsList(0, 59, 'minute').map((time) => (
-              <option key={time.id} value={time.minute}>
-                {time.minute}
-              </option>
-            ))}
-          </select>
-          <select value={ampm} onChange={(e) => setAmpm(e.target.value)}>
-            <option value="AM">AM</option>
-            <option value="PM">PM</option>
-          </select>
-          <button
-            type="button"
-            className="ssf-button"
-            onClick={() => {
-              postShowtime();
-            }}
-          >
-            Submit
-          </button>
+    <span>
+      <button
+        type="button"
+        className="submit-showtime-button"
+        onClick={() => setExpand(!expand)}
+      >
+        {expand ? '-' : '+'}
+      </button>
+      {expand ? (
+        <div className="submit">
+          <div>
+            <select value={hour} onChange={(e) => setHour(e.target.value)}>
+              {digitsList(1, 12, 'hour').map((time) => (
+                <option key={time.id} value={time.hour}>
+                  {time.hour}
+                </option>
+              ))}
+            </select>
+            <select value={minute} onChange={(e) => setMinute(e.target.value)}>
+              {digitsList(0, 59, 'minute').map((time) => (
+                <option key={time.id} value={time.minute}>
+                  {time.minute}
+                </option>
+              ))}
+            </select>
+            <select value={ampm} onChange={(e) => setAmpm(e.target.value)}>
+              <option value="AM">AM</option>
+              <option value="PM">PM</option>
+            </select>
+            <button
+              type="button"
+              className="ssf-button"
+              onClick={() => {
+                postShowtime();
+              }}
+            >
+              Submit
+            </button>
+          </div>
+          <div>{success}</div>
         </div>
-        <div>{success}</div>
-      </span>
-    </div>
+      ) : (
+        ''
+      )}
+    </span>
   );
 }
 export default ShowtimesEditor;

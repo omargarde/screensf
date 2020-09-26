@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
+import ScreeningsEditor from '../submit/ScreeningsEditor';
 import ShowsList from './ShowsList';
 
 const VenueList = (props) => {
   const { venue, submit, today } = props;
-  const [expand, setExpand] = useState(false);
   return (
     <div className="screenings-venues">
       <div className="venue-block">
@@ -20,21 +20,7 @@ const VenueList = (props) => {
           />
         ))}
         <div className="shows-film">
-          {submit ? (
-            <div>
-              <div>New Screening</div>
-              <button
-                type="button"
-                className="submit-showtime"
-                onClick={() => setExpand(!expand)}
-              >
-                {expand ? '-' : '+'}
-              </button>
-              <div>{expand ? 'Expanded' : ''}</div>
-            </div>
-          ) : (
-            ''
-          )}
+          <ScreeningsEditor today={today} submit={submit} />
         </div>
       </div>
     </div>

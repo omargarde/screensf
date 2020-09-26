@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import axios from 'axios';
 import Featured from './Featured';
-import Screenings from './Screenings';
+import Screenings from './screenings/Screenings';
 import DateSelector from './DateSelector';
 import 'react-datepicker/dist/react-datepicker.css';
 import boilerplate from './boilerplate';
