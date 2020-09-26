@@ -106,7 +106,11 @@ class Home extends React.Component {
           handleDateChange={this.dateChange}
         />
         <Featured featured={featured} today={selectedDate} />
-        <Screenings venues={showtimes} today={selectedDate} submit={isSubmit} />
+        <Screenings
+          venues={showtimes}
+          today={moment(selectedDate).format('YYYY-MM-DD')}
+          submit={isSubmit}
+        />
       </div>
     );
   }

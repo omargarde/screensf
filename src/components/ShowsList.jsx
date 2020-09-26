@@ -50,7 +50,11 @@ const ShowsList = (props) => {
               {expand ? '-' : '+'}
             </button>
             <div>
-              {expand ? <ShowtimesEditor today={today} show={show} /> : ''}
+              {expand ? (
+                <ShowtimesEditor today={today} show={show} submit={submit} />
+              ) : (
+                ''
+              )}
             </div>
           </span>
         ) : (
