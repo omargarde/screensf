@@ -60,7 +60,7 @@ function ShowtimesEditor(props) {
         {expand ? '-' : '+'}
       </button>
       {expand ? (
-        <div className="submit">
+        <div className="submit-form">
           <div>
             <select value={hour} onChange={(e) => setHour(e.target.value)}>
               {digitsList(1, 12, 'hour').map((time) => (

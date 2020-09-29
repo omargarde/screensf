@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+// import DatePicker from 'react-datepicker';
 
 function ScreeningsEditor(props) {
   const { show, today } = props;
@@ -6,17 +7,20 @@ function ScreeningsEditor(props) {
   const [movId, setMovId] = useState('');
   const [serId, setSerId] = useState('');
   const [screenNote, setScreenNote] = useState('');
+  const [screenUrl, setScreenUrl] = useState('');
+  // const [startDate, setStartDate] = useState(new Date());
+  // const [endDate, setEndDate] = useState(new Date());
 
   const postScreening = () => {
     return console.log('post screening');
   };
 
   return (
-    <div className="submit">
+    <div className="submit-form">
       <div className="film-title">Add Screening</div>
       <button
         type="button"
-        className="submit-showtime-button"
+        className="submit-screening-button"
         onClick={() => setExpand(!expand)}
       >
         {expand ? '-' : '+'}
@@ -40,7 +44,15 @@ function ScreeningsEditor(props) {
             />
           </label>
           <label>Start Date:</label>
+          {/* <DatePicker
+            selected={startDate}
+            onChange={(date) => setStartDate(date)}
+          /> */}
           <label>End Date:</label>
+          {/* <DatePicker
+            selected={endDate}
+            onChange={(date) => setEndDate(date)}
+          /> */}
           <label>
             Format:
             <select>
@@ -53,9 +65,13 @@ function ScreeningsEditor(props) {
               <option>Virtual Screening</option>
             </select>
           </label>
-          <label>
+          <label htmlFor={screenUrl}>
             URL:
-            <input type="text" />
+            <input
+              onChange={(e) => setScreenUrl(e.target.value)}
+              id={screenUrl}
+              type="text"
+            />
           </label>
           <label htmlFor={screenNote}>
             Screening Note:

@@ -315,7 +315,7 @@ $highlight: #8B2635;
     margin-right: 1%;
   }
 
-  .submit {
+  .submit-form {
     margin: 5%;
     padding: 5%;
     border: 1px black dotted;
@@ -330,7 +330,16 @@ $highlight: #8B2635;
     margin-top: 1%;
   }
   
-  .submit-showtime:focus {
+  .submit-screening-button {
+    background-color: white;
+    border: 1px black solid;
+    border-radius: 10%;
+    width: 1.5em;
+    font-size: 1.2em;
+    margin-top: 1%;
+  }
+
+  .submit-showtime-button:focus {
     outline: thin dotted;
   }
 
