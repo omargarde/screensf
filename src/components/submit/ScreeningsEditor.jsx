@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
-// import DatePicker from 'react-datepicker';
 
 function ScreeningsEditor(props) {
   const { show, today } = props;
   const [expand, setExpand] = useState(false);
   const [movId, setMovId] = useState('');
   const [serId, setSerId] = useState('');
+  const [altTitle, setAltTitle] = useState('');
+  const [venue, setVenue] = useState('');
   const [screenNote, setScreenNote] = useState('');
   const [screenUrl, setScreenUrl] = useState('');
-  // const [startDate, setStartDate] = useState(new Date());
-  // const [endDate, setEndDate] = useState(new Date());
+  const [format, setFormat] = useState('');
+  const [canceled, setCanceled] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
 
   const postScreening = () => {
     return console.log('post screening');
@@ -35,6 +38,15 @@ function ScreeningsEditor(props) {
               type="text"
             />
           </label>
+          <label htmlFor={venue}>
+            Venue
+            <select value={venue} onChange={(e) => setVenue(e.target.value)}>
+              <option>The Castro Theater</option>
+              <option>Roxie Theater</option>
+              <option>Pacific Film Archive</option>
+              <option>Artists Television Access</option>
+            </select>
+          </label>
           <label htmlFor={serId}>
             Series ID:
             <input
@@ -43,19 +55,33 @@ function ScreeningsEditor(props) {
               type="text"
             />
           </label>
-          <label>Start Date:</label>
-          {/* <DatePicker
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
-          /> */}
-          <label>End Date:</label>
-          {/* <DatePicker
-            selected={endDate}
-            onChange={(date) => setEndDate(date)}
-          /> */}
-          <label>
+          <label htmlFor={altTitle}>
+            Alt Title:
+            <input
+              onChange={(e) => setAltTitle(e.target.value)}
+              value={altTitle}
+              type="text"
+            />
+          </label>
+          <label htmlFor={startDate}>
+            Start Date:
+            <input
+              type="date"
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
+            />
+          </label>
+          <label htmlFor={endDate}>
+            End Date:
+            <input
+              type="date"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+            />
+          </label>
+          <label htmlFor={format}>
             Format:
-            <select>
+            <select value={format} onChange={(e) => setFormat(e.target.value)}>
               <option>DCP</option>
               <option>35mm</option>
               <option>16mm</option>
@@ -69,7 +95,7 @@ function ScreeningsEditor(props) {
             URL:
             <input
               onChange={(e) => setScreenUrl(e.target.value)}
-              id={screenUrl}
+              value={screenUrl}
               type="text"
             />
           </label>
@@ -77,17 +103,18 @@ function ScreeningsEditor(props) {
             Screening Note:
             <input
               onChange={(e) => setScreenNote(e.target.value)}
-              id={screenNote}
+              value={screenNote}
               type="text"
             />
           </label>
-          <label>
-            <h4>Select Venue</h4>
+          <label
+            htmlFor={canceled}
+            onChange={(e) => setCanceled(e.target.value)}
+          >
+            Canceled?
             <select>
-              <option>The Castro Theater</option>
-              <option>Roxie Theater</option>
-              <option>Pacific Film Archive</option>
-              <option>Artists Television Access</option>
+              <option value="0">No</option>
+              <option value="1">Yes</option>
             </select>
           </label>
           <button

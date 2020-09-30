@@ -101,12 +101,16 @@ $highlight: #8B2635;
       border-radius: 0;
     }
 
-    .submit input[type=text] {
+    .submit-form input[type=text] {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
     box-sizing: border-box;
     }
+
+    .submit-form input[type=date], select {
+      margin: 3%;
+      }
 
     label {
       display: block;
@@ -333,13 +337,15 @@ $highlight: #8B2635;
   .submit-screening-button {
     background-color: white;
     border: 1px black solid;
-    border-radius: 10%;
+    border-radius: 50%;
     width: 1.5em;
     font-size: 1.2em;
     margin-top: 1%;
   }
-
   .submit-showtime-button:focus {
+    outline: thin dotted;
+  }
+  .submit-screening-button:focus {
     outline: thin dotted;
   }
 

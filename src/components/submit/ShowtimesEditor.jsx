@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { digitsList } from './helpers';
 
 function ShowtimesEditor(props) {
   const { show, today, submit } = props;
@@ -8,20 +9,6 @@ function ShowtimesEditor(props) {
   const [minute, setMinute] = useState('00');
   const [ampm, setAmpm] = useState('AM');
   const [success, setSuccess] = useState('');
-
-  const digitsList = (first, last, label) => {
-    const digits = [];
-    let i = first;
-    while (i <= last) {
-      const item = {};
-      item.id = i;
-      item[label] = `${i}`;
-      if (i < 10) item[label] = `0${i}`;
-      digits.push(item);
-      i += 1;
-    }
-    return digits;
-  };
 
   const postShowtime = () => {
     let twentyFour = hour;
@@ -98,4 +85,5 @@ function ShowtimesEditor(props) {
     </span>
   );
 }
+
 export default ShowtimesEditor;
