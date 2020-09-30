@@ -11,8 +11,8 @@ function ScreeningsEditor(props) {
   const [screenUrl, setScreenUrl] = useState('');
   const [format, setFormat] = useState('');
   const [canceled, setCanceled] = useState('');
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
+  const [startDate, setStartDate] = useState(today);
+  const [endDate, setEndDate] = useState(today);
 
   const postScreening = () => {
     return console.log('post screening');
@@ -41,6 +41,7 @@ function ScreeningsEditor(props) {
           <label htmlFor={venue}>
             Venue
             <select value={venue} onChange={(e) => setVenue(e.target.value)}>
+              <option value="">Select...</option>
               <option>The Castro Theater</option>
               <option>Roxie Theater</option>
               <option>Pacific Film Archive</option>
@@ -67,6 +68,7 @@ function ScreeningsEditor(props) {
             Start Date:
             <input
               type="date"
+              defaultValue={startDate}
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
             />
@@ -82,6 +84,7 @@ function ScreeningsEditor(props) {
           <label htmlFor={format}>
             Format:
             <select value={format} onChange={(e) => setFormat(e.target.value)}>
+              <option value="">Select...</option>
               <option>DCP</option>
               <option>35mm</option>
               <option>16mm</option>
@@ -113,6 +116,7 @@ function ScreeningsEditor(props) {
           >
             Canceled?
             <select>
+              <option value="">Select...</option>
               <option value="0">No</option>
               <option value="1">Yes</option>
             </select>
