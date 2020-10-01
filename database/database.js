@@ -1,6 +1,7 @@
 const { Client } = require('pg');
 const moment = require('moment');
 const read = require('./sql/read');
+const e = require('express');
 
 const client = new Client({
   host: `localhost`,
@@ -42,7 +43,11 @@ const normalizeShowtimes = (showtimes, showtimesHide, date) => {
 };
 
 const cutDate = (date) => {
-  return `${date.getUTCFullYear()}-${date.getUTCMonth()}-${date.getUTCDate()}`;
+  let day = date.getUTCDate();
+  let month = date.getUTCMonth();
+  if (date.getUTCDate() < 10) day = `0${date.getUTCDate()}`;
+  if (date.getUTCMonth() < 10) month = `0${date.getUTCMonth()}`;
+  return `${date.getUTCFullYear()}-${month}-${day}`;
 };
 
 const getYear = (releaseDate) => {
@@ -134,8 +139,24 @@ const getShowtimesOnDate = (req, res) => {
     });
 };
 
+const getVenues = (req, res) => {
+  const query = {
+    text: read.getVenues,
+  };
+  client
+    .query(query)
+    .then((data) => {
+      res.send(JSON.stringify(data.rows));
+      res.end();
+    })
+    .catch((error) => {
+      res.end(error);
+    });
+};
+
 module.exports = {
   getShowtimesOnDate,
   getRecommendedOnDate,
+  getVenues,
   client,
 };

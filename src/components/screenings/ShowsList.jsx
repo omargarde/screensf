@@ -5,7 +5,7 @@ import ShowtimesEditor from '../submit/ShowtimesEditor';
 import ScreeningsEditor from '../submit/ScreeningsEditor';
 
 const ShowsList = (props) => {
-  const { show, submit, today } = props;
+  const { show, submit, today, theaters } = props;
   const [expand, setExpand] = useState(false);
   const runtime = `${show.runtime}min`;
   return (
@@ -58,9 +58,14 @@ const ShowsList = (props) => {
             </button>
           </div>
         )}
-        {submit && (
+        {expand && (
           <div>
-            <ScreeningsEditor today={today} show={show} submit={submit} />
+            <ScreeningsEditor
+              today={today}
+              show={show}
+              submit={submit}
+              theaters={theaters}
+            />
           </div>
         )}
       </div>

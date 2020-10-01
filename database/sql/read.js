@@ -92,7 +92,10 @@ screenings.screening_url,
 screenings.format,
 screenings.screening_note;`;
 
+const getVenues = `SELECT * from venues`;
+
 module.exports = {
   showtimesOnDate,
   recommendedOnDate,
+  getVenues,
 };
