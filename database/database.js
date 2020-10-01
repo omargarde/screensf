@@ -1,6 +1,7 @@
 const { Client } = require('pg');
 const moment = require('moment');
 const read = require('./sql/read');
+const e = require('express');
 
 const client = new Client({
   host: `localhost`,
@@ -28,10 +29,10 @@ function addDays(date, days) {
 
 const normalizeShowtimes = (showtimes, showtimesHide, date) => {
   const newTimes = [];
+  if (showtimes === null) return newTimes;
   const times = showtimes.split(',');
   const today = new Date(`${date} 00:00:00-8:00`);
   const tomorrow = addDays(today, 1);
-  if (showtimes === null) return newTimes;
   for (let x = 0; x < times.length; x += 1) {
     const showtime = new Date(times[x]);
     if (showtime >= today && showtime < tomorrow && showtimesHide[x] === 0) {
@@ -39,6 +40,14 @@ const normalizeShowtimes = (showtimes, showtimesHide, date) => {
     }
   }
   return newTimes;
+};
+
+const cutDate = (date) => {
+  let day = date.getUTCDate();
+  let month = date.getUTCMonth();
+  if (date.getUTCDate() < 10) day = `0${date.getUTCDate()}`;
+  if (date.getUTCMonth() < 10) month = `0${date.getUTCMonth()}`;
+  return `${date.getUTCFullYear()}-${month}-${day}`;
 };
 
 const getYear = (releaseDate) => {
@@ -88,6 +97,7 @@ const getShowtimesOnDate = (req, res) => {
           const venueTitle = rows[i].venue;
           const venueAddress = rows[i].venue_address.split(',');
           const shortAddress = `${venueAddress[0]}, ${venueAddress[1]}`;
+
           if (!showsByVenue[venueTitle]) {
             showsByVenue[venueTitle] = {
               venue: venueTitle,
@@ -102,6 +112,8 @@ const getShowtimesOnDate = (req, res) => {
             today,
           );
           showData.year = getYear(showData.release_date);
+          showData.start_date = cutDate(showData.start_date);
+          showData.end_date = cutDate(showData.end_date);
           if (
             showData.showtimes.length > 0 ||
             showData.format === 'Virtual Screening'
@@ -127,8 +139,24 @@ const getShowtimesOnDate = (req, res) => {
     });
 };
 
+const getVenues = (req, res) => {
+  const query = {
+    text: read.getVenues,
+  };
+  client
+    .query(query)
+    .then((data) => {
+      res.send(JSON.stringify(data.rows));
+      res.end();
+    })
+    .catch((error) => {
+      res.end(error);
+    });
+};
+
 module.exports = {
   getShowtimesOnDate,
   getRecommendedOnDate,
+  getVenues,
   client,
 };

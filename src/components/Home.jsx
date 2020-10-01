@@ -2,21 +2,26 @@ import React from 'react';
 import moment from 'moment';
 import axios from 'axios';
 import Featured from './Featured';
-import Screenings from './Screenings';
+import Screenings from './screenings/Screenings';
 import DateSelector from './DateSelector';
 import 'react-datepicker/dist/react-datepicker.css';
-import boilerplate from './boilerplate';
+import { data, loadImage } from './helpers';
+import ScreeningsEditor from './submit/ScreeningsEditor';
+import { showBoilerplate } from './submit/helpers';
 
 class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       showtimes: [],
-      featured: boilerplate.data,
+      featured: data,
       isLoading: true,
+      isSubmit: true,
       today: new Date(),
       selectedDate: new Date(),
-      loading: boilerplate.loading,
+      loading: loadImage,
+      expand: false,
+      theaters: '',
     };
     this.fetchFrontPage();
     this.dateChange = this.dateChange.bind(this);
@@ -34,6 +39,7 @@ class Home extends React.Component {
   fetchFrontPage() {
     this.fetchRecommended();
     this.fetchShowtimes();
+    this.fetchVenues();
   }
 
   fetchRecommended() {
@@ -48,7 +54,7 @@ class Home extends React.Component {
         if (response.data) {
           this.setState({ featured: response.data });
         } else {
-          this.setState({ featured: boilerplate.data });
+          this.setState({ featured: data });
         }
       })
       .catch((error) => {
@@ -73,14 +79,26 @@ class Home extends React.Component {
       });
   }
 
+  fetchVenues() {
+    axios({
+      method: 'get',
+      url: '/venues/',
+    }).then((response) => {
+      this.setState({ theaters: response.data });
+    });
+  }
+
   render() {
     const {
       today,
       selectedDate,
       featured,
       isLoading,
+      isSubmit,
       showtimes,
       loading,
+      expand,
+      theaters,
     } = this.state;
 
     const dates = {
@@ -104,7 +122,31 @@ class Home extends React.Component {
           handleDateChange={this.dateChange}
         />
         <Featured featured={featured} today={selectedDate} />
-        <Screenings venues={showtimes} today={selectedDate} />
+        {isSubmit && (
+          <div className="film-title">
+            Add Screening
+            <button
+              type="button"
+              className="submit-screening-button"
+              onClick={() => this.setState({ expand: !expand })}
+            >
+              {expand ? '-' : '+'}
+            </button>
+          </div>
+        )}
+        {expand && (
+          <ScreeningsEditor
+            show={showBoilerplate}
+            submit={isSubmit}
+            theaters={theaters}
+          />
+        )}
+        <Screenings
+          venues={showtimes}
+          today={moment(selectedDate).format('YYYY-MM-DD')}
+          submit={isSubmit}
+          theaters={theaters}
+        />
       </div>
     );
   }

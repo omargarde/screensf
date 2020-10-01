@@ -14,6 +14,8 @@ app.get('/recommended/:id', db.getRecommendedOnDate);
 
 app.get('/showtimes/:id', db.getShowtimesOnDate);
 
+app.get('/venues/', db.getVenues);
+
 // Create
 app.post('/movies/', post.postMovie);
 

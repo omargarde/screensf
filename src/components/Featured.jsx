@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import ShowsList from './ShowsList';
+import ShowsList from './screenings/ShowsList';
 
 const Featured = (props) => {
   const { featured, today } = props;
