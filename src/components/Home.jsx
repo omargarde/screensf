@@ -6,6 +6,8 @@ import Screenings from './screenings/Screenings';
 import DateSelector from './DateSelector';
 import 'react-datepicker/dist/react-datepicker.css';
 import boilerplate from './boilerplate';
+import ScreeningsEditor from './submit/ScreeningsEditor';
+import { showBoilerplate } from './submit/helpers';
 
 class Home extends React.Component {
   constructor(props) {
@@ -18,6 +20,7 @@ class Home extends React.Component {
       today: new Date(),
       selectedDate: new Date(),
       loading: boilerplate.loading,
+      expand: false,
     };
     this.fetchFrontPage();
     this.dateChange = this.dateChange.bind(this);
@@ -83,6 +86,7 @@ class Home extends React.Component {
       isSubmit,
       showtimes,
       loading,
+      expand,
     } = this.state;
 
     const dates = {
@@ -106,6 +110,21 @@ class Home extends React.Component {
           handleDateChange={this.dateChange}
         />
         <Featured featured={featured} today={selectedDate} />
+        {isSubmit && (
+          <div className="film-title">
+            Add Screening
+            <button
+              type="button"
+              className="submit-screening-button"
+              onClick={() => this.setState({ expand: !expand })}
+            >
+              {expand ? '-' : '+'}
+            </button>
+          </div>
+        )}
+        {expand && (
+          <ScreeningsEditor show={showBoilerplate} submit={isSubmit} />
+        )}
         <Screenings
           venues={showtimes}
           today={moment(selectedDate).format('YYYY-MM-DD')}

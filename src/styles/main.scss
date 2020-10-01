@@ -323,6 +323,7 @@ $highlight: #8B2635;
     margin: 5%;
     padding: 5%;
     border: 1px black dotted;
+    z-index: 1;
   }
 
   .submit-showtime-button {
@@ -340,7 +341,7 @@ $highlight: #8B2635;
     border-radius: 50%;
     width: 1.5em;
     font-size: 1.2em;
-    margin-top: 1%;
+    margin: 3%;
   }
   .submit-showtime-button:focus {
     outline: thin dotted;

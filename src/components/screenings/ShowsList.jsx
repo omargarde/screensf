@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Showtime from './Showtime';
 import ShowtimesEditor from '../submit/ShowtimesEditor';
+import ScreeningsEditor from '../submit/ScreeningsEditor';
 
 const ShowsList = (props) => {
   const { show, submit, today } = props;
+  const [expand, setExpand] = useState(false);
   const runtime = `${show.runtime}min`;
   return (
     <div className="shows-film">
@@ -39,9 +41,28 @@ const ShowsList = (props) => {
         {show.showtimes.map((showtime) => (
           <Showtime showtime={showtime} key={showtime} />
         ))}
-        <span>
-          <ShowtimesEditor today={today} show={show} submit={submit} />
-        </span>
+        {submit && (
+          <span>
+            <ShowtimesEditor today={today} show={show} submit={submit} />
+          </span>
+        )}
+        {submit && (
+          <div className="film-title">
+            Edit Screening
+            <button
+              type="button"
+              className="submit-screening-button"
+              onClick={() => setExpand(!expand)}
+            >
+              {expand ? '-' : '+'}
+            </button>
+          </div>
+        )}
+        {submit && (
+          <div>
+            <ScreeningsEditor today={today} show={show} submit={submit} />
+          </div>
+        )}
       </div>
     </div>
   );

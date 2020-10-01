@@ -1,5 +1,4 @@
 import React from 'react';
-import ScreeningsEditor from '../submit/ScreeningsEditor';
 import ShowsList from './ShowsList';
 
 const VenueList = (props) => {
@@ -19,9 +18,6 @@ const VenueList = (props) => {
             key={item.film}
           />
         ))}
-        <div className="shows-film">
-          <ScreeningsEditor today={today} submit={submit} />
-        </div>
       </div>
     </div>
   );

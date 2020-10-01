@@ -12,6 +12,31 @@ const digitsList = (first, last, label) => {
   return digits;
 };
 
+const showBoilerplate = {
+  alt_title: '',
+  director: '',
+  end_date: '',
+  film: '',
+  format: '',
+  movie_id: '',
+  release_date: '',
+  runtime: '',
+  screening_id: '',
+  screening_note: '',
+  screening_url: '',
+  series: '',
+  series_url: '',
+  showtimes: [],
+  showtimes_hide: '',
+  showtimesid: [],
+  start_date: '',
+  venue: '',
+  venue_address: '',
+  venueshorttitle: '',
+  year: '',
+};
+
 module.exports = {
   digitsList,
+  showBoilerplate,
 };

@@ -41,6 +41,10 @@ const normalizeShowtimes = (showtimes, showtimesHide, date) => {
   return newTimes;
 };
 
+const cutDate = (date) => {
+  return `${date.getUTCFullYear()}-${date.getUTCMonth()}-${date.getUTCDate()}`;
+};
+
 const getYear = (releaseDate) => {
   if (releaseDate === null) return '';
   return releaseDate.getFullYear();
@@ -88,6 +92,7 @@ const getShowtimesOnDate = (req, res) => {
           const venueTitle = rows[i].venue;
           const venueAddress = rows[i].venue_address.split(',');
           const shortAddress = `${venueAddress[0]}, ${venueAddress[1]}`;
+
           if (!showsByVenue[venueTitle]) {
             showsByVenue[venueTitle] = {
               venue: venueTitle,
@@ -102,6 +107,8 @@ const getShowtimesOnDate = (req, res) => {
             today,
           );
           showData.year = getYear(showData.release_date);
+          showData.start_date = cutDate(showData.start_date);
+          showData.end_date = cutDate(showData.end_date);
           if (
             showData.showtimes.length > 0 ||
             showData.format === 'Virtual Screening'

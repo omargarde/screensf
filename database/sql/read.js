@@ -2,6 +2,7 @@ const showtimesOnDate = `SELECT
     venues.title AS venue,
     venues.short_title AS venueShortTitle,
     venues.address AS venue_address,
+    movies.id AS movie_id,
     movies.title AS film,
     movies.director,
     movies.release_date,
@@ -29,6 +30,7 @@ const showtimesOnDate = `SELECT
     screenings.start_date <= $1 AND screenings.end_date >= $1 AND screenings.canceled = 0
     GROUP BY
     venues.title,
+    movies.id,
     movies.title,
     movies.director,
     movies.release_date,
