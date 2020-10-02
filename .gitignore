@@ -5,7 +5,7 @@ public/screensf-bundle.js
 Dockerfile
 .gcloudignore
 cloud_sql_proxy
-dbstff
+keys.js
 screen-sf-85b8f51a1820.json
 .eslintrc.js
 .prettierrc.js

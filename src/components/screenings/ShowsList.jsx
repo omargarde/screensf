@@ -1,13 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import Showtime from './Showtime';
 import ShowtimesEditor from '../submit/ShowtimesEditor';
 import ScreeningsEditor from '../submit/ScreeningsEditor';
+import { theMovieAPI } from '../../../keys';
 
 const ShowsList = (props) => {
   const { show, submit, today, theaters } = props;
   const [expand, setExpand] = useState(false);
-  const runtime = `${show.runtime}min`;
+  const [runtime, setRuntime] = useState('');
+  const movieId = show.movie_id;
+  const [movieData, setMovieData] = useState('');
+  const [director, setDirector] = useState(show.director);
+
+  const getCrew = (data, title) => {
+    const crewman = [];
+    data.credits.crew.forEach((crew) => {
+      if (crew.job === title) {
+        crewman.push(`${crew.name}`);
+      }
+    });
+    return crewman.join(', ');
+  }
+
+  useEffect(() => {
+    if (movieId > 1) {
+      axios({
+        method: 'get',
+        url: `https://api.themoviedb.org/3/movie/${movieId}?api_key=${theMovieAPI}&append_to_response=credits`,
+      })
+        .then((response) => {
+          setMovieData(response.data);
+          setDirector(getCrew(response.data, 'Director'));
+          if (response.data.runtime > 0) {
+            setRuntime(`${response.data.runtime}min`);
+          }
+        })
+        .catch((error) => {
+          throw new Error(error);
+        });
+    }
+  });
+
   return (
     <div className="shows-film">
       <div className="film-series">
@@ -27,13 +62,13 @@ const ShowsList = (props) => {
           rel="noreferrer"
           aria-describedby="new-window-2"
         >
-          {show.film ? show.film : show.alt_title}
+          {movieData.title ? movieData.title : show.alt_title}
         </a>
       </div>
       <div className="film-details">
-        <div>{show.director}</div>
+        <div>{director}</div>
         <div>{show.year}</div>
-        {show.runtime ? <div>{runtime}</div> : ''}
+        <div>{runtime}</div>
         <div>{show.format}</div>
       </div>
       <div className="film-note">{show.screening_note}</div>
