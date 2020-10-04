@@ -13,6 +13,7 @@ const ShowsList = (props) => {
   const movieId = show.movie_id;
   const [movieData, setMovieData] = useState('');
   const [director, setDirector] = useState(show.director);
+  const [year, setYear] = useState(show.year);
 
   const getCrew = (data, title) => {
     const crewman = [];
@@ -22,7 +23,11 @@ const ShowsList = (props) => {
       }
     });
     return crewman.join(', ');
-  }
+  };
+
+  const getYear = (releaseDate) => {
+    return releaseDate.split('-')[0];
+  };
 
   useEffect(() => {
     if (movieId > 1) {
@@ -31,10 +36,12 @@ const ShowsList = (props) => {
         url: `https://api.themoviedb.org/3/movie/${movieId}?api_key=${theMovieAPI}&append_to_response=credits`,
       })
         .then((response) => {
-          setMovieData(response.data);
-          setDirector(getCrew(response.data, 'Director'));
-          if (response.data.runtime > 0) {
-            setRuntime(`${response.data.runtime}min`);
+          const { data } = response;
+          setMovieData(data);
+          setDirector(getCrew(data, 'Director'));
+          setYear(getYear(data.release_date));
+          if (data.runtime > 0) {
+            setRuntime(`${data.runtime}min`);
           }
         })
         .catch((error) => {
@@ -67,7 +74,7 @@ const ShowsList = (props) => {
       </div>
       <div className="film-details">
         <div>{director}</div>
-        <div>{show.year}</div>
+        <div>{year}</div>
         <div>{runtime}</div>
         <div>{show.format}</div>
       </div>

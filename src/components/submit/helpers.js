@@ -26,6 +26,7 @@ const showBoilerplate = {
   screening_url: '',
   series: '',
   series_url: '',
+  series_id: '',
   showtimes: [],
   showtimes_hide: '',
   showtimesid: [],

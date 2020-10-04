@@ -3,13 +3,13 @@ import React, { useState } from 'react';
 function ScreeningsEditor(props) {
   const { show, theaters } = props;
   const [movId, setMovId] = useState(show.movie_id);
-  const [serId, setSerId] = useState();
+  const [serId, setSerId] = useState(show.series_id);
   const [altTitle, setAltTitle] = useState(show.alt_title);
   const [venue, setVenue] = useState(show.venue);
   const [screenNote, setScreenNote] = useState(show.screening_note);
   const [screenUrl, setScreenUrl] = useState(show.screening_url);
   const [format, setFormat] = useState(show.format);
-  const [canceled, setCanceled] = useState('');
+  const [canceled, setCanceled] = useState(show.canceled);
   const [startDate, setStartDate] = useState(show.start_date);
   const [endDate, setEndDate] = useState(show.end_date);
 
@@ -43,7 +43,7 @@ function ScreeningsEditor(props) {
           Series ID:
           <input
             onChange={(e) => setSerId(e.target.value)}
-            id={serId}
+            value={serId}
             type="text"
           />
         </label>
@@ -81,7 +81,7 @@ function ScreeningsEditor(props) {
             <option>70mm</option>
             <option>DV</option>
             <option>VHS</option>
-            <option>Virtual Screening</option>
+            <option value="Virtual Screening"> Virtual Screening</option>
           </select>
         </label>
         <label htmlFor={screenUrl}>
@@ -100,12 +100,15 @@ function ScreeningsEditor(props) {
             type="text"
           />
         </label>
-        <label htmlFor={canceled} onChange={(e) => setCanceled(e.target.value)}>
+        <label htmlFor={canceled}>
           Canceled?
-          <select>
+          <select
+            value={canceled}
+            onChange={(e) => setCanceled(e.target.value)}
+          >
             <option value="">Select...</option>
-            <option value="0">No</option>
-            <option value="1">Yes</option>
+            <option value={0}>No</option>
+            <option value={1}>Yes</option>
           </select>
         </label>
         <button
