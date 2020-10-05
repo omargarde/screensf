@@ -82,7 +82,10 @@ const postScreening = (req, res) => {
       screenings 
       (id, movies_id, venues_id, alt_title, screening_url, start_date, end_date, format, screening_note, canceled)
       VALUES 
-      (DEFAULT, $1, $2, $3, $4, $4, $5, $6, $7, $8, $9);`,
+      (DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8, $9)
+      RETURNING
+      id; 
+      `,
       [
         req.body.movies_id,
         req.body.venues_id,
@@ -95,15 +98,13 @@ const postScreening = (req, res) => {
         req.body.canceled,
       ],
     )
-    .then(() => {
+    .then((response) => {
       console.log('successful post');
-      res.end();
+      res.send(JSON.stringify(response.rows[0]));
     })
     .catch((error) => {
       throw new Error(error);
     });
-
-  res.end();
 };
 
 const postShowtimes = (req, res) => {
@@ -140,14 +141,11 @@ const postScreeningsSeries = (req, res) => {
       screenings_series
       (id, screenings_id, series_id)
       VALUES 
-      (DEFAULT, $/screenings_id/, $/series_id/);`,
-      {
-        screenings_id: req.body.screenings_id,
-        series_id: req.body.series_id,
-      },
+      (DEFAULT, $1, $2);`,
+      [req.body.screenings_id, req.body.series_id],
     )
     .then(() => {
-      console.log('successful screening post');
+      console.log('successful screening series post');
       res.end();
     })
     .catch((error) => {

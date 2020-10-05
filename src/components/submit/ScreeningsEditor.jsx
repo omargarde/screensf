@@ -1,20 +1,81 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import { cutDate } from './helpers';
 
 function ScreeningsEditor(props) {
   const { show, theaters } = props;
+  const start = cutDate(show.start_date);
+  const end = cutDate(show.end_date);
   const [movId, setMovId] = useState(show.movie_id);
-  const [serId, setSerId] = useState();
+  const [serId, setSerId] = useState(show.series_id);
+  // const [screenId, setScreenId] = useState(show.screening_id);
   const [altTitle, setAltTitle] = useState(show.alt_title);
-  const [venue, setVenue] = useState(show.venue);
+  const [venue, setVenue] = useState(show.venue_id);
   const [screenNote, setScreenNote] = useState(show.screening_note);
   const [screenUrl, setScreenUrl] = useState(show.screening_url);
-  const [format, setFormat] = useState(show.format);
-  const [canceled, setCanceled] = useState('');
-  const [startDate, setStartDate] = useState(show.start_date);
-  const [endDate, setEndDate] = useState(show.end_date);
+  const [screenFormat, setFormat] = useState(show.format);
+  const [screenCanceled, setCanceled] = useState(show.canceled);
+  const [startDate, setStartDate] = useState(start);
+  const [endDate, setEndDate] = useState(end);
+  const [success, setSuccess] = useState('');
+
+  const postScreenSeries = (screeningsId) => {
+    axios({
+      method: 'post',
+      url: `/screenings-series/`,
+      data: {
+        screenings_id: screeningsId,
+        series_id: serId,
+      },
+    })
+      .then(() => {
+        setSuccess('Successful screening and series post. Reload the page.');
+      })
+      .catch((error) => {
+        setSuccess('There was an error posting this showtime.');
+        throw new Error(error);
+      });
+  };
 
   const postScreening = () => {
-    return console.log('post screening');
+    axios({
+      method: 'post',
+      url: `/screenings/`,
+      data: {
+        movies_id: movId,
+        venues_id: venue,
+        alt_title: altTitle,
+        screening_url: screenUrl,
+        start_date: startDate,
+        end_date: endDate,
+        format: screenFormat,
+        screening_note: screenNote,
+        canceled: screenCanceled,
+      },
+    })
+      .then((screeningData) => {
+        const { data } = screeningData;
+        setSuccess('Screening posted successfully. Posting series data...');
+        postScreenSeries(data.id);
+      })
+      .catch((error) => {
+        setSuccess('There was an error posting this showtime.');
+        throw new Error(error);
+      });
+  };
+
+  const editScreening = () => {
+    // check each state for changes
+    // send axios request(s) for edits
+    return console.log('editScreening');
+  };
+
+  const handleScreening = () => {
+    if (show.movie_id) {
+      editScreening();
+    } else {
+      postScreening();
+    }
   };
 
   return (
@@ -33,7 +94,7 @@ function ScreeningsEditor(props) {
           <select value={venue} onChange={(e) => setVenue(e.target.value)}>
             <option value="">Select...</option>
             {theaters.map((theater) => (
-              <option key={theater.id} value={theater.title}>
+              <option key={theater.id} value={theater.id}>
                 {theater.title}
               </option>
             ))}
@@ -43,7 +104,7 @@ function ScreeningsEditor(props) {
           Series ID:
           <input
             onChange={(e) => setSerId(e.target.value)}
-            id={serId}
+            value={serId}
             type="text"
           />
         </label>
@@ -71,17 +132,20 @@ function ScreeningsEditor(props) {
             onChange={(e) => setEndDate(e.target.value)}
           />
         </label>
-        <label htmlFor={format}>
+        <label htmlFor={screenFormat}>
           Format:
-          <select value={format} onChange={(e) => setFormat(e.target.value)}>
+          <select
+            value={screenFormat}
+            onChange={(e) => setFormat(e.target.value)}
+          >
             <option value="">Select...</option>
-            <option>DCP</option>
-            <option>35mm</option>
-            <option>16mm</option>
-            <option>70mm</option>
-            <option>DV</option>
-            <option>VHS</option>
-            <option>Virtual Screening</option>
+            <option value="DCP">DCP</option>
+            <option value="35mm">35mm</option>
+            <option value="16mm">16mm</option>
+            <option value="70mm">70mm</option>
+            <option value="DV">DV</option>
+            <option value="VHS">VHS</option>
+            <option value="Virtual Screening"> Virtual Screening</option>
           </select>
         </label>
         <label htmlFor={screenUrl}>
@@ -100,24 +164,28 @@ function ScreeningsEditor(props) {
             type="text"
           />
         </label>
-        <label htmlFor={canceled} onChange={(e) => setCanceled(e.target.value)}>
+        <label htmlFor={screenCanceled}>
           Canceled?
-          <select>
+          <select
+            value={screenCanceled}
+            onChange={(e) => setCanceled(e.target.value)}
+          >
             <option value="">Select...</option>
-            <option value="0">No</option>
-            <option value="1">Yes</option>
+            <option value={0}>No</option>
+            <option value={1}>Yes</option>
           </select>
         </label>
         <button
           type="button"
           className="ssf-button"
           onClick={() => {
-            postScreening();
+            handleScreening();
           }}
         >
           Submit
         </button>
       </div>
+      <div>{success}</div>
     </div>
   );
 }

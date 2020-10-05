@@ -5,7 +5,7 @@ import Featured from './Featured';
 import Screenings from './screenings/Screenings';
 import DateSelector from './DateSelector';
 import 'react-datepicker/dist/react-datepicker.css';
-import { data, loadImage } from './helpers';
+import { data, loadImage, editShowtimes } from './helpers';
 import ScreeningsEditor from './submit/ScreeningsEditor';
 import { showBoilerplate } from './submit/helpers';
 
@@ -63,7 +63,7 @@ class Home extends React.Component {
   }
 
   fetchShowtimes() {
-    const { selectedDate } = this.state;
+    const { selectedDate, isSubmit } = this.state;
     const query = `/showtimes/${moment(selectedDate).format('YYYY-MM-DD')}`;
     this.setState({ isLoading: true });
     axios({
@@ -71,7 +71,14 @@ class Home extends React.Component {
       url: query,
     })
       .then((response) => {
-        this.setState({ showtimes: response.data, isLoading: false });
+        if (isSubmit) {
+          this.setState({ showtimes: response.data, isLoading: false });
+        } else {
+          this.setState({
+            showtimes: editShowtimes(response.data),
+            isLoading: false,
+          });
+        }
       })
       .catch((error) => {
         this.setState({ isLoading: true });

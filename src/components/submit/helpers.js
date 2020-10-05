@@ -18,7 +18,7 @@ const showBoilerplate = {
   end_date: '',
   film: '',
   format: '',
-  movie_id: '',
+  movie_id: false,
   release_date: '',
   runtime: '',
   screening_id: '',
@@ -26,6 +26,7 @@ const showBoilerplate = {
   screening_url: '',
   series: '',
   series_url: '',
+  series_id: '',
   showtimes: [],
   showtimes_hide: '',
   showtimesid: [],
@@ -36,7 +37,12 @@ const showBoilerplate = {
   year: '',
 };
 
+const cutDate = (date) => {
+  return date.split('T')[0];
+};
+
 module.exports = {
   digitsList,
   showBoilerplate,
+  cutDate,
 };
