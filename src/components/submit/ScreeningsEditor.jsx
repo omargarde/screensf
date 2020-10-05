@@ -10,7 +10,7 @@ function ScreeningsEditor(props) {
   const [serId, setSerId] = useState(show.series_id);
   // const [screenId, setScreenId] = useState(show.screening_id);
   const [altTitle, setAltTitle] = useState(show.alt_title);
-  const [venue, setVenue] = useState(show.venue);
+  const [venue, setVenue] = useState(show.venue_id);
   const [screenNote, setScreenNote] = useState(show.screening_note);
   const [screenUrl, setScreenUrl] = useState(show.screening_url);
   const [screenFormat, setFormat] = useState(show.format);
