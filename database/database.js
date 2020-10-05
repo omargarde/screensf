@@ -1,7 +1,6 @@
 const { Client } = require('pg');
 const moment = require('moment');
 const read = require('./sql/read');
-const e = require('express');
 
 const client = new Client({
   host: `localhost`,
@@ -40,14 +39,6 @@ const normalizeShowtimes = (showtimes, showtimesHide, date) => {
     }
   }
   return newTimes;
-};
-
-const cutDate = (date) => {
-  let day = date.getUTCDate();
-  let month = date.getUTCMonth();
-  if (date.getUTCDate() < 10) day = `0${date.getUTCDate()}`;
-  if (date.getUTCMonth() < 10) month = `0${date.getUTCMonth()}`;
-  return `${date.getUTCFullYear()}-${month}-${day}`;
 };
 
 const getYear = (releaseDate) => {
@@ -112,21 +103,12 @@ const getShowtimesOnDate = (req, res) => {
             today,
           );
           showData.year = getYear(showData.release_date);
-          showData.start_date = cutDate(showData.start_date);
-          showData.end_date = cutDate(showData.end_date);
-          if (
-            showData.showtimes.length > 0 ||
-            showData.format === 'Virtual Screening'
-          ) {
-            showsByVenue[venueTitle].shows.push(showData);
-          }
+          showsByVenue[venueTitle].shows.push(showData);
         }
 
         const showsFinal = {};
         Object.keys(showsByVenue).forEach((item) => {
-          if (showsByVenue[item].shows.length > 0) {
-            showsFinal[item] = showsByVenue[item];
-          }
+          showsFinal[item] = showsByVenue[item];
         });
         const showsStr = JSON.stringify(Object.values(showsFinal));
         res.send(showsStr);
