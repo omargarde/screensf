@@ -55,7 +55,24 @@ const SeriesEditor = () => {
   };
 
   const postSeries = () => {
-    setNote('post series');
+    axios({
+      method: 'post',
+      url: `/series/`,
+      data: {
+        title: serTitle,
+        start_date: startDate,
+        end_date: endDate,
+        series_description: serDesc,
+        series_url: serUrl,
+      },
+    })
+      .then(() => {
+        setNote('Series posted successfully.');
+      })
+      .catch((error) => {
+        setNote('There was an error posting this series.');
+        throw new Error(error);
+      });
   };
 
   const editSeries = () => {

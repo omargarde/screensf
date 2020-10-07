@@ -32,15 +32,19 @@ const postSeries = (req, res) => {
     .query(
       `INSERT INTO 
       series 
-      (id, title) 
+      (id, title, start_date, end_date, series_description, series_url) 
       VALUES 
-      (DEFAULT, $/title/);`,
-      {
-        title: req.body.title,
-      },
+      (DEFAULT, $1, $2, $3, $4, $5 );`,
+      [
+        req.body.title,
+        req.body.start_date,
+        req.body.end_date,
+        req.body.series_description,
+        req.body.series_url,
+      ],
     )
     .then(() => {
-      console.log('successful post');
+      console.log('successful series post');
       res.end();
     })
     .catch((error) => {
