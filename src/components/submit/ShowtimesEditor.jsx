@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { digitsList } from './helpers';
 
-function ShowtimesEditor(props) {
+const ShowtimesEditor = (props) => {
   const { show, today, submit } = props;
   const [expand, setExpand] = useState(false);
   const [hour, setHour] = useState('01');
@@ -84,6 +84,6 @@ function ShowtimesEditor(props) {
       )}
     </span>
   );
-}
+};
 
 export default ShowtimesEditor;

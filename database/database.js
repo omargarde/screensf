@@ -136,9 +136,25 @@ const getVenues = (req, res) => {
     });
 };
 
+const getSeries = (req, res) => {
+  const query = {
+    text: read.getSeries,
+  };
+  client
+    .query(query)
+    .then((data) => {
+      res.send(JSON.stringify(data.rows));
+      res.end();
+    })
+    .catch((error) => {
+      res.end(error);
+    });
+};
+
 module.exports = {
   getShowtimesOnDate,
   getRecommendedOnDate,
   getVenues,
+  getSeries,
   client,
 };

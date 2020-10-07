@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { cutDate } from './helpers';
 
-function ScreeningsEditor(props) {
+const ScreeningsEditor = (props) => {
   const { show, theaters } = props;
   const start = cutDate(show.start_date);
   const end = cutDate(show.end_date);
@@ -188,6 +188,6 @@ function ScreeningsEditor(props) {
       <div>{success}</div>
     </div>
   );
-}
+};
 
 export default ScreeningsEditor;

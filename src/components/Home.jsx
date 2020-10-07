@@ -8,6 +8,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { data, loadImage, editShowtimes } from './helpers';
 import ScreeningsEditor from './submit/ScreeningsEditor';
 import { showBoilerplate } from './submit/helpers';
+import SeriesEditor from './submit/SeriesEditor';
+import Expand from './submit/Expand';
 
 class Home extends React.Component {
   constructor(props) {
@@ -21,10 +23,13 @@ class Home extends React.Component {
       selectedDate: new Date(),
       loading: loadImage,
       expand: false,
+      serExpand: false,
       theaters: '',
     };
     this.fetchFrontPage();
     this.dateChange = this.dateChange.bind(this);
+    this.expandChange = this.expandChange.bind(this);
+    this.serExpandChange = this.serExpandChange.bind(this);
   }
 
   dateChange(date) {
@@ -34,6 +39,16 @@ class Home extends React.Component {
       },
       this.fetchFrontPage,
     );
+  }
+
+  expandChange() {
+    const { expand } = this.state;
+    this.setState({ expand: !expand });
+  }
+
+  serExpandChange() {
+    const { serExpand } = this.state;
+    this.setState({ serExpand: !serExpand });
   }
 
   fetchFrontPage() {
@@ -105,6 +120,7 @@ class Home extends React.Component {
       showtimes,
       loading,
       expand,
+      serExpand,
       theaters,
     } = this.state;
 
@@ -129,25 +145,22 @@ class Home extends React.Component {
           handleDateChange={this.dateChange}
         />
         <Featured featured={featured} today={selectedDate} />
-        {isSubmit && (
-          <div className="film-title">
-            Add Screening
-            <button
-              type="button"
-              className="submit-screening-button"
-              onClick={() => this.setState({ expand: !expand })}
-            >
-              {expand ? '-' : '+'}
-            </button>
-          </div>
-        )}
+        <Expand
+          handleExpand={this.expandChange}
+          expand={expand}
+          submit={isSubmit}
+          title="Add Screening"
+        />
         {expand && (
-          <ScreeningsEditor
-            show={showBoilerplate}
-            submit={isSubmit}
-            theaters={theaters}
-          />
+          <ScreeningsEditor show={showBoilerplate} theaters={theaters} />
         )}
+        <Expand
+          handleExpand={this.serExpandChange}
+          expand={serExpand}
+          submit={isSubmit}
+          title="Series Editor"
+        />
+        {serExpand && <SeriesEditor show={showBoilerplate} />}
         <Screenings
           venues={showtimes}
           today={moment(selectedDate).format('YYYY-MM-DD')}

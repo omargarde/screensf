@@ -99,8 +99,11 @@ screenings.screening_note;`;
 
 const getVenues = `SELECT * from venues`;
 
+const getSeries = `SELECT * from series`;
+
 module.exports = {
   showtimesOnDate,
   recommendedOnDate,
   getVenues,
+  getSeries,
 };

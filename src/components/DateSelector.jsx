@@ -18,14 +18,14 @@ const DateSelector = (props) => {
       <button
         type="button"
         className="ssf-button"
-        onClick={() => props.handleDateChange(dates.yesterday.toDate())}
+        onClick={() => handleDateChange(dates.yesterday.toDate())}
       >
         Previous
       </button>
       <button
         type="button"
         className="ssf-button"
-        onClick={() => props.handleDateChange(dates.tomorrow.toDate())}
+        onClick={() => handleDateChange(dates.tomorrow.toDate())}
       >
         Next
       </button>

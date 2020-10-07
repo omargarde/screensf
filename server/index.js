@@ -16,6 +16,8 @@ app.get('/showtimes/:id', db.getShowtimesOnDate);
 
 app.get('/venues/', db.getVenues);
 
+app.get('/series/', db.getSeries);
+
 // Create
 app.post('/movies/', post.postMovie);
 
