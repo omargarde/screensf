@@ -76,7 +76,25 @@ const SeriesEditor = () => {
   };
 
   const editSeries = () => {
-    setNote('edit series');
+    axios({
+      method: 'put',
+      url: `/series/`,
+      data: {
+        series_id: serId,
+        title: serTitle,
+        start_date: startDate,
+        end_date: endDate,
+        series_description: serDesc,
+        series_url: serUrl,
+      },
+    })
+      .then(() => {
+        setNote('Series edited successfully.');
+      })
+      .catch((error) => {
+        setNote('There was an error editing this series.');
+        throw new Error(error);
+      });
   };
 
   const handleSeries = () => {

@@ -2,8 +2,9 @@ const express = require('express');
 const path = require('path');
 
 const app = express();
-const db = require('../database/database.js');
-const post = require('../database/post.js');
+const db = require('../database/database');
+const post = require('../database/post');
+const put = require('../database/put');
 
 app.use('/', express.static(path.join(__dirname, '../dist')));
 app.use(express.json());
@@ -34,6 +35,9 @@ app.post('/screenings-series/', post.postScreeningsSeries);
 app.post('/venues-series/', post.postVenuesSeries);
 
 // Update
+app.put('/series/', put.editSeries);
+
+app.put('/screenings/', put.editScreening);
 
 // Delete
 

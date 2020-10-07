@@ -4,11 +4,11 @@ import { cutDate } from './helpers';
 
 const ScreeningsEditor = (props) => {
   const { show, theaters } = props;
+  const screenId = show.screening_id;
   const start = cutDate(show.start_date);
   const end = cutDate(show.end_date);
   const [movId, setMovId] = useState(show.movie_id);
   const [serId, setSerId] = useState(show.series_id);
-  // const [screenId, setScreenId] = useState(show.screening_id);
   const [altTitle, setAltTitle] = useState(show.alt_title);
   const [venue, setVenue] = useState(show.venue_id);
   const [screenNote, setScreenNote] = useState(show.screening_note);
@@ -65,9 +65,30 @@ const ScreeningsEditor = (props) => {
   };
 
   const editScreening = () => {
-    // check each state for changes
-    // send axios request(s) for edits
-    return console.log('editScreening');
+    axios({
+      method: 'put',
+      url: `/screenings/`,
+      data: {
+        screening_id: screenId,
+        movies_id: movId,
+        venues_id: venue,
+        alt_title: altTitle,
+        screening_url: screenUrl,
+        start_date: startDate,
+        end_date: endDate,
+        format: screenFormat,
+        screening_note: screenNote,
+        canceled: screenCanceled,
+      },
+    })
+      .then(() => {
+        setSuccess('Screening edited successfully. Editing series data...');
+        // editScreenSeries(data.id);
+      })
+      .catch((error) => {
+        setSuccess('There was an error editing this showtime.');
+        throw new Error(error);
+      });
   };
 
   const handleScreening = () => {
