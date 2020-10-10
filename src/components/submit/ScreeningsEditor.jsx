@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+/* eslint-disable camelcase */
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { cutDate } from './helpers';
 
 const ScreeningsEditor = (props) => {
   const { show, theaters } = props;
-  const screenId = show.screening_id;
+  const screenId = show.screening_id ? show.screening_id : 'newScr';
   const start = cutDate(show.start_date);
   const end = cutDate(show.end_date);
+  const [scrId, setScrId] = useState(screenId);
   const [movId, setMovId] = useState(show.movie_id);
+  const [origSer, setOrigSer] = useState(show.series_id);
   const [serId, setSerId] = useState(show.series_id);
   const [altTitle, setAltTitle] = useState(show.alt_title);
   const [venue, setVenue] = useState(show.venue_id);
@@ -17,7 +20,82 @@ const ScreeningsEditor = (props) => {
   const [screenCanceled, setCanceled] = useState(show.canceled);
   const [startDate, setStartDate] = useState(start);
   const [endDate, setEndDate] = useState(end);
-  const [success, setSuccess] = useState('');
+  const [note, setNote] = useState('');
+  const [serList, setSerList] = useState([]);
+  const [scrList, setScrList] = useState([]);
+  const [scrKey, setScrKey] = useState('new');
+
+  useEffect(() => {
+    const getSeriesList = () => {
+      axios({
+        method: 'get',
+        url: '/series/',
+      })
+        .then((response) => {
+          const { data } = response;
+          setSerList(data);
+        })
+        .catch((error) => {
+          throw new Error(error);
+        });
+    };
+    const getScreeningsList = () => {
+      axios({
+        method: 'get',
+        url: '/screenings/',
+      })
+        .then((response) => {
+          const { data } = response;
+          setScrList(data);
+        })
+        .catch((error) => {
+          throw new Error(error);
+        });
+    };
+    getScreeningsList();
+    getSeriesList();
+  }, []);
+
+  const selectScreening = (selectedId) => {
+    setNote('');
+    setScrKey(selectedId);
+    setScrId('');
+    setMovId('');
+    setVenue('');
+    setAltTitle('');
+    setScreenUrl('');
+    setStartDate('');
+    setEndDate('');
+    setFormat('');
+    setScreenNote('');
+    setCanceled('');
+    if (selectedId === 'new') return;
+    const {
+      screening_id,
+      movies_id,
+      venue_id,
+      series_id,
+      alt_title,
+      screening_url,
+      start_date,
+      end_date,
+      format,
+      screening_note,
+      canceled,
+    } = scrList[selectedId];
+    setScrId(screening_id);
+    setMovId(movies_id);
+    setSerId(series_id);
+    setOrigSer(series_id);
+    setVenue(venue_id);
+    setAltTitle(alt_title);
+    setScreenUrl(screening_url);
+    setStartDate(cutDate(start_date));
+    setEndDate(cutDate(end_date));
+    setFormat(format);
+    setScreenNote(screening_note);
+    setCanceled(canceled);
+  };
 
   const postScreenSeries = (screeningsId) => {
     axios({
@@ -29,12 +107,39 @@ const ScreeningsEditor = (props) => {
       },
     })
       .then(() => {
-        setSuccess('Successful screening and series post. Reload the page.');
+        setNote('Successful screening and series post. Reload the page.');
       })
       .catch((error) => {
-        setSuccess('There was an error posting this showtime.');
+        setNote(
+          'The screening posted, but there was an error posting the series.',
+        );
         throw new Error(error);
       });
+  };
+
+  const editScreenSeries = () => {
+    if (serId !== origSer) {
+      axios({
+        method: 'put',
+        url: `/screenings-series/`,
+        data: {
+          screenings_id: scrId,
+          series_id: origSer,
+          new_series: serId,
+        },
+      })
+        .then(() => {
+          setNote('Successful screening and series edits. Reload the page.');
+        })
+        .catch((error) => {
+          setNote(
+            'The screening edited, but there was an error editing the series.',
+          );
+          throw new Error(error);
+        });
+    } else {
+      setNote('Successful screening edit. No series change necessary.');
+    }
   };
 
   const postScreening = () => {
@@ -55,11 +160,11 @@ const ScreeningsEditor = (props) => {
     })
       .then((screeningData) => {
         const { data } = screeningData;
-        setSuccess('Screening posted successfully. Posting series data...');
+        setNote('Screening posted successfully. Posting series data...');
         postScreenSeries(data.id);
       })
       .catch((error) => {
-        setSuccess('There was an error posting this showtime.');
+        setNote('There was an error posting this screening.');
         throw new Error(error);
       });
   };
@@ -69,7 +174,7 @@ const ScreeningsEditor = (props) => {
       method: 'put',
       url: `/screenings/`,
       data: {
-        screening_id: screenId,
+        screening_id: scrId,
         movies_id: movId,
         venues_id: venue,
         alt_title: altTitle,
@@ -82,26 +187,46 @@ const ScreeningsEditor = (props) => {
       },
     })
       .then(() => {
-        setSuccess('Screening edited successfully. Editing series data...');
-        // editScreenSeries(data.id);
+        setNote('Screening edited successfully. Editing series data...');
+        editScreenSeries();
       })
       .catch((error) => {
-        setSuccess('There was an error editing this showtime.');
+        setNote('There was an error editing this screening.');
         throw new Error(error);
       });
   };
 
   const handleScreening = () => {
-    if (show.movie_id) {
-      editScreening();
-    } else {
+    if (scrId === 'newScr') {
       postScreening();
+      setNote('posting screening..');
+    } else {
+      editScreening();
+      setNote('editing screening..');
     }
   };
 
   return (
     <div className="submit-form">
       <div>
+        {show.screenings_id ? (
+          ''
+        ) : (
+          <label htmlFor={scrKey}>
+            Select Screening:
+            <select
+              value={scrKey}
+              onChange={(e) => selectScreening(e.target.value)}
+            >
+              <option value="new">New Screening</option>
+              {scrList.map((selScr, i) => (
+                <option key={selScr.id} value={i}>
+                  {selScr.alt_title}
+                </option>
+              ))}
+            </select>
+          </label>
+        )}
         <label htmlFor={movId}>
           Movie ID:
           <input
@@ -122,12 +247,15 @@ const ScreeningsEditor = (props) => {
           </select>
         </label>
         <label htmlFor={serId}>
-          Series ID:
-          <input
-            onChange={(e) => setSerId(e.target.value)}
-            value={serId}
-            type="text"
-          />
+          Select Series:
+          <select value={serId} onChange={(e) => setSerId(e.target.value)}>
+            <option value="">Select...</option>
+            {serList.map((selSer) => (
+              <option key={selSer.id} value={selSer.id}>
+                {selSer.title}
+              </option>
+            ))}
+          </select>
         </label>
         <label htmlFor={altTitle}>
           Alt Title:
@@ -206,7 +334,7 @@ const ScreeningsEditor = (props) => {
           Submit
         </button>
       </div>
-      <div>{success}</div>
+      <div>{note}</div>
     </div>
   );
 };

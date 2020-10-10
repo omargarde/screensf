@@ -19,6 +19,10 @@ app.get('/venues/', db.getVenues);
 
 app.get('/series/', db.getSeries);
 
+app.get('/movies/', db.getMovies);
+
+app.get('/screenings/', db.getScreenings);
+
 // Create
 app.post('/movies/', post.postMovie);
 
@@ -38,6 +42,8 @@ app.post('/venues-series/', post.postVenuesSeries);
 app.put('/series/', put.editSeries);
 
 app.put('/screenings/', put.editScreening);
+
+app.put('/screenings-series/', put.editScreeningsSeries);
 
 // Delete
 

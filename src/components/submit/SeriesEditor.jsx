@@ -15,18 +15,21 @@ const SeriesEditor = () => {
   const [note, setNote] = useState('');
 
   useEffect(() => {
-    axios({
-      method: 'get',
-      url: '/series/',
-    })
-      .then((response) => {
-        const { data } = response;
-        setSerList(data);
+    const getSeriesList = () => {
+      axios({
+        method: 'get',
+        url: '/series/',
       })
-      .catch((error) => {
-        throw new Error(error);
-      });
-  });
+        .then((response) => {
+          const { data } = response;
+          setSerList(data);
+        })
+        .catch((error) => {
+          throw new Error(error);
+        });
+    };
+    getSeriesList();
+  }, []);
 
   const selectSeries = (selectedId) => {
     setNote('');

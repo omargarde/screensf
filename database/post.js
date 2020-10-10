@@ -1,33 +1,34 @@
 const screensf = require('./database.js');
 
-const postMovie = (req, res) => {
+const postMovie = (req, res, next) => {
   screensf.client
     .query(
       `INSERT INTO 
       movies 
-      (id, title, director, year, duration) 
+      (id, title, director, release_date, runtime, synopsis) 
       VALUES 
-      ($/id/, $/title/, $/director/, $/year/, $/duration/);`,
-      {
-        id: req.body.id,
-        title: req.body.title,
-        director: req.body.director,
-        year: req.body.year,
-        duration: req.body.duration,
-      },
+      ($1, $2, $3, $4, $5, $6);`,
+      [
+        req.body.id,
+        req.body.title,
+        req.body.director,
+        req.body.release_date,
+        req.body.runtime,
+        req.body.synopsis,
+      ],
     )
     .then(() => {
       console.log('successful post');
       res.end();
     })
     .catch((error) => {
-      throw new Error(error);
+      return next(error);
     });
 
   res.end();
 };
 
-const postSeries = (req, res) => {
+const postSeries = (req, res, next) => {
   screensf.client
     .query(
       `INSERT INTO 
@@ -48,38 +49,34 @@ const postSeries = (req, res) => {
       res.end();
     })
     .catch((error) => {
-      throw new Error(error);
+      return next(error);
     });
 
   res.end();
 };
 
-const postVenue = (req, res) => {
+const postVenue = (req, res, next) => {
   screensf.client
     .query(
       `INSERT INTO 
       venues 
       (id, title, short_title, city) 
       VALUES 
-      (DEFAULT, $/title/, $/short_title/, $/city/);`,
-      {
-        title: req.body.title,
-        short_title: req.body.short_title,
-        city: req.body.city,
-      },
+      (DEFAULT, $1, $2, $3);`,
+      [req.body.title, req.body.short_title, req.body.city],
     )
     .then(() => {
       console.log('successful post');
       res.end();
     })
     .catch((error) => {
-      throw new Error(error);
+      return next(error);
     });
 
   res.end();
 };
 
-const postScreening = (req, res) => {
+const postScreening = (req, res, next) => {
   screensf.client
     .query(
       `INSERT INTO 
@@ -107,11 +104,11 @@ const postScreening = (req, res) => {
       res.send(JSON.stringify(response.rows[0]));
     })
     .catch((error) => {
-      throw new Error(error);
+      return next(error);
     });
 };
 
-const postShowtimes = (req, res) => {
+const postShowtimes = (req, res, next) => {
   screensf.client
     .query(
       `INSERT INTO 
@@ -132,13 +129,13 @@ const postShowtimes = (req, res) => {
       res.end();
     })
     .catch((error) => {
-      throw new Error(error);
+      return next(error);
     });
 
   res.end();
 };
 
-const postScreeningsSeries = (req, res) => {
+const postScreeningsSeries = (req, res, next) => {
   screensf.client
     .query(
       `INSERT INTO 
@@ -153,13 +150,13 @@ const postScreeningsSeries = (req, res) => {
       res.end();
     })
     .catch((error) => {
-      throw new Error(error);
+      return next(error);
     });
 
   res.end();
 };
 
-const postVenuesSeries = (req, res) => {
+const postVenuesSeries = (req, res, next) => {
   screensf.client
     .query(
       `INSERT INTO 
@@ -167,44 +164,41 @@ const postVenuesSeries = (req, res) => {
       (id, venues_id, series_id)
       VALUES 
       (DEFAULT, $/venues_id/, $/series_id/);`,
-      {
-        venues_id: req.body.venues_id,
-        series_id: req.body.series_id,
-      },
+      [req.body.venues_id, req.body.series_id],
     )
     .then(() => {
       console.log('successful venue post');
       res.end();
     })
     .catch((error) => {
-      throw new Error(error);
+      return next(error);
     });
 
   res.end();
 };
 
-const postFeaturedScreening = (req, res) => {
+const postFeaturedScreening = (req, res, next) => {
   screensf.client
     .query(
       `INSERT INTO 
         featured_films
         (id, screenings_id, ondate, featured_image, author, article)
         VALUES 
-        (DEFAULT, $/screenings_id/, $/ondate/, $/featured_image/, $/author/, $/article/);`,
-      {
-        screenings_id: req.body.screenings_id,
-        ondate: req.body.ondate,
-        featured_image: req.body.featured_image,
-        author: req.body.author,
-        article: req.body.article,
-      },
+        (DEFAULT, $1, $2, $3, $4, $5);`,
+      [
+        req.body.screenings_id,
+        req.body.ondate,
+        req.body.featured_image,
+        req.body.author,
+        req.body.article,
+      ],
     )
     .then(() => {
       console.log('successful featured screening post');
       res.end();
     })
     .catch((error) => {
-      throw new Error(error);
+      return next(error);
     });
 
   res.end();

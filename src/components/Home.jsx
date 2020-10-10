@@ -10,6 +10,7 @@ import ScreeningsEditor from './submit/ScreeningsEditor';
 import { showBoilerplate } from './submit/helpers';
 import SeriesEditor from './submit/SeriesEditor';
 import Expand from './submit/Expand';
+import MoviesEditor from './submit/MoviesEditor';
 
 class Home extends React.Component {
   constructor(props) {
@@ -18,18 +19,20 @@ class Home extends React.Component {
       showtimes: [],
       featured: data,
       isLoading: true,
-      isSubmit: true,
+      isSubmit: false,
       today: new Date(),
       selectedDate: new Date(),
       loading: loadImage,
       expand: false,
       serExpand: false,
+      movExpand: false,
       theaters: '',
     };
     this.fetchFrontPage();
     this.dateChange = this.dateChange.bind(this);
     this.expandChange = this.expandChange.bind(this);
     this.serExpandChange = this.serExpandChange.bind(this);
+    this.movExpandChange = this.movExpandChange.bind(this);
   }
 
   dateChange(date) {
@@ -49,6 +52,11 @@ class Home extends React.Component {
   serExpandChange() {
     const { serExpand } = this.state;
     this.setState({ serExpand: !serExpand });
+  }
+
+  movExpandChange() {
+    const { movExpand } = this.state;
+    this.setState({ movExpand: !movExpand });
   }
 
   fetchFrontPage() {
@@ -121,6 +129,7 @@ class Home extends React.Component {
       loading,
       expand,
       serExpand,
+      movExpand,
       theaters,
     } = this.state;
 
@@ -161,6 +170,13 @@ class Home extends React.Component {
           title="Series Editor"
         />
         {serExpand && <SeriesEditor show={showBoilerplate} />}
+        <Expand
+          handleExpand={this.movExpandChange}
+          expand={movExpand}
+          submit={isSubmit}
+          title="Movie Editor"
+        />
+        {movExpand && <MoviesEditor />}
         <Screenings
           venues={showtimes}
           today={moment(selectedDate).format('YYYY-MM-DD')}

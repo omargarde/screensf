@@ -30,7 +30,7 @@ const ShowsList = (props) => {
   };
 
   useEffect(() => {
-    if (movieId > 1) {
+    const getMovieData = () => {
       axios({
         method: 'get',
         url: `https://api.themoviedb.org/3/movie/${movieId}?api_key=${theMovieAPI}&append_to_response=credits`,
@@ -47,8 +47,11 @@ const ShowsList = (props) => {
         .catch((error) => {
           throw new Error(error);
         });
+    };
+    if (movieId > 1) {
+      getMovieData();
     }
-  });
+  }, [movieId]);
 
   return (
     <div className="shows-film">

@@ -1,6 +1,6 @@
 const screensf = require('./database.js');
 
-const editSeries = (req, res) => {
+const editSeries = (req, res, next) => {
   screensf.client
     .query(
       `UPDATE
@@ -23,11 +23,11 @@ const editSeries = (req, res) => {
       res.end();
     })
     .catch((error) => {
-      console.error(error);
+      return next(error);
     });
 };
 
-const editScreening = (req, res) => {
+const editScreening = (req, res, next) => {
   screensf.client
     .query(
       `UPDATE
@@ -51,28 +51,37 @@ const editScreening = (req, res) => {
         req.body.canceled,
       ],
     )
-    .then((r) => {
-      console.log('successful edit', r);
-      console.log(
-        req.body.screening_id,
-        req.body.movies_id,
-        req.body.venues_id,
-        req.body.alt_title,
-        req.body.screening_url,
-        req.body.start_date,
-        req.body.end_date,
-        req.body.format,
-        req.body.screening_note,
-        req.body.canceled,
-      );
+    .then(() => {
+      console.log('successful edit');
       res.end();
     })
     .catch((error) => {
-      console.error(error);
+      return next(error);
+    });
+};
+
+const editScreeningsSeries = (req, res, next) => {
+  screensf.client
+    .query(
+      `UPDATE
+      screenings_series
+      SET 
+      screenings_id = $1, series_id = $3
+      WHERE
+      screenings_id = $1 AND series_id = $2
+      `,
+      [req.body.screenings_id, req.body.series_id, req.body.new_series],
+    )
+    .then(() => {
+      console.log('successful edit');
+    })
+    .catch((error) => {
+      return next(error);
     });
 };
 
 module.exports = {
   editSeries,
   editScreening,
+  editScreeningsSeries,
 };

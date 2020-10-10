@@ -101,9 +101,44 @@ const getVenues = `SELECT * from venues`;
 
 const getSeries = `SELECT * from series`;
 
+const getMovies = `SELECT *  FROM  movies`;
+
+const getScreenings = `SELECT
+  screenings.id AS screening_id,
+  screenings.movies_id,
+  screenings.alt_title,
+  screenings.screening_url,
+  screenings.start_date,
+  screenings.end_date,
+  screenings.format,
+  screenings.screening_note,
+  screenings.canceled,
+  string_agg(DISTINCT series.id::character varying, ', ') AS series_id,
+  venues.id AS venue_id
+  FROM
+  screenings
+  INNER JOIN venues ON screenings.venues_id=venues.id
+  INNER JOIN screenings_series ON screenings.id = screenings_series.screenings_id
+  INNER JOIN series ON series.id = screenings_series.series_id 
+  GROUP BY
+  screenings.id,
+  venues.id,
+  series.id,
+  screenings.movies_id,
+  screenings.alt_title,
+  screenings.screening_url,
+  screenings.start_date,
+  screenings.end_date,
+  screenings.format,
+  screenings.screening_note,
+  screenings.canceled;
+  `;
+
 module.exports = {
   showtimesOnDate,
   recommendedOnDate,
   getVenues,
   getSeries,
+  getMovies,
+  getScreenings,
 };

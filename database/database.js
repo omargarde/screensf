@@ -1,15 +1,16 @@
 const { Client } = require('pg');
 const moment = require('moment');
 const read = require('./sql/read');
+// const { proxy } = require('../keys');
+// const { local } = require('../keys');
+// const client = new Client(proxy);
+// const client = new Client(local);
 
 const client = new Client({
-  host: `localhost`,
-  user: process.env.USER,
-  database: 'screensf',
-  // host: `/cloudsql/${process.env.CLOUD_SQL_CONNECTION_NAME}`,
-  // user: process.env.DB_USER,
-  // database: process.env.DB_NAME,
-  // password: process.env.DB_PASS,
+  host: `/cloudsql/${process.env.CLOUD_SQL_CONNECTION_NAME}`,
+  user: process.env.DB_USER,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASS,
 });
 
 client.connect((err) => {
@@ -30,7 +31,7 @@ const normalizeShowtimes = (showtimes, showtimesHide, date) => {
   const newTimes = [];
   if (showtimes === null) return newTimes;
   const times = showtimes.split(',');
-  const today = new Date(`${date} 00:00:00-8:00`);
+  const today = new Date(`${date} 01:00:00-8:00`);
   const tomorrow = addDays(today, 1);
   for (let x = 0; x < times.length; x += 1) {
     const showtime = new Date(times[x]);
@@ -151,10 +152,42 @@ const getSeries = (req, res) => {
     });
 };
 
+const getMovies = (req, res) => {
+  const query = {
+    text: read.getMovies,
+  };
+  client
+    .query(query)
+    .then((data) => {
+      res.send(JSON.stringify(data.rows));
+      res.end();
+    })
+    .catch((error) => {
+      res.end(error);
+    });
+};
+
+const getScreenings = (req, res) => {
+  const query = {
+    text: read.getScreenings,
+  };
+  client
+    .query(query)
+    .then((data) => {
+      res.send(JSON.stringify(data.rows));
+      res.end();
+    })
+    .catch((error) => {
+      res.end(error);
+    });
+};
+
 module.exports = {
   getShowtimesOnDate,
   getRecommendedOnDate,
   getVenues,
   getSeries,
+  getMovies,
+  getScreenings,
   client,
 };

@@ -305,6 +305,8 @@ $highlight: #8B2635;
   }
   
   .film-note {
+    display: flex;
+    flex-wrap: wrap;
     font-weight: 300;
     font-size: .85em;
   }
@@ -316,7 +318,7 @@ $highlight: #8B2635;
   }
 
   .showtime {
-    margin-right: 1%;
+    margin-right: 3%;
   }
 
   .submit-form {
