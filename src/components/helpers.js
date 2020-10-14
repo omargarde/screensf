@@ -20,7 +20,7 @@ const editShowtimes = (showtimes) => {
   let showsArray = [];
   showtimes.forEach((venue) => {
     venue.shows.forEach((show) => {
-      if (show.showtimes.length > 0 || show.format === 'Virtual Screening') {
+      if (show.showtimesid != null || show.format === 'Virtual Screening') {
         showsArray.push(show);
       }
     });

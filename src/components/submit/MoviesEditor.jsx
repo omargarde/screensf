@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { cutDate } from './helpers';
+import { theMovieAPI } from '../../../keys';
 
 const MoviesEditor = () => {
   const [movKey, setMovKey] = useState('new');
@@ -26,7 +27,36 @@ const MoviesEditor = () => {
       .catch((error) => {
         throw new Error(error);
       });
-  }, [movList]);
+  }, []);
+
+  const getCrew = (data, title) => {
+    const crewman = [];
+    data.credits.crew.forEach((crew) => {
+      if (crew.job === title) {
+        crewman.push(`${crew.name}`);
+      }
+    });
+    return crewman.join(', ');
+  };
+
+  const getMovieData = (movieId) => {
+    setMovId(movieId);
+    axios({
+      method: 'get',
+      url: `https://api.themoviedb.org/3/movie/${movieId}?api_key=${theMovieAPI}&append_to_response=credits`,
+    })
+      .then((response) => {
+        const { data } = response;
+        setMovTitle(data.title);
+        setMovDirector(getCrew(data, 'Director'));
+        setRelDate(data.release_date);
+        setMovRuntime(data.runtime);
+        setMovSyn(data.overview);
+      })
+      .catch((error) => {
+        throw new Error(error);
+      });
+  };
 
   const selectMovie = (selectedId) => {
     setNote('');
@@ -36,7 +66,9 @@ const MoviesEditor = () => {
     setRelDate('');
     setMovRuntime('');
     setMovSyn('');
-    if (selectedId === 'new') return;
+    if (selectedId === 'new') {
+      return;
+    }
     const { id, title, director, release_date, runtime, synopsis } = movList[
       selectedId
     ];
@@ -116,7 +148,7 @@ const MoviesEditor = () => {
       <label htmlFor={movId}>
         Movie ID:
         <input
-          onChange={(e) => setMovId(e.target.value)}
+          onChange={(e) => getMovieData(e.target.value)}
           value={movId}
           type="text"
         />

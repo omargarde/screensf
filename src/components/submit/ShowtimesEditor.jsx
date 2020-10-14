@@ -3,27 +3,31 @@ import axios from 'axios';
 import { digitsList } from './helpers';
 
 const ShowtimesEditor = (props) => {
-  const { show, today, submit } = props;
+  const { screening, today, submit, showtimes } = props;
   const [expand, setExpand] = useState(false);
-  const [hour, setHour] = useState('01');
+  const [hour, setHour] = useState('00');
   const [minute, setMinute] = useState('00');
-  const [ampm, setAmpm] = useState('AM');
   const [success, setSuccess] = useState('');
+  const [shoKey, setShoKey] = useState('new');
+  const [shoId, setShoId] = useState('');
+  const [shoNote, setShoNote] = useState('');
+  const [shoCanceled, setCanceled] = useState(0);
+  const [shoHide, setHide] = useState(0);
+
+  const newShow = () => {
+    return `${today} ${hour}:${minute}:00-8:00`;
+  };
 
   const postShowtime = () => {
-    let twentyFour = hour;
-    if (ampm === 'PM' && twentyFour < 12) twentyFour = Number(hour) + 12;
-    if (ampm === 'AM' && hour === '12') twentyFour = '00';
-    const newShowtime = `${today} ${twentyFour}:${minute}:00-8:00`;
     axios({
       method: 'post',
       url: `/showtimes/`,
       data: {
-        screenings_id: show.screening_id,
-        showtime: newShowtime,
-        showtime_note: '',
-        canceled: 0,
-        hide: 0,
+        screenings_id: screening,
+        showtime: newShow(),
+        showtime_note: shoNote,
+        canceled: shoCanceled,
+        hide: shoHide,
       },
     })
       .then(() => {
@@ -33,6 +37,50 @@ const ShowtimesEditor = (props) => {
         setSuccess('There was an error posting this showtime.');
         throw new Error(error);
       });
+  };
+
+  const editShowtime = () => {
+    axios({
+      method: 'put',
+      url: `/showtimes/`,
+      data: {
+        showtime_id: shoId,
+        showtime: newShow(),
+        showtime_note: shoNote,
+        canceled: shoCanceled,
+        hide: shoHide,
+      },
+    })
+      .then(() => {
+        setSuccess('Successful edit. Reload the page.');
+      })
+      .catch((error) => {
+        setSuccess('There was an error posting this showtime.');
+        throw new Error(error);
+      });
+  };
+
+  const selectShowtime = (key) => {
+    const showTimeData = showtimes[key];
+    setShoKey(key);
+    setShoId(showTimeData.id);
+    const shoHour = showTimeData.showtime.slice(11, 13);
+    const shoMin = showTimeData.showtime.slice(14, 16);
+    setHour(shoHour);
+    setMinute(shoMin);
+    setShoNote(showTimeData.showtime_note);
+    setHide(showTimeData.hide);
+    setCanceled(showTimeData.canceled);
+  };
+
+  const handleShowtime = () => {
+    if (shoKey === 'new') {
+      postShowtime();
+      setSuccess('posting showtime');
+    } else {
+      editShowtime();
+      setSuccess('editing showtime');
+    }
   };
 
   if (!submit) return <div />;
@@ -46,11 +94,29 @@ const ShowtimesEditor = (props) => {
       >
         {expand ? '-' : '+'}
       </button>
+
       {expand ? (
         <div className="submit-form">
           <div>
+            <label htmlFor={shoKey}>
+              Select Showtime:
+              <select
+                value={shoKey}
+                onChange={(e) => selectShowtime(e.target.value)}
+              >
+                <option value="new">New Showtime</option>
+                {showtimes.map((selSho, i) => (
+                  <option key={selSho.id} value={i}>
+                    {selSho.id}
+                    {' ('}
+                    {selSho.showtime}
+                    {')'}
+                  </option>
+                ))}
+              </select>
+            </label>
             <select value={hour} onChange={(e) => setHour(e.target.value)}>
-              {digitsList(1, 12, 'hour').map((time) => (
+              {digitsList(0, 23, 'hour').map((time) => (
                 <option key={time.id} value={time.hour}>
                   {time.hour}
                 </option>
@@ -63,15 +129,38 @@ const ShowtimesEditor = (props) => {
                 </option>
               ))}
             </select>
-            <select value={ampm} onChange={(e) => setAmpm(e.target.value)}>
-              <option value="AM">AM</option>
-              <option value="PM">PM</option>
-            </select>
+            <label htmlFor={shoNote}>
+              Showtime Note:
+              <input
+                onChange={(e) => setShoNote(e.target.value)}
+                value={shoNote}
+                type="text"
+              />
+            </label>
+            <label htmlFor={shoCanceled}>
+              Canceled?
+              <select
+                value={shoCanceled}
+                onChange={(e) => setCanceled(e.target.value)}
+              >
+                <option value="">Select...</option>
+                <option value={0}>No</option>
+                <option value={1}>Yes</option>
+              </select>
+            </label>
+            <label htmlFor={shoHide}>
+              Hide?
+              <select value={shoHide} onChange={(e) => setHide(e.target.value)}>
+                <option value="">Select...</option>
+                <option value={0}>No</option>
+                <option value={1}>Yes</option>
+              </select>
+            </label>
             <button
               type="button"
               className="ssf-button"
               onClick={() => {
-                postShowtime();
+                handleShowtime();
               }}
             >
               Submit

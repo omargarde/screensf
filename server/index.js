@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 
 const app = express();
-const db = require('../database/database');
+const get = require('../database/get');
 const post = require('../database/post');
 const put = require('../database/put');
 
@@ -11,19 +11,22 @@ app.use(express.json());
 
 // Read
 
-app.get('/recommended/:id', db.getRecommendedOnDate);
+app.get('/recommended/:id', get.getRecommendedOnDate);
 
-app.get('/showtimes/:id', db.getShowtimesOnDate);
+app.get('/showtimes/:id', get.getShowtimesOnDate);
 
-app.get('/venues/', db.getVenues);
+app.get('/venues/', get.getVenues);
 
-app.get('/series/', db.getSeries);
+app.get('/series/', get.getSeries);
 
-app.get('/movies/', db.getMovies);
+app.get('/movies/', get.getMovies);
 
-app.get('/screenings/', db.getScreenings);
+app.get('/screenings/', get.getScreenings);
+
+app.get('/showtime-hours/:id', get.getShowtimeHours);
 
 // Create
+
 app.post('/movies/', post.postMovie);
 
 app.post('/series/', post.postSeries);
@@ -39,11 +42,14 @@ app.post('/screenings-series/', post.postScreeningsSeries);
 app.post('/venues-series/', post.postVenuesSeries);
 
 // Update
+
 app.put('/series/', put.editSeries);
 
 app.put('/screenings/', put.editScreening);
 
 app.put('/screenings-series/', put.editScreeningsSeries);
+
+app.put('/showtimes/', put.editShowtimes);
 
 // Delete
 

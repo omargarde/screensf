@@ -74,6 +74,34 @@ const editScreeningsSeries = (req, res, next) => {
     )
     .then(() => {
       console.log('successful edit');
+      res.end();
+    })
+    .catch((error) => {
+      return next(error);
+    });
+};
+
+const editShowtimes = (req, res, next) => {
+  screensf.client
+    .query(
+      `UPDATE
+      showtimes
+      SET 
+      showtime = $2, showtime_note = $3, canceled = $4, hide = $5
+      WHERE
+      id = $1
+      `,
+      [
+        req.body.showtime_id,
+        req.body.showtime,
+        req.body.showtime_note,
+        req.body.canceled,
+        req.body.hide,
+      ],
+    )
+    .then(() => {
+      console.log('successful edit');
+      res.end();
     })
     .catch((error) => {
       return next(error);
@@ -84,4 +112,5 @@ module.exports = {
   editSeries,
   editScreening,
   editScreeningsSeries,
+  editShowtimes,
 };

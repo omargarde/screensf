@@ -16,9 +16,6 @@ const showtimesOnDate = `SELECT
     screenings.screening_url,
     screenings.start_date,
     screenings.end_date,
-    string_agg(DISTINCT showtimes.id::character varying, ', ') AS showtimesId,
-    string_agg(DISTINCT showtimes.showtime, ', ') AS showtimes,
-    array_agg(showtimes.hide) AS showtimes_hide,
     screenings.format,
     screenings.screening_note,
     screenings.canceled
@@ -28,7 +25,6 @@ const showtimesOnDate = `SELECT
     INNER JOIN venues ON screenings.venues_id=venues.id
     INNER JOIN screenings_series ON screenings.id = screenings_series.screenings_id
     INNER JOIN series ON series.id = screenings_series.series_id 
-    LEFT JOIN showtimes ON showtimes.screenings_id = screenings.id
     WHERE
     screenings.start_date <= $1 AND screenings.end_date >= $1 AND screenings.canceled = 0
     GROUP BY
@@ -65,9 +61,6 @@ string_agg(DISTINCT series.title, ', ') AS series,
 screenings.id AS screening_id,
 screenings.alt_title,
 screenings.screening_url,
-string_agg(DISTINCT showtimes.id::character varying, ', ') AS showtimesId,
-string_agg(DISTINCT showtimes.showtime, ', ') AS showtimes,
-array_agg(showtimes.hide) AS showtimes_hide,
 screenings.format,
 screenings.screening_note
 FROM 
@@ -77,7 +70,6 @@ INNER JOIN movies ON screenings.movies_id=movies.id
 INNER JOIN venues ON screenings.venues_id=venues.id
 INNER JOIN screenings_series ON screenings.id = screenings_series.screenings_id
 INNER JOIN series ON series.id = screenings_series.series_id 
-LEFT JOIN showtimes ON showtimes.screenings_id = screenings.id
 WHERE 
 featured_films.ondate = $1
 GROUP BY
@@ -134,6 +126,16 @@ const getScreenings = `SELECT
   screenings.canceled;
   `;
 
+const getShowtimeHours = `SELECT
+    *
+    FROM
+    showtimes
+    WHERE
+    screenings_id = $1
+    ORDER BY
+    showtime;
+  `;
+
 module.exports = {
   showtimesOnDate,
   recommendedOnDate,
@@ -141,4 +143,5 @@ module.exports = {
   getSeries,
   getMovies,
   getScreenings,
+  getShowtimeHours,
 };

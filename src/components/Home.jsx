@@ -5,7 +5,7 @@ import Featured from './Featured';
 import Screenings from './screenings/Screenings';
 import DateSelector from './DateSelector';
 import 'react-datepicker/dist/react-datepicker.css';
-import { data, loadImage, editShowtimes } from './helpers';
+import { data, loadImage } from './helpers';
 import ScreeningsEditor from './submit/ScreeningsEditor';
 import { showBoilerplate } from './submit/helpers';
 import SeriesEditor from './submit/SeriesEditor';
@@ -86,7 +86,7 @@ class Home extends React.Component {
   }
 
   fetchShowtimes() {
-    const { selectedDate, isSubmit } = this.state;
+    const { selectedDate } = this.state;
     const query = `/showtimes/${moment(selectedDate).format('YYYY-MM-DD')}`;
     this.setState({ isLoading: true });
     axios({
@@ -94,14 +94,7 @@ class Home extends React.Component {
       url: query,
     })
       .then((response) => {
-        if (isSubmit) {
-          this.setState({ showtimes: response.data, isLoading: false });
-        } else {
-          this.setState({
-            showtimes: editShowtimes(response.data),
-            isLoading: false,
-          });
-        }
+        this.setState({ showtimes: response.data, isLoading: false });
       })
       .catch((error) => {
         this.setState({ isLoading: true });
@@ -182,6 +175,7 @@ class Home extends React.Component {
           today={moment(selectedDate).format('YYYY-MM-DD')}
           submit={isSubmit}
           theaters={theaters}
+          dates={dates}
         />
       </div>
     );
