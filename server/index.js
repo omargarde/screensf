@@ -51,6 +51,8 @@ app.put('/screenings-series/', put.editScreeningsSeries);
 
 app.put('/showtimes/', put.editShowtimes);
 
+app.put('/movies/', put.editMovies);
+
 // Delete
 
 const port = process.env.PORT || 3000;

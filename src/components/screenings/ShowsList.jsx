@@ -8,7 +8,7 @@ import ScreeningsEditor from '../submit/ScreeningsEditor';
 import { theMovieAPI } from '../../../keys';
 
 const ShowsList = (props) => {
-  const { show, submit, today, theaters, dates, setShow } = props;
+  const { show, submit, today, theaters } = props;
   const [expand, setExpand] = useState(false);
   const [runtime, setRuntime] = useState('');
   const movieId = show.movie_id;
@@ -16,10 +16,6 @@ const ShowsList = (props) => {
   const [movieData, setMovieData] = useState('');
   const [director, setDirector] = useState(show.director);
   const [year, setYear] = useState(show.year);
-  const [showtimeHours, setShowtimeHours] = useState([]);
-  const [todayShowtimes, setTodayShow] = useState([]);
-  const [hide, setHide] = useState(true);
-
   const getCrew = (data, title) => {
     const crewman = [];
     data.credits.crew.forEach((crew) => {
@@ -53,47 +49,10 @@ const ShowsList = (props) => {
           throw new Error(error);
         });
     };
-    const getShowtimesData = () => {
-      axios({
-        method: 'get',
-        url: `/showtime-hours/${screenId}`,
-      })
-        .then((response) => {
-          const { data } = response;
-          setShowtimeHours(data);
-          const todayShows = [];
-          data.forEach((item) => {
-            const date = item.showtime.slice(0, 10);
-            const showHour = Number(item.showtime.slice(11, 13));
-            if (item.hide === 0) {
-              if (date === today && showHour > 3) {
-                todayShows.push(item);
-              } else if (date === dates.tomorrow.format('YYYY-MM-DD')) {
-                todayShows.push(item);
-              }
-            }
-          });
-          setTodayShow(todayShows);
-          if (todayShows.length > 0 || show.format === 'Virtual Screening') {
-            setHide(false);
-            setShow(1);
-          }
-          if (!submit) setShow(-1);
-          if (submit) setHide(false);
-        })
-        .catch((error) => {
-          throw new Error(error);
-        });
-    };
-    if (screenId) {
-      getShowtimesData();
-    }
     if (movieId > 1) {
       getMovieData();
     }
-  }, [dates, movieId, screenId, setShowtimeHours, show, today]);
-
-  if (hide) return '';
+  }, [movieId, screenId, show, today]);
 
   return (
     <div>
@@ -126,7 +85,7 @@ const ShowsList = (props) => {
         </div>
         <div className="film-note">{show.screening_note}</div>
         <div className="showtimes">
-          {todayShowtimes.map((showtime) => (
+          {show.showtimes.map((showtime) => (
             <Showtime showtime={showtime} key={showtime.id} />
           ))}
           {submit && (
@@ -134,7 +93,6 @@ const ShowsList = (props) => {
               <ShowtimesEditor
                 today={today}
                 screening={show.screening_id}
-                showtimes={showtimeHours}
                 submit={submit}
               />
             </span>

@@ -67,7 +67,8 @@ class Home extends React.Component {
 
   fetchRecommended() {
     const { selectedDate } = this.state;
-    const query = `/recommended/${moment(selectedDate).format('YYYY-MM-DD')}`;
+    const thisDay = moment(selectedDate).format('YYYY-MM-DD');
+    const query = `/recommended/${thisDay}`;
 
     axios({
       method: 'get',
@@ -87,7 +88,11 @@ class Home extends React.Component {
 
   fetchShowtimes() {
     const { selectedDate } = this.state;
-    const query = `/showtimes/${moment(selectedDate).format('YYYY-MM-DD')}`;
+    const thisDay = moment(selectedDate).format('YYYY-MM-DD');
+    const nextDay = moment(new Date(selectedDate))
+      .add(1, 'days')
+      .format('YYYY-MM-DD');
+    const query = `/showtimes/${thisDay}-${nextDay}`;
     this.setState({ isLoading: true });
     axios({
       method: 'get',

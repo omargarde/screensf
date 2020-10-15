@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { digitsList } from './helpers';
 
 const ShowtimesEditor = (props) => {
-  const { screening, today, submit, showtimes } = props;
+  const { screening, today, submit } = props;
   const [expand, setExpand] = useState(false);
   const [hour, setHour] = useState('00');
   const [minute, setMinute] = useState('00');
@@ -13,10 +13,34 @@ const ShowtimesEditor = (props) => {
   const [shoNote, setShoNote] = useState('');
   const [shoCanceled, setCanceled] = useState(0);
   const [shoHide, setHide] = useState(0);
+  const [shoList, setShoList] = useState([]);
 
   const newShow = () => {
     return `${today} ${hour}:${minute}:00-8:00`;
   };
+
+  useEffect(() => {
+    const getShowList = () => {
+      axios({
+        method: 'get',
+        url: `/showtime-hours/${screening}`,
+      })
+        .then((response) => {
+          const { data } = response;
+          const allData = [];
+          data.forEach((show) => {
+            if (show.id) {
+              allData.push(show);
+            }
+          });
+          setShoList(allData);
+        })
+        .catch((error) => {
+          throw new Error(error);
+        });
+    };
+    getShowList();
+  }, [screening]);
 
   const postShowtime = () => {
     axios({
@@ -61,7 +85,7 @@ const ShowtimesEditor = (props) => {
   };
 
   const selectShowtime = (key) => {
-    const showTimeData = showtimes[key];
+    const showTimeData = shoList[key];
     setShoKey(key);
     setShoId(showTimeData.id);
     const shoHour = showTimeData.showtime.slice(11, 13);
@@ -105,7 +129,7 @@ const ShowtimesEditor = (props) => {
                 onChange={(e) => selectShowtime(e.target.value)}
               >
                 <option value="new">New Showtime</option>
-                {showtimes.map((selSho, i) => (
+                {shoList.map((selSho, i) => (
                   <option key={selSho.id} value={i}>
                     {selSho.id}
                     {' ('}

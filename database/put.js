@@ -108,9 +108,38 @@ const editShowtimes = (req, res, next) => {
     });
 };
 
+const editMovies = (req, res, next) => {
+  screensf.client
+    .query(
+      `UPDATE
+      movies
+      SET 
+      title = $2, director = $3, release_date = $4, runtime = $5, synopsis = $6
+      WHERE
+      id = $1
+      `,
+      [
+        req.body.id,
+        req.body.title,
+        req.body.director,
+        req.body.release_date,
+        req.body.runtime,
+        req.body.synopsis,
+      ],
+    )
+    .then(() => {
+      console.log('successful edit');
+      res.end();
+    })
+    .catch((error) => {
+      return next(error);
+    });
+};
+
 module.exports = {
   editSeries,
   editScreening,
   editScreeningsSeries,
   editShowtimes,
+  editMovies,
 };

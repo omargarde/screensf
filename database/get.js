@@ -1,9 +1,20 @@
 const screensf = require('./database.js');
 const read = require('./sql/read');
 
-const getYear = (releaseDate) => {
-  if (releaseDate === null) return '';
-  return releaseDate.getFullYear();
+const fixShowtimes = (showtimes, today, tomorrow) => {
+  const result = [];
+  showtimes.forEach((show) => {
+    if (show.id && show.hide === 0) {
+      const date = show.showtime.slice(0, 10);
+      const hour = Number(show.showtime.slice(11, 13));
+      if (date === today && hour > 3) {
+        result.push(show);
+      } else if (hour < 3 && date === tomorrow) {
+        result.push(show);
+      }
+    }
+  });
+  return result;
 };
 
 const getRecommendedOnDate = (req, res) => {
@@ -28,7 +39,9 @@ const getRecommendedOnDate = (req, res) => {
 };
 
 const getShowtimesOnDate = (req, res) => {
-  const today = req.params.id;
+  const text = req.params.id;
+  const today = text.slice(0, 10);
+  const tomorrow = text.slice(11, 21);
   const query = {
     text: read.showtimesOnDate,
     values: [today],
@@ -52,13 +65,23 @@ const getShowtimesOnDate = (req, res) => {
             };
           }
           const showData = rows[i];
-          showData.year = getYear(showData.release_date);
-          showsByVenue[venueTitle].shows.push(showData);
+          showData.showtimes = fixShowtimes(
+            showData.showtimes,
+            today,
+            tomorrow,
+          );
+          if (
+            showData.showtimes.length > 0 ||
+            showData.format === 'Virtual Screening'
+          ) {
+            showsByVenue[venueTitle].shows.push(showData);
+          }
         }
-
         const showsFinal = {};
         Object.keys(showsByVenue).forEach((item) => {
-          showsFinal[item] = showsByVenue[item];
+          if (showsByVenue[item].shows.length > 0) {
+            showsFinal[item] = showsByVenue[item];
+          }
         });
         const showsStr = JSON.stringify(Object.values(showsFinal));
         res.send(showsStr);

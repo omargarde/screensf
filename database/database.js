@@ -1,8 +1,8 @@
 const { Client } = require('pg');
-// const { proxy } = require('../keys');
-const { local } = require('../keys');
-// const client = new Client(proxy);
-const client = new Client(local);
+const { proxy } = require('../keys');
+// const { local } = require('../keys');
+const client = new Client(proxy);
+// const client = new Client(local);
 
 // const client = new Client({
 //   host: `/cloudsql/${process.env.CLOUD_SQL_CONNECTION_NAME}`,

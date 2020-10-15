@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 const Showtime = (props) => {
   const { showtime } = props;
-
   let showTimeHour = showtime.showtime.slice(11, 13);
   const showTimeMinute = showtime.showtime.slice(14, 16);
   let amPm = 'AM';

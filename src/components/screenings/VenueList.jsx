@@ -1,17 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ShowsList from './ShowsList';
 
 const VenueList = (props) => {
-  const { venue, submit, today, theaters, dates } = props;
-  const [showCount, setShowCount] = useState(1);
-  const showCounter = (value) => {
-    setShowCount(showCount + value);
-  };
-
-  // could use API vs. counter
-
-  if (showCount === 0) return '';
-
+  const { venue, submit, today, theaters } = props;
   return (
     <div className="screenings-venues">
       <div className="venue-block">
@@ -25,8 +16,6 @@ const VenueList = (props) => {
             today={today}
             submit={submit}
             theaters={theaters}
-            setShow={showCounter}
-            dates={dates}
             key={item.film}
           />
         ))}

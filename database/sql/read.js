@@ -11,6 +11,17 @@ const showtimesOnDate = `SELECT
     string_agg(DISTINCT series.title, ', ') AS series,
     string_agg(DISTINCT series.series_url, ', ') AS series_url,
     string_agg(DISTINCT series.id::character varying, ', ') AS series_id,
+    json_agg(json_build_object(
+      'id', showtimes.id,
+      'screenings_id', showtimes.screenings_id,
+      'showtime', showtimes.showtime,
+      'showtime_note', showtimes.showtime_note,
+      'canceled', showtimes.canceled,
+      'hide', showtimes.hide
+      )
+      ORDER BY
+      showtimes.showtime
+      ) AS showtimes,
     screenings.id AS screening_id,
     screenings.alt_title,
     screenings.screening_url,
@@ -25,12 +36,13 @@ const showtimesOnDate = `SELECT
     INNER JOIN venues ON screenings.venues_id=venues.id
     INNER JOIN screenings_series ON screenings.id = screenings_series.screenings_id
     INNER JOIN series ON series.id = screenings_series.series_id 
+    LEFT JOIN showtimes ON showtimes.screenings_id = screenings.id
     WHERE
     screenings.start_date <= $1 AND screenings.end_date >= $1 AND screenings.canceled = 0
     GROUP BY
     venues.title,
-    movies.id,
     movies.title,
+    movies.id,
     movies.director,
     movies.release_date,
     movies.runtime,
@@ -44,7 +56,10 @@ const showtimesOnDate = `SELECT
     screenings.end_date,
     screenings.format,
     screenings.screening_note,
-    screenings.canceled;`;
+    screenings.canceled
+    ORDER BY
+    venues.title,
+    movies.title;`;
 
 const recommendedOnDate = `SELECT 
 featured_films.featured_image AS image,
