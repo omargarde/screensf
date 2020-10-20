@@ -221,6 +221,8 @@ const ScreeningsEditor = (props) => {
               <option value="new">New Screening</option>
               {scrList.map((selScr, i) => (
                 <option key={selScr.id} value={i}>
+                  {selScr.screening_id}
+                  {` - `}
                   {selScr.alt_title}
                 </option>
               ))}

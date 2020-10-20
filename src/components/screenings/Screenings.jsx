@@ -9,6 +9,7 @@ const Screenings = (props) => {
       <h2 className="screenings-title">
         {moment(today).format('dddd, MMMM D YYYY')}
       </h2>
+      <div>Virtual Screenings are ongoing unless otherwise noted</div>
       {venues.map((item) => (
         <VenueList
           venue={item}

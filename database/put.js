@@ -7,7 +7,7 @@ const editSeries = (req, res, next) => {
       series
       SET title = $2, start_date = $3, end_date = $4, series_description = $5, series_url = $6
       WHERE
-      id = $1
+      id = $1;
       `,
       [
         req.body.series_id,
@@ -36,7 +36,7 @@ const editScreening = (req, res, next) => {
       movies_id = $2, venues_id = $3, alt_title = $4, screening_url = $5, 
       start_date = $6, end_date = $7, format = $8, screening_note = $9, canceled = $10
       WHERE
-      id = $1
+      id = $1;
       `,
       [
         req.body.screening_id,
@@ -68,7 +68,7 @@ const editScreeningsSeries = (req, res, next) => {
       SET 
       screenings_id = $1, series_id = $3
       WHERE
-      screenings_id = $1 AND series_id = $2
+      screenings_id = $1 AND series_id = $2;
       `,
       [req.body.screenings_id, req.body.series_id, req.body.new_series],
     )
@@ -89,7 +89,7 @@ const editShowtimes = (req, res, next) => {
       SET 
       showtime = $2, showtime_note = $3, canceled = $4, hide = $5
       WHERE
-      id = $1
+      id = $1;
       `,
       [
         req.body.showtime_id,
@@ -116,7 +116,7 @@ const editMovies = (req, res, next) => {
       SET 
       title = $2, director = $3, release_date = $4, runtime = $5, synopsis = $6
       WHERE
-      id = $1
+      id = $1;
       `,
       [
         req.body.id,
@@ -136,10 +136,71 @@ const editMovies = (req, res, next) => {
     });
 };
 
+const editVenue = (req, res, next) => {
+  screensf.client
+    .query(
+      `UPDATE
+      venues
+      SET 
+      title = $2, short_title = $3, city = $4, venue_description = $5, address = $6, currently_open = $7
+      WHERE
+      id = $1;
+      `,
+      [
+        req.body.id,
+        req.body.title,
+        req.body.short_title,
+        req.body.city,
+        req.body.venue_description,
+        req.body.address,
+        req.body.currently_open,
+      ],
+    )
+    .then(() => {
+      console.log('successful edit');
+      res.end();
+    })
+    .catch((error) => {
+      return next(error);
+    });
+};
+
+const editFeatured = (req, res, next) => {
+  screensf.client
+    .query(
+      `UPDATE 
+      featured_films
+      SET
+      screenings_id = $2, ondate = $3, featured_image = $4, author = $5, article = $6
+      WHERE
+      id = $1;
+      `,
+      [
+        req.body.id,
+        req.body.screenings_id,
+        req.body.ondate,
+        req.body.featured_image,
+        req.body.author,
+        req.body.article,
+      ],
+    )
+    .then(() => {
+      console.log('successful featured film edit');
+      res.end();
+    })
+    .catch((error) => {
+      return next(error);
+    });
+
+  res.end();
+};
+
 module.exports = {
   editSeries,
   editScreening,
   editScreeningsSeries,
   editShowtimes,
   editMovies,
+  editVenue,
+  editFeatured,
 };

@@ -60,10 +60,17 @@ const postVenue = (req, res, next) => {
     .query(
       `INSERT INTO 
       venues 
-      (id, title, short_title, city) 
+      (id, title, short_title, city, venue_description, address, currently_open) 
       VALUES 
-      (DEFAULT, $1, $2, $3);`,
-      [req.body.title, req.body.short_title, req.body.city],
+      (DEFAULT, $1, $2, $3, $4, $5, $6);`,
+      [
+        req.body.title,
+        req.body.short_title,
+        req.body.city,
+        req.body.venue_description,
+        req.body.address,
+        req.body.currently_open,
+      ],
     )
     .then(() => {
       console.log('successful post');
@@ -177,7 +184,7 @@ const postVenuesSeries = (req, res, next) => {
   res.end();
 };
 
-const postFeaturedScreening = (req, res, next) => {
+const postFeatured = (req, res, next) => {
   screensf.client
     .query(
       `INSERT INTO 
@@ -194,7 +201,7 @@ const postFeaturedScreening = (req, res, next) => {
       ],
     )
     .then(() => {
-      console.log('successful featured screening post');
+      console.log('successful featured film post');
       res.end();
     })
     .catch((error) => {
@@ -212,5 +219,5 @@ module.exports = {
   postShowtimes,
   postScreeningsSeries,
   postVenuesSeries,
-  postFeaturedScreening,
+  postFeatured,
 };

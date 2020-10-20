@@ -59,7 +59,7 @@ const showtimesOnDate = `SELECT
     screenings.canceled
     ORDER BY
     venues.title,
-    movies.title;`;
+    screenings.alt_title;`;
 
 const recommendedOnDate = `SELECT 
 featured_films.featured_image AS image,
@@ -68,6 +68,7 @@ featured_films.article,
 venues.title AS venue,
 venues.short_title AS venueShortTitle,
 venues.address AS venue_address,
+movies.id AS movie_id,
 movies.title AS film,
 movies.director,
 movies.release_date,
@@ -77,14 +78,26 @@ screenings.id AS screening_id,
 screenings.alt_title,
 screenings.screening_url,
 screenings.format,
-screenings.screening_note
+screenings.screening_note,
+json_agg(json_build_object(
+  'id', showtimes.id,
+  'screenings_id', showtimes.screenings_id,
+  'showtime', showtimes.showtime,
+  'showtime_note', showtimes.showtime_note,
+  'canceled', showtimes.canceled,
+  'hide', showtimes.hide
+  )
+  ORDER BY
+  showtimes.showtime
+  ) AS showtimes
 FROM 
 featured_films
 INNER JOIN screenings ON featured_films.screenings_id=screenings.id
 INNER JOIN movies ON screenings.movies_id=movies.id
 INNER JOIN venues ON screenings.venues_id=venues.id
 INNER JOIN screenings_series ON screenings.id = screenings_series.screenings_id
-INNER JOIN series ON series.id = screenings_series.series_id 
+INNER JOIN series ON series.id = screenings_series.series_id
+LEFT JOIN showtimes ON showtimes.screenings_id = screenings.id
 WHERE 
 featured_films.ondate = $1
 GROUP BY
@@ -92,6 +105,7 @@ featured_films.featured_image,
 featured_films.author,
 featured_films.article,
 venues.title,
+movies.id,
 movies.title,
 movies.director,
 movies.release_date,
@@ -109,6 +123,8 @@ const getVenues = `SELECT * from venues`;
 const getSeries = `SELECT * from series`;
 
 const getMovies = `SELECT *  FROM  movies`;
+
+const getFeatured = `SELECT * FROM featured_films`;
 
 const getScreenings = `SELECT
   screenings.id AS screening_id,
@@ -159,4 +175,5 @@ module.exports = {
   getMovies,
   getScreenings,
   getShowtimeHours,
+  getFeatured,
 };

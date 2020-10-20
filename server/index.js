@@ -25,6 +25,8 @@ app.get('/screenings/', get.getScreenings);
 
 app.get('/showtime-hours/:id', get.getShowtimeHours);
 
+app.get('/featured/', get.getFeatured);
+
 // Create
 
 app.post('/movies/', post.postMovie);
@@ -41,6 +43,8 @@ app.post('/screenings-series/', post.postScreeningsSeries);
 
 app.post('/venues-series/', post.postVenuesSeries);
 
+app.post('/featured/', post.postFeatured);
+
 // Update
 
 app.put('/series/', put.editSeries);
@@ -52,6 +56,10 @@ app.put('/screenings-series/', put.editScreeningsSeries);
 app.put('/showtimes/', put.editShowtimes);
 
 app.put('/movies/', put.editMovies);
+
+app.put('/venues/', put.editVenue);
+
+app.put('/featured/', put.editFeatured);
 
 // Delete
 

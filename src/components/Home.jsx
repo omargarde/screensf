@@ -11,6 +11,8 @@ import { showBoilerplate } from './submit/helpers';
 import SeriesEditor from './submit/SeriesEditor';
 import Expand from './submit/Expand';
 import MoviesEditor from './submit/MoviesEditor';
+import VenueEditor from './submit/VenueEditor';
+import FeaturedEditor from './submit/FeaturedEditor';
 
 class Home extends React.Component {
   constructor(props) {
@@ -26,6 +28,7 @@ class Home extends React.Component {
       expand: false,
       serExpand: false,
       movExpand: false,
+      featExpand: false,
       theaters: '',
     };
     this.fetchFrontPage();
@@ -33,6 +36,7 @@ class Home extends React.Component {
     this.expandChange = this.expandChange.bind(this);
     this.serExpandChange = this.serExpandChange.bind(this);
     this.movExpandChange = this.movExpandChange.bind(this);
+    this.featExpandChange = this.featExpandChange.bind(this);
   }
 
   dateChange(date) {
@@ -59,6 +63,11 @@ class Home extends React.Component {
     this.setState({ movExpand: !movExpand });
   }
 
+  featExpandChange() {
+    const { featExpand } = this.state;
+    this.setState({ featExpand: !featExpand });
+  }
+
   fetchFrontPage() {
     this.fetchRecommended();
     this.fetchShowtimes();
@@ -68,7 +77,10 @@ class Home extends React.Component {
   fetchRecommended() {
     const { selectedDate } = this.state;
     const thisDay = moment(selectedDate).format('YYYY-MM-DD');
-    const query = `/recommended/${thisDay}`;
+    const nextDay = moment(new Date(selectedDate))
+      .add(1, 'days')
+      .format('YYYY-MM-DD');
+    const query = `/recommended/${thisDay}-${nextDay}`;
 
     axios({
       method: 'get',
@@ -128,6 +140,7 @@ class Home extends React.Component {
       expand,
       serExpand,
       movExpand,
+      featExpand,
       theaters,
     } = this.state;
 
@@ -153,6 +166,13 @@ class Home extends React.Component {
         />
         <Featured featured={featured} today={selectedDate} />
         <Expand
+          handleExpand={this.featExpandChange}
+          expand={featExpand}
+          submit={isSubmit}
+          title="Add Featured"
+        />
+        {featExpand && <FeaturedEditor />}
+        <Expand
           handleExpand={this.expandChange}
           expand={expand}
           submit={isSubmit}
@@ -165,9 +185,10 @@ class Home extends React.Component {
           handleExpand={this.serExpandChange}
           expand={serExpand}
           submit={isSubmit}
-          title="Series Editor"
+          title="Series and Venue Editors"
         />
         {serExpand && <SeriesEditor show={showBoilerplate} />}
+        {serExpand && <VenueEditor />}
         <Expand
           handleExpand={this.movExpandChange}
           expand={movExpand}

@@ -18,7 +18,9 @@ const fixShowtimes = (showtimes, today, tomorrow) => {
 };
 
 const getRecommendedOnDate = (req, res) => {
-  const today = req.params.id;
+  const text = req.params.id;
+  const today = text.slice(0, 10);
+  const tomorrow = text.slice(11, 21);
   const query = {
     text: read.recommendedOnDate,
     values: [today],
@@ -28,6 +30,11 @@ const getRecommendedOnDate = (req, res) => {
     .then((data) => {
       if (data.rows[0]) {
         const featuredData = data.rows[0];
+        featuredData.showtimes = fixShowtimes(
+          featuredData.showtimes,
+          today,
+          tomorrow,
+        );
         res.send(JSON.stringify(featuredData));
         res.end();
       }
@@ -172,6 +179,22 @@ const getShowtimeHours = (req, res) => {
     });
 };
 
+const getFeatured = (req, res) => {
+  const query = {
+    text: read.getFeatured,
+  };
+  screensf.client
+    .query(query)
+    .then((data) => {
+      const rows = JSON.stringify(data.rows);
+      res.send(rows);
+      res.end();
+    })
+    .catch((error) => {
+      res.end(error);
+    });
+};
+
 module.exports = {
   getShowtimesOnDate,
   getRecommendedOnDate,
@@ -180,4 +203,5 @@ module.exports = {
   getMovies,
   getScreenings,
   getShowtimeHours,
+  getFeatured,
 };

@@ -84,6 +84,9 @@ const ShowsList = (props) => {
           <div>{show.format}</div>
         </div>
         <div className="film-note">{show.screening_note}</div>
+        {show.showtimes.map((showtime) => (
+          <div className="film-note">{showtime.showtime_note}</div>
+        ))}
         <div className="showtimes">
           {show.showtimes.map((showtime) => (
             <Showtime showtime={showtime} key={showtime.id} />
