@@ -2,21 +2,33 @@ const express = require('express');
 const path = require('path');
 
 const app = express();
-const db = require('../database/database.js');
-const post = require('../database/post.js');
+const get = require('../database/get');
+const post = require('../database/post');
+const put = require('../database/put');
 
 app.use('/', express.static(path.join(__dirname, '../dist')));
 app.use(express.json());
 
 // Read
 
-app.get('/recommended/:id', db.getRecommendedOnDate);
+app.get('/recommended/:id', get.getRecommendedOnDate);
 
-app.get('/showtimes/:id', db.getShowtimesOnDate);
+app.get('/showtimes/:id', get.getShowtimesOnDate);
 
-app.get('/venues/', db.getVenues);
+app.get('/venues/', get.getVenues);
+
+app.get('/series/', get.getSeries);
+
+app.get('/movies/', get.getMovies);
+
+app.get('/screenings/', get.getScreenings);
+
+app.get('/showtime-hours/:id', get.getShowtimeHours);
+
+app.get('/featured/', get.getFeatured);
 
 // Create
+
 app.post('/movies/', post.postMovie);
 
 app.post('/series/', post.postSeries);
@@ -31,7 +43,23 @@ app.post('/screenings-series/', post.postScreeningsSeries);
 
 app.post('/venues-series/', post.postVenuesSeries);
 
+app.post('/featured/', post.postFeatured);
+
 // Update
+
+app.put('/series/', put.editSeries);
+
+app.put('/screenings/', put.editScreening);
+
+app.put('/screenings-series/', put.editScreeningsSeries);
+
+app.put('/showtimes/', put.editShowtimes);
+
+app.put('/movies/', put.editMovies);
+
+app.put('/venues/', put.editVenue);
+
+app.put('/featured/', put.editFeatured);
 
 // Delete
 

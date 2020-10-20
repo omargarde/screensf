@@ -18,7 +18,7 @@ const showBoilerplate = {
   end_date: '',
   film: '',
   format: '',
-  movie_id: false,
+  movie_id: '',
   release_date: '',
   runtime: '',
   screening_id: '',
@@ -35,6 +35,7 @@ const showBoilerplate = {
   venue_address: '',
   venueshorttitle: '',
   year: '',
+  submit: true,
 };
 
 const cutDate = (date) => {

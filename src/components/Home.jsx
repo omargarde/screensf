@@ -5,9 +5,14 @@ import Featured from './Featured';
 import Screenings from './screenings/Screenings';
 import DateSelector from './DateSelector';
 import 'react-datepicker/dist/react-datepicker.css';
-import { data, loadImage, editShowtimes } from './helpers';
+import { data, loadImage } from './helpers';
 import ScreeningsEditor from './submit/ScreeningsEditor';
 import { showBoilerplate } from './submit/helpers';
+import SeriesEditor from './submit/SeriesEditor';
+import Expand from './submit/Expand';
+import MoviesEditor from './submit/MoviesEditor';
+import VenueEditor from './submit/VenueEditor';
+import FeaturedEditor from './submit/FeaturedEditor';
 
 class Home extends React.Component {
   constructor(props) {
@@ -16,15 +21,22 @@ class Home extends React.Component {
       showtimes: [],
       featured: data,
       isLoading: true,
-      isSubmit: true,
+      isSubmit: false,
       today: new Date(),
       selectedDate: new Date(),
       loading: loadImage,
       expand: false,
+      serExpand: false,
+      movExpand: false,
+      featExpand: false,
       theaters: '',
     };
     this.fetchFrontPage();
     this.dateChange = this.dateChange.bind(this);
+    this.expandChange = this.expandChange.bind(this);
+    this.serExpandChange = this.serExpandChange.bind(this);
+    this.movExpandChange = this.movExpandChange.bind(this);
+    this.featExpandChange = this.featExpandChange.bind(this);
   }
 
   dateChange(date) {
@@ -36,6 +48,26 @@ class Home extends React.Component {
     );
   }
 
+  expandChange() {
+    const { expand } = this.state;
+    this.setState({ expand: !expand });
+  }
+
+  serExpandChange() {
+    const { serExpand } = this.state;
+    this.setState({ serExpand: !serExpand });
+  }
+
+  movExpandChange() {
+    const { movExpand } = this.state;
+    this.setState({ movExpand: !movExpand });
+  }
+
+  featExpandChange() {
+    const { featExpand } = this.state;
+    this.setState({ featExpand: !featExpand });
+  }
+
   fetchFrontPage() {
     this.fetchRecommended();
     this.fetchShowtimes();
@@ -44,7 +76,11 @@ class Home extends React.Component {
 
   fetchRecommended() {
     const { selectedDate } = this.state;
-    const query = `/recommended/${moment(selectedDate).format('YYYY-MM-DD')}`;
+    const thisDay = moment(selectedDate).format('YYYY-MM-DD');
+    const nextDay = moment(new Date(selectedDate))
+      .add(1, 'days')
+      .format('YYYY-MM-DD');
+    const query = `/recommended/${thisDay}-${nextDay}`;
 
     axios({
       method: 'get',
@@ -63,22 +99,19 @@ class Home extends React.Component {
   }
 
   fetchShowtimes() {
-    const { selectedDate, isSubmit } = this.state;
-    const query = `/showtimes/${moment(selectedDate).format('YYYY-MM-DD')}`;
+    const { selectedDate } = this.state;
+    const thisDay = moment(selectedDate).format('YYYY-MM-DD');
+    const nextDay = moment(new Date(selectedDate))
+      .add(1, 'days')
+      .format('YYYY-MM-DD');
+    const query = `/showtimes/${thisDay}-${nextDay}`;
     this.setState({ isLoading: true });
     axios({
       method: 'get',
       url: query,
     })
       .then((response) => {
-        if (isSubmit) {
-          this.setState({ showtimes: response.data, isLoading: false });
-        } else {
-          this.setState({
-            showtimes: editShowtimes(response.data),
-            isLoading: false,
-          });
-        }
+        this.setState({ showtimes: response.data, isLoading: false });
       })
       .catch((error) => {
         this.setState({ isLoading: true });
@@ -105,6 +138,9 @@ class Home extends React.Component {
       showtimes,
       loading,
       expand,
+      serExpand,
+      movExpand,
+      featExpand,
       theaters,
     } = this.state;
 
@@ -129,30 +165,43 @@ class Home extends React.Component {
           handleDateChange={this.dateChange}
         />
         <Featured featured={featured} today={selectedDate} />
-        {isSubmit && (
-          <div className="film-title">
-            Add Screening
-            <button
-              type="button"
-              className="submit-screening-button"
-              onClick={() => this.setState({ expand: !expand })}
-            >
-              {expand ? '-' : '+'}
-            </button>
-          </div>
-        )}
+        <Expand
+          handleExpand={this.featExpandChange}
+          expand={featExpand}
+          submit={isSubmit}
+          title="Add Featured"
+        />
+        {featExpand && <FeaturedEditor />}
+        <Expand
+          handleExpand={this.expandChange}
+          expand={expand}
+          submit={isSubmit}
+          title="Add Screening"
+        />
         {expand && (
-          <ScreeningsEditor
-            show={showBoilerplate}
-            submit={isSubmit}
-            theaters={theaters}
-          />
+          <ScreeningsEditor show={showBoilerplate} theaters={theaters} />
         )}
+        <Expand
+          handleExpand={this.serExpandChange}
+          expand={serExpand}
+          submit={isSubmit}
+          title="Series and Venue Editors"
+        />
+        {serExpand && <SeriesEditor show={showBoilerplate} />}
+        {serExpand && <VenueEditor />}
+        <Expand
+          handleExpand={this.movExpandChange}
+          expand={movExpand}
+          submit={isSubmit}
+          title="Movie Editor"
+        />
+        {movExpand && <MoviesEditor />}
         <Screenings
           venues={showtimes}
           today={moment(selectedDate).format('YYYY-MM-DD')}
           submit={isSubmit}
           theaters={theaters}
+          dates={dates}
         />
       </div>
     );

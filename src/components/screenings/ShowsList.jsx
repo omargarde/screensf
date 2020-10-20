@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
@@ -11,10 +12,10 @@ const ShowsList = (props) => {
   const [expand, setExpand] = useState(false);
   const [runtime, setRuntime] = useState('');
   const movieId = show.movie_id;
+  const screenId = show.screening_id;
   const [movieData, setMovieData] = useState('');
   const [director, setDirector] = useState(show.director);
   const [year, setYear] = useState(show.year);
-
   const getCrew = (data, title) => {
     const crewman = [];
     data.credits.crew.forEach((crew) => {
@@ -30,7 +31,7 @@ const ShowsList = (props) => {
   };
 
   useEffect(() => {
-    if (movieId > 1) {
+    const getMovieData = () => {
       axios({
         method: 'get',
         url: `https://api.themoviedb.org/3/movie/${movieId}?api_key=${theMovieAPI}&append_to_response=credits`,
@@ -47,69 +48,81 @@ const ShowsList = (props) => {
         .catch((error) => {
           throw new Error(error);
         });
+    };
+    if (movieId > 1) {
+      getMovieData();
     }
-  });
+  }, [movieId, screenId, show, today]);
 
   return (
-    <div className="shows-film">
-      <div className="film-series">
-        <a
-          href={show.series_url}
-          target="_blank"
-          rel="noreferrer"
-          aria-describedby="new-window-2"
-        >
-          {show.series}
-        </a>
-      </div>
-      <div className="film-title">
-        <a
-          href={show.screening_url}
-          target="_blank"
-          rel="noreferrer"
-          aria-describedby="new-window-2"
-        >
-          {movieData.title ? movieData.title : show.alt_title}
-        </a>
-      </div>
-      <div className="film-details">
-        <div>{director}</div>
-        <div>{year}</div>
-        <div>{runtime}</div>
-        <div>{show.format}</div>
-      </div>
-      <div className="film-note">{show.screening_note}</div>
-      <div className="showtimes">
+    <div>
+      <div className="shows-film">
+        <div className="film-series">
+          <a
+            href={show.series_url}
+            target="_blank"
+            rel="noreferrer"
+            aria-describedby="new-window-2"
+          >
+            {show.series}
+          </a>
+        </div>
+        <div className="film-title">
+          <a
+            href={show.screening_url}
+            target="_blank"
+            rel="noreferrer"
+            aria-describedby="new-window-2"
+          >
+            {movieData.title ? movieData.title : show.alt_title}
+          </a>
+        </div>
+        <div className="film-details">
+          <div>{director}</div>
+          <div>{year}</div>
+          <div>{runtime}</div>
+          <div>{show.format}</div>
+        </div>
+        <div className="film-note">{show.screening_note}</div>
         {show.showtimes.map((showtime) => (
-          <Showtime showtime={showtime} key={showtime} />
+          <div className="film-note">{showtime.showtime_note}</div>
         ))}
-        {submit && (
-          <span>
-            <ShowtimesEditor today={today} show={show} submit={submit} />
-          </span>
-        )}
-        {submit && (
-          <div className="film-title">
-            Edit Screening
-            <button
-              type="button"
-              className="submit-screening-button"
-              onClick={() => setExpand(!expand)}
-            >
-              {expand ? '-' : '+'}
-            </button>
-          </div>
-        )}
-        {expand && (
-          <div>
-            <ScreeningsEditor
-              today={today}
-              show={show}
-              submit={submit}
-              theaters={theaters}
-            />
-          </div>
-        )}
+        <div className="showtimes">
+          {show.showtimes.map((showtime) => (
+            <Showtime showtime={showtime} key={showtime.id} />
+          ))}
+          {submit && (
+            <span>
+              <ShowtimesEditor
+                today={today}
+                screening={show.screening_id}
+                submit={submit}
+              />
+            </span>
+          )}
+          {submit && (
+            <div className="film-title">
+              Edit Screening
+              <button
+                type="button"
+                className="submit-screening-button"
+                onClick={() => setExpand(!expand)}
+              >
+                {expand ? '-' : '+'}
+              </button>
+            </div>
+          )}
+          {expand && (
+            <div>
+              <ScreeningsEditor
+                today={today}
+                show={show}
+                submit={submit}
+                theaters={theaters}
+              />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -122,9 +135,6 @@ ShowsList.propTypes = {
     runtime: PropTypes.number,
     format: PropTypes.string,
     screening_note: PropTypes.string,
-    showtimes: PropTypes.array,
-    showtimes_display: PropTypes.array,
-    showtimesid: PropTypes.string,
   }),
 };
 

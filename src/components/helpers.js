@@ -1,3 +1,11 @@
+const boilerplateImage = (arr) => {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+const images = [
+  'https://storage.googleapis.com/filmcans/true-romance-banner.jpg',
+  'https://storage.googleapis.com/filmcans/vdM73PvqnJqS3t23h3Pir4dY2xO.jpg'
+]
+
 const boilerplate = {
   image: 'https://storage.googleapis.com/filmcans/true-romance-banner.jpg',
   writer: '',
@@ -38,4 +46,6 @@ module.exports = {
   data: boilerplate,
   loadImage,
   editShowtimes,
+  boilerplateImage,
+  images,
 };
