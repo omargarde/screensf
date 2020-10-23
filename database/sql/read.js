@@ -143,6 +143,8 @@ const getScreenings = `SELECT
   INNER JOIN venues ON screenings.venues_id=venues.id
   INNER JOIN screenings_series ON screenings.id = screenings_series.screenings_id
   INNER JOIN series ON series.id = screenings_series.series_id 
+  WHERE
+  screenings.venues_id = $1
   GROUP BY
   screenings.id,
   venues.id,

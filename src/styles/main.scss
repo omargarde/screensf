@@ -352,4 +352,12 @@ $highlight: #8B2635;
     outline: thin dotted;
   }
 
+  .pick-screening {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .pick-screening select {
+    height: 30px;
+    margin: 0%;
+  }
 }

@@ -45,6 +45,56 @@ const getRecommendedOnDate = (req, res) => {
     });
 };
 
+const getShowtimesSubmit = (req, res) => {
+  const text = req.params.id;
+  const today = text.slice(0, 10);
+  const tomorrow = text.slice(11, 21);
+  const query = {
+    text: read.showtimesOnDate,
+    values: [today],
+  };
+  screensf.client
+    .query(query)
+    .then((data) => {
+      if (data.rows) {
+        const { rows } = data;
+        const showsByVenue = {};
+        for (let i = 0; i < rows.length; i += 1) {
+          const venueTitle = rows[i].venue;
+          const venueAddress = rows[i].venue_address.split(',');
+          const shortAddress = `${venueAddress[0]}, ${venueAddress[1]}`;
+
+          if (!showsByVenue[venueTitle]) {
+            showsByVenue[venueTitle] = {
+              venue: venueTitle,
+              address: shortAddress,
+              shows: [],
+            };
+          }
+          const showData = rows[i];
+          showData.showtimes = fixShowtimes(
+            showData.showtimes,
+            today,
+            tomorrow,
+          );
+
+          showsByVenue[venueTitle].shows.push(showData);
+        }
+        const showsFinal = {};
+        Object.keys(showsByVenue).forEach((item) => {
+          showsFinal[item] = showsByVenue[item];
+        });
+        const showsStr = JSON.stringify(Object.values(showsFinal));
+        res.send(showsStr);
+      }
+      res.end();
+    })
+    .catch((error) => {
+      console.log('error', error);
+      res.end(error);
+    });
+};
+
 const getShowtimesOnDate = (req, res) => {
   const text = req.params.id;
   const today = text.slice(0, 10);
@@ -149,6 +199,7 @@ const getMovies = (req, res) => {
 const getScreenings = (req, res) => {
   const query = {
     text: read.getScreenings,
+    values: [req.params.id],
   };
   screensf.client
     .query(query)
@@ -197,6 +248,7 @@ const getFeatured = (req, res) => {
 
 module.exports = {
   getShowtimesOnDate,
+  getShowtimesSubmit,
   getRecommendedOnDate,
   getVenues,
   getSeries,
