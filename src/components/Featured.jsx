@@ -6,7 +6,9 @@ const Featured = (props) => {
   const { featured, today } = props;
   return (
     <div className="featured">
-      <img src={featured.image} className="featured-image" alt="featured" />
+      <div className="featured-image">
+        <img src={featured.image} className="featured-image" alt="featured" />
+      </div>
       <h3>
         {featured.welcome
           ? 'Welcome to the SF Bay Film Calendar'

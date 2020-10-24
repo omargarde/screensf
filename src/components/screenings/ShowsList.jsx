@@ -8,7 +8,7 @@ import ScreeningsEditor from '../submit/ScreeningsEditor';
 import { theMovieAPI } from '../../../keys';
 
 const ShowsList = (props) => {
-  const { show, submit, today, theaters } = props;
+  const { show, submit, today } = props;
   const [expand, setExpand] = useState(false);
   const [runtime, setRuntime] = useState('');
   const movieId = show.movie_id;
@@ -114,12 +114,7 @@ const ShowsList = (props) => {
           )}
           {expand && (
             <div>
-              <ScreeningsEditor
-                today={today}
-                show={show}
-                submit={submit}
-                theaters={theaters}
-              />
+              <ScreeningsEditor today={today} show={show} submit={submit} />
             </div>
           )}
         </div>

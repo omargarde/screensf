@@ -4,7 +4,7 @@ import axios from 'axios';
 import { cutDate } from './helpers';
 
 const ScreeningsEditor = (props) => {
-  const { show, theaters } = props;
+  const { show } = props;
   const screenId = show.screening_id ? show.screening_id : 'newScr';
   const start = cutDate(show.start_date);
   const end = cutDate(show.end_date);
@@ -330,7 +330,7 @@ const ScreeningsEditor = (props) => {
             <option value="35mm">35mm</option>
             <option value="16mm">16mm</option>
             <option value="70mm">70mm</option>
-            <option value="DV">DV</option>
+            <option value="Video">Video</option>
             <option value="VHS">VHS</option>
             <option value="Virtual Screening">Virtual Screening</option>
           </select>

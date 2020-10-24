@@ -21,7 +21,7 @@ class Home extends React.Component {
       showtimes: [],
       featured: data,
       isLoading: true,
-      isSubmit: true,
+      isSubmit: false,
       today: new Date(),
       selectedDate: new Date(),
       loading: loadImage,
@@ -29,7 +29,6 @@ class Home extends React.Component {
       serExpand: false,
       movExpand: false,
       featExpand: false,
-      theaters: '',
     };
     this.fetchFrontPage();
     this.dateChange = this.dateChange.bind(this);
@@ -71,7 +70,6 @@ class Home extends React.Component {
   fetchFrontPage() {
     this.fetchRecommended();
     this.fetchShowtimes();
-    this.fetchVenues();
   }
 
   fetchRecommended() {
@@ -119,15 +117,6 @@ class Home extends React.Component {
       });
   }
 
-  fetchVenues() {
-    axios({
-      method: 'get',
-      url: '/venues/',
-    }).then((response) => {
-      this.setState({ theaters: response.data });
-    });
-  }
-
   render() {
     const {
       today,
@@ -141,7 +130,6 @@ class Home extends React.Component {
       serExpand,
       movExpand,
       featExpand,
-      theaters,
     } = this.state;
 
     const dates = {
@@ -178,9 +166,7 @@ class Home extends React.Component {
           submit={isSubmit}
           title="Add Screening"
         />
-        {expand && (
-          <ScreeningsEditor show={showBoilerplate} theaters={theaters} />
-        )}
+        {expand && <ScreeningsEditor show={showBoilerplate} />}
         <Expand
           handleExpand={this.serExpandChange}
           expand={serExpand}
@@ -200,7 +186,6 @@ class Home extends React.Component {
           venues={showtimes}
           today={moment(selectedDate).format('YYYY-MM-DD')}
           submit={isSubmit}
-          theaters={theaters}
           dates={dates}
         />
       </div>

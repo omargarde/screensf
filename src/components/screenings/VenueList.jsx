@@ -2,7 +2,7 @@ import React from 'react';
 import ShowsList from './ShowsList';
 
 const VenueList = (props) => {
-  const { venue, submit, today, theaters } = props;
+  const { venue, submit, today } = props;
   return (
     <div className="screenings-venues">
       <div className="venue-block">
@@ -15,7 +15,6 @@ const VenueList = (props) => {
             show={item}
             today={today}
             submit={submit}
-            theaters={theaters}
             key={item.film}
           />
         ))}
