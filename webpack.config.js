@@ -1,20 +1,20 @@
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const BrotliPlugin = require('brotli-webpack-plugin');
+// const BrotliPlugin = require('brotli-webpack-plugin');
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const isDevelopment = process.env.NODE_ENV === 'production';
-const SRC_DIR = __dirname + '/src';
-const DIST_DIR = __dirname + '/dist';
- 
+const SRC_DIR = `${__dirname}/src`;
+const DIST_DIR = `${__dirname}/dist`;
+
 module.exports = {
-  entry: [`${SRC_DIR  }/App.jsx`],
+  entry: [`${SRC_DIR}/App.jsx`],
   output: {
     path: DIST_DIR,
     publicPath: '/',
-    filename: 'screensf-bundle.js'
+    filename: 'screensf-bundle.js',
   },
   module: {
     rules: [
@@ -23,14 +23,14 @@ module.exports = {
         exclude: /node_modules/,
         use: {
           loader: 'html-loader',
-          options: {minimize: true}
+          options: { minimize: true },
         },
       },
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader'
+          loader: 'babel-loader',
         },
       },
       {
@@ -82,7 +82,7 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: ['*', '.js', '.jsx', '.scss', '.css']
+    extensions: ['*', '.js', '.jsx', '.scss', '.css'],
   },
   optimization: {
     splitChunks: {
@@ -102,15 +102,15 @@ module.exports = {
     new UglifyJsPlugin({
       cache: true,
       parallel: true,
-      sourceMap: true
+      sourceMap: true,
     }),
     new HtmlWebpackPlugin({
-      template: SRC_DIR + '/index.html',
-      filename: './index.html'
+      template: `${SRC_DIR}/index.html`,
+      filename: './index.html',
     }),
-    new MiniCssExtractPlugin({ 
+    new MiniCssExtractPlugin({
       filename: isDevelopment ? '[name].css' : '[name].[hash].css',
-      chunkFilename: isDevelopment ? '[id].css' : '[id].[hash].css'
+      chunkFilename: isDevelopment ? '[id].css' : '[id].[hash].css',
     }),
     // new BundleAnalyzerPlugin(),
     // new BrotliPlugin({

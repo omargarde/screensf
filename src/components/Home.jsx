@@ -29,7 +29,6 @@ class Home extends React.Component {
       serExpand: false,
       movExpand: false,
       featExpand: false,
-      theaters: '',
     };
     this.fetchFrontPage();
     this.dateChange = this.dateChange.bind(this);
@@ -71,7 +70,6 @@ class Home extends React.Component {
   fetchFrontPage() {
     this.fetchRecommended();
     this.fetchShowtimes();
-    this.fetchVenues();
   }
 
   fetchRecommended() {
@@ -81,7 +79,6 @@ class Home extends React.Component {
       .add(1, 'days')
       .format('YYYY-MM-DD');
     const query = `/recommended/${thisDay}-${nextDay}`;
-
     axios({
       method: 'get',
       url: query,
@@ -99,12 +96,13 @@ class Home extends React.Component {
   }
 
   fetchShowtimes() {
-    const { selectedDate } = this.state;
+    const { selectedDate, isSubmit } = this.state;
     const thisDay = moment(selectedDate).format('YYYY-MM-DD');
     const nextDay = moment(new Date(selectedDate))
       .add(1, 'days')
       .format('YYYY-MM-DD');
-    const query = `/showtimes/${thisDay}-${nextDay}`;
+    let query = `/showtimes/${thisDay}-${nextDay}`;
+    if (isSubmit) query = `/showtimes-submit/${thisDay}-${nextDay}`;
     this.setState({ isLoading: true });
     axios({
       method: 'get',
@@ -117,15 +115,6 @@ class Home extends React.Component {
         this.setState({ isLoading: true });
         throw new Error(error);
       });
-  }
-
-  fetchVenues() {
-    axios({
-      method: 'get',
-      url: '/venues/',
-    }).then((response) => {
-      this.setState({ theaters: response.data });
-    });
   }
 
   render() {
@@ -141,7 +130,6 @@ class Home extends React.Component {
       serExpand,
       movExpand,
       featExpand,
-      theaters,
     } = this.state;
 
     const dates = {
@@ -178,9 +166,7 @@ class Home extends React.Component {
           submit={isSubmit}
           title="Add Screening"
         />
-        {expand && (
-          <ScreeningsEditor show={showBoilerplate} theaters={theaters} />
-        )}
+        {expand && <ScreeningsEditor show={showBoilerplate} />}
         <Expand
           handleExpand={this.serExpandChange}
           expand={serExpand}
@@ -200,7 +186,6 @@ class Home extends React.Component {
           venues={showtimes}
           today={moment(selectedDate).format('YYYY-MM-DD')}
           submit={isSubmit}
-          theaters={theaters}
           dates={dates}
         />
       </div>

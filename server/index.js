@@ -15,13 +15,15 @@ app.get('/recommended/:id', get.getRecommendedOnDate);
 
 app.get('/showtimes/:id', get.getShowtimesOnDate);
 
+app.get('/showtimes-submit/:id', get.getShowtimesSubmit);
+
 app.get('/venues/', get.getVenues);
 
 app.get('/series/', get.getSeries);
 
 app.get('/movies/', get.getMovies);
 
-app.get('/screenings/', get.getScreenings);
+app.get('/screenings/:id', get.getScreenings);
 
 app.get('/showtime-hours/:id', get.getShowtimeHours);
 

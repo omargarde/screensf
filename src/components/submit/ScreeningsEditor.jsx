@@ -4,10 +4,12 @@ import axios from 'axios';
 import { cutDate } from './helpers';
 
 const ScreeningsEditor = (props) => {
-  const { show, theaters } = props;
+  const { show } = props;
   const screenId = show.screening_id ? show.screening_id : 'newScr';
   const start = cutDate(show.start_date);
   const end = cutDate(show.end_date);
+  const [venList, setVenList] = useState([]);
+  const [venKey, setVenKey] = useState('');
   const [scrId, setScrId] = useState(screenId);
   const [movId, setMovId] = useState(show.movie_id);
   const [origSer, setOrigSer] = useState(show.series_id);
@@ -39,21 +41,21 @@ const ScreeningsEditor = (props) => {
           throw new Error(error);
         });
     };
-    const getScreeningsList = () => {
+    const getVenueList = () => {
       axios({
         method: 'get',
-        url: '/screenings/',
+        url: '/venues/',
       })
         .then((response) => {
           const { data } = response;
-          setScrList(data);
+          setVenList(data);
         })
         .catch((error) => {
           throw new Error(error);
         });
     };
-    getScreeningsList();
     getSeriesList();
+    getVenueList();
   }, []);
 
   const selectScreening = (selectedId) => {
@@ -65,11 +67,15 @@ const ScreeningsEditor = (props) => {
     setAltTitle('');
     setScreenUrl('');
     setStartDate('');
+    setSerId('');
     setEndDate('');
     setFormat('');
     setScreenNote('');
     setCanceled('');
-    if (selectedId === 'new') return;
+    if (selectedId === 'newScr') {
+      setOrigSer('');
+      return;
+    }
     const {
       screening_id,
       movies_id,
@@ -95,6 +101,25 @@ const ScreeningsEditor = (props) => {
     setFormat(format);
     setScreenNote(screening_note);
     setCanceled(canceled);
+  };
+
+  const getScreeningsList = (value) => {
+    axios({
+      method: 'get',
+      url: `/screenings/${value}`,
+    })
+      .then((response) => {
+        const { data } = response;
+        setScrList(data);
+      })
+      .catch((error) => {
+        throw new Error(error);
+      });
+  };
+
+  const selectVenue = (value) => {
+    setVenKey(value);
+    getScreeningsList(venList[value].id);
   };
 
   const postScreenSeries = (screeningsId) => {
@@ -208,17 +233,28 @@ const ScreeningsEditor = (props) => {
 
   return (
     <div className="submit-form">
+      <h3>Screening Editor</h3>
       <div>
-        {show.screenings_id ? (
-          ''
-        ) : (
+        <div className="pick-screening">
+          <label htmlFor={venKey}>
+            <select
+              value={venKey}
+              onChange={(e) => selectVenue(e.target.value)}
+            >
+              <option>Filter by Venue</option>
+              {venList.map((ven, i) => (
+                <option key={ven.id} value={i}>
+                  {ven.title}
+                </option>
+              ))}
+            </select>
+          </label>
           <label htmlFor={scrKey}>
-            Select Screening:
             <select
               value={scrKey}
               onChange={(e) => selectScreening(e.target.value)}
             >
-              <option value="new">New Screening</option>
+              <option value="newScr">New Screening</option>
               {scrList.map((selScr, i) => (
                 <option key={selScr.id} value={i}>
                   {selScr.screening_id}
@@ -228,7 +264,7 @@ const ScreeningsEditor = (props) => {
               ))}
             </select>
           </label>
-        )}
+        </div>
         <label htmlFor={movId}>
           Movie ID:
           <input
@@ -241,7 +277,7 @@ const ScreeningsEditor = (props) => {
           Venue:
           <select value={venue} onChange={(e) => setVenue(e.target.value)}>
             <option value="">Select...</option>
-            {theaters.map((theater) => (
+            {venList.map((theater) => (
               <option key={theater.id} value={theater.id}>
                 {theater.title}
               </option>
@@ -294,9 +330,9 @@ const ScreeningsEditor = (props) => {
             <option value="35mm">35mm</option>
             <option value="16mm">16mm</option>
             <option value="70mm">70mm</option>
-            <option value="DV">DV</option>
+            <option value="Video">Video</option>
             <option value="VHS">VHS</option>
-            <option value="Virtual Screening"> Virtual Screening</option>
+            <option value="Virtual Screening">Virtual Screening</option>
           </select>
         </label>
         <label htmlFor={screenUrl}>
