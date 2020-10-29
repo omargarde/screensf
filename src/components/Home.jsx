@@ -21,7 +21,7 @@ class Home extends React.Component {
       showtimes: [],
       featured: data,
       isLoading: true,
-      isSubmit: false,
+      isSubmit: true,
       today: new Date(),
       selectedDate: new Date(),
       loading: loadImage,

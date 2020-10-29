@@ -7,16 +7,17 @@ const ShowtimesEditor = (props) => {
   const [expand, setExpand] = useState(false);
   const [hour, setHour] = useState('00');
   const [minute, setMinute] = useState('00');
-  const [success, setSuccess] = useState('');
+  const [date, setDate] = useState(today);
   const [shoKey, setShoKey] = useState('new');
   const [shoId, setShoId] = useState('');
   const [shoNote, setShoNote] = useState('');
   const [shoCanceled, setCanceled] = useState(0);
   const [shoHide, setHide] = useState(0);
   const [shoList, setShoList] = useState([]);
+  const [note, setNote] = useState('');
 
   const newShow = () => {
-    return `${today} ${hour}:${minute}:00-8:00`;
+    return `${date} ${hour}:${minute}:00-8:00`;
   };
 
   useEffect(() => {
@@ -55,10 +56,13 @@ const ShowtimesEditor = (props) => {
       },
     })
       .then(() => {
-        setSuccess('Successful post. Reload the page.');
+        setNote('Successful post. Reload the page.');
+        setTimeout(() => {
+          setNote('');
+        }, 1000);
       })
       .catch((error) => {
-        setSuccess('There was an error posting this showtime.');
+        setNote('There was an error posting this showtime.');
         throw new Error(error);
       });
   };
@@ -76,10 +80,10 @@ const ShowtimesEditor = (props) => {
       },
     })
       .then(() => {
-        setSuccess('Successful edit. Reload the page.');
+        setNote('Successful edit. Reload the page.');
       })
       .catch((error) => {
-        setSuccess('There was an error posting this showtime.');
+        setNote('There was an error posting this showtime.');
         throw new Error(error);
       });
   };
@@ -88,10 +92,12 @@ const ShowtimesEditor = (props) => {
     const showTimeData = shoList[key];
     setShoKey(key);
     setShoId(showTimeData.id);
+    const shoDate = showTimeData.showtime.slice(0, 10);
     const shoHour = showTimeData.showtime.slice(11, 13);
     const shoMin = showTimeData.showtime.slice(14, 16);
     setHour(shoHour);
     setMinute(shoMin);
+    setDate(shoDate);
     setShoNote(showTimeData.showtime_note);
     setHide(showTimeData.hide);
     setCanceled(showTimeData.canceled);
@@ -100,10 +106,10 @@ const ShowtimesEditor = (props) => {
   const handleShowtime = () => {
     if (shoKey === 'new') {
       postShowtime();
-      setSuccess('posting showtime');
+      setNote('posting showtime');
     } else {
       editShowtime();
-      setSuccess('editing showtime');
+      setNote('editing showtime');
     }
   };
 
@@ -138,6 +144,14 @@ const ShowtimesEditor = (props) => {
                   </option>
                 ))}
               </select>
+            </label>
+            <label htmlFor={date}>
+              Showtime Date:
+              <input
+                type="date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+              />
             </label>
             <select value={hour} onChange={(e) => setHour(e.target.value)}>
               {digitsList(0, 23, 'hour').map((time) => (
@@ -190,7 +204,7 @@ const ShowtimesEditor = (props) => {
               Submit
             </button>
           </div>
-          <div>{success}</div>
+          <div>{note}</div>
         </div>
       ) : (
         ''
