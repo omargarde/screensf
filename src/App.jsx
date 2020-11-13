@@ -1,8 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import Home from './components/Home';
 import Nav from './components/Nav';
+import Venues from './components/venues/Venues';
+import VenueView from './components/venues/VenueView';
+import ScrollToTop from './components/ScrollToTop';
 
 // eslint-disable-next-line
 import styles from './styles/main';
@@ -14,6 +17,9 @@ function App() {
       <div className="wrapper">
         <Switch>
           <Route exact path="/" component={Home} />
+          <Route path="/venues/:id" component={VenueView} />
+          <Route path="/venues" component={Venues} />
+          <Redirect to="/" />
         </Switch>
       </div>
       <Nav />
@@ -23,6 +29,7 @@ function App() {
 
 ReactDOM.render(
   <BrowserRouter>
+    <ScrollToTop />
     <App />
   </BrowserRouter>,
   document.getElementById('root'),

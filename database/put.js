@@ -142,7 +142,7 @@ const editVenue = (req, res, next) => {
       `UPDATE
       venues
       SET 
-      title = $2, short_title = $3, city = $4, venue_description = $5, address = $6, currently_open = $7
+      title = $2, short_title = $3, region = $4, venue_description = $5, address = $6, img = $7, venue_url = $8, currently_open = $9
       WHERE
       id = $1;
       `,
@@ -150,9 +150,11 @@ const editVenue = (req, res, next) => {
         req.body.id,
         req.body.title,
         req.body.short_title,
-        req.body.city,
+        req.body.region,
         req.body.venue_description,
         req.body.address,
+        req.body.img,
+        req.body.venue_url,
         req.body.currently_open,
       ],
     )

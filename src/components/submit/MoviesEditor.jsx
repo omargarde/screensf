@@ -20,7 +20,7 @@ const MoviesEditor = () => {
   useEffect(() => {
     axios({
       method: 'get',
-      url: '/movies/',
+      url: 'api/movies/',
     })
       .then((response) => {
         const { data } = response;
@@ -105,7 +105,7 @@ const MoviesEditor = () => {
   const postMovie = () => {
     axios({
       method: 'post',
-      url: `/movies/`,
+      url: `api/movies/`,
       data: {
         id: movId,
         title: movTitle,
@@ -127,7 +127,7 @@ const MoviesEditor = () => {
   const editMovie = () => {
     axios({
       method: 'put',
-      url: `/movies/`,
+      url: `api/movies/`,
       data: {
         id: movId,
         title: movTitle,
@@ -168,7 +168,7 @@ const MoviesEditor = () => {
         </select>
       </label>
       <label htmlFor={searchQuery}>
-        Search Movie:
+        Search Movies:
         <input
           onChange={(e) => searchMovie(e.target.value, e)}
           value={searchQuery}
@@ -190,7 +190,7 @@ const MoviesEditor = () => {
       <label htmlFor={movId}>
         Movie ID:
         <input
-          onInput={(e) => getMovieData(e.target.value)}
+          onChange={(e) => getMovieData(e.target.value)}
           value={movId}
           type="text"
         />

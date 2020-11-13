@@ -120,6 +120,8 @@ screenings.screening_note;`;
 
 const getVenues = `SELECT * from venues`;
 
+const getVenue = `SELECT * from venues WHERE id = $1`;
+
 const getSeries = `SELECT * from series`;
 
 const getMovies = `SELECT *  FROM  movies`;
@@ -173,6 +175,7 @@ module.exports = {
   showtimesOnDate,
   recommendedOnDate,
   getVenues,
+  getVenue,
   getSeries,
   getMovies,
   getScreenings,

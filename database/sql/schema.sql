@@ -32,9 +32,11 @@ CREATE TABLE venues (
   id serial PRIMARY KEY,
   title text,
   short_title text,
-  city text,
+  region text,
   venue_description text,
   address text,
+  img text,
+  venue_url text,
   currently_open int
 );
 

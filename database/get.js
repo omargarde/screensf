@@ -68,6 +68,7 @@ const getShowtimesSubmit = (req, res) => {
             showsByVenue[venueTitle] = {
               venue: venueTitle,
               address: shortAddress,
+              id: rows[i].venue_id,
               shows: [],
             };
           }
@@ -166,6 +167,23 @@ const getVenues = (req, res) => {
     });
 };
 
+const getVenue = (req, res) => {
+  const venId = req.params.id;
+  const query = {
+    text: read.getVenue,
+    values: [venId],
+  };
+  screensf.client
+    .query(query)
+    .then((data) => {
+      res.send(JSON.stringify(data.rows));
+      res.end();
+    })
+    .catch((error) => {
+      res.end(error);
+    });
+};
+
 const getSeries = (req, res) => {
   const query = {
     text: read.getSeries,
@@ -251,6 +269,7 @@ module.exports = {
   getShowtimesSubmit,
   getRecommendedOnDate,
   getVenues,
+  getVenue,
   getSeries,
   getMovies,
   getScreenings,
