@@ -21,7 +21,7 @@ class Home extends React.Component {
       showtimes: [],
       featured: data,
       isLoading: true,
-      isSubmit: false,
+      isSubmit: true,
       today: new Date(),
       selectedDate: new Date(),
       loading: loadImage,
@@ -78,7 +78,7 @@ class Home extends React.Component {
     const nextDay = moment(new Date(selectedDate))
       .add(1, 'days')
       .format('YYYY-MM-DD');
-    const query = `/recommended/${thisDay}-${nextDay}`;
+    const query = `api/recommended/${thisDay}-${nextDay}`;
     axios({
       method: 'get',
       url: query,
@@ -101,8 +101,8 @@ class Home extends React.Component {
     const nextDay = moment(new Date(selectedDate))
       .add(1, 'days')
       .format('YYYY-MM-DD');
-    let query = `/showtimes/${thisDay}-${nextDay}`;
-    if (isSubmit) query = `/showtimes-submit/${thisDay}-${nextDay}`;
+    let query = `api/showtimes/${thisDay}-${nextDay}`;
+    if (isSubmit) query = `api/showtimes-submit/${thisDay}-${nextDay}`;
     this.setState({ isLoading: true });
     axios({
       method: 'get',

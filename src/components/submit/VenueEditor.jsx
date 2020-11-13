@@ -8,9 +8,11 @@ const VenueEditor = () => {
   const [venId, setVenId] = useState(0);
   const [venTitle, setVenTitle] = useState('');
   const [venShortTitle, setVenShortTitle] = useState('');
-  const [venCity, setVenCity] = useState('');
+  const [venRegion, setVenRegion] = useState('');
   const [venDesc, setVenDesc] = useState('');
   const [venAdd, setVenAdd] = useState('');
+  const [venImg, setVenImg] = useState('');
+  const [venUrl, setVenUrl] = useState('');
   const [venOpen, setVenOpen] = useState('');
   const [note, setNote] = useState('');
 
@@ -18,7 +20,7 @@ const VenueEditor = () => {
     const getVenueList = () => {
       axios({
         method: 'get',
-        url: '/venues/',
+        url: 'api/venues/',
       })
         .then((response) => {
           const { data } = response;
@@ -36,40 +38,48 @@ const VenueEditor = () => {
     setVenId('');
     setVenTitle('');
     setVenShortTitle('');
-    setVenCity('');
+    setVenRegion('');
     setVenDesc('');
     setVenAdd('');
+    setVenImg('');
+    setVenUrl('');
     setVenOpen('');
     setNote('');
     const {
       id,
       title,
       short_title,
-      city,
+      region,
       venue_description,
       address,
+      img,
+      venue_url,
       currently_open,
     } = venList[value];
     setVenId(id);
     setVenTitle(title);
     setVenShortTitle(short_title);
-    setVenCity(city);
+    setVenRegion(region);
     setVenDesc(venue_description);
     setVenAdd(address);
+    setVenImg(img);
+    setVenUrl(venue_url);
     setVenOpen(currently_open);
   };
 
   const postVenue = () => {
     axios({
       method: 'post',
-      url: `/venues/`,
+      url: `api/venues/`,
       data: {
         id: venId,
         title: venTitle,
         short_title: venShortTitle,
-        city: venCity,
+        region: venRegion,
         venue_description: venDesc,
         address: venAdd,
+        img: venImg,
+        venue_url: venUrl,
         currently_open: venOpen,
       },
     })
@@ -85,14 +95,16 @@ const VenueEditor = () => {
   const editVenue = () => {
     axios({
       method: 'put',
-      url: `/venues/`,
+      url: `api/venues/`,
       data: {
         id: venId,
         title: venTitle,
         short_title: venShortTitle,
-        city: venCity,
+        region: venRegion,
         venue_description: venDesc,
         address: venAdd,
+        img: venImg,
+        venue_url: venUrl,
         currently_open: venOpen,
       },
     })
@@ -142,12 +154,12 @@ const VenueEditor = () => {
           onChange={(e) => setVenShortTitle(e.target.value)}
         />
       </label>
-      <label htmlFor={venCity}>
-        Venue City:
+      <label htmlFor={venRegion}>
+        Venue Region:
         <input
           type="text"
-          value={venCity}
-          onChange={(e) => setVenCity(e.target.value)}
+          value={venRegion}
+          onChange={(e) => setVenRegion(e.target.value)}
         />
       </label>
       <label htmlFor={venDesc}>
@@ -164,6 +176,22 @@ const VenueEditor = () => {
           type="text"
           value={venAdd}
           onChange={(e) => setVenAdd(e.target.value)}
+        />
+      </label>
+      <label htmlFor={venImg}>
+        Venue Image:
+        <input
+          type="text"
+          value={venImg}
+          onChange={(e) => setVenImg(e.target.value)}
+        />
+      </label>
+      <label htmlFor={venUrl}>
+        Venue URL:
+        <input
+          type="text"
+          value={venUrl}
+          onChange={(e) => setVenUrl(e.target.value)}
         />
       </label>
       <label htmlFor={venOpen}>

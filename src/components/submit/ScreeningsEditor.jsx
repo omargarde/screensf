@@ -31,7 +31,7 @@ const ScreeningsEditor = (props) => {
     const getSeriesList = () => {
       axios({
         method: 'get',
-        url: '/series/',
+        url: 'api/series/',
       })
         .then((response) => {
           const { data } = response;
@@ -44,7 +44,7 @@ const ScreeningsEditor = (props) => {
     const getVenueList = () => {
       axios({
         method: 'get',
-        url: '/venues/',
+        url: 'api/venues/',
       })
         .then((response) => {
           const { data } = response;
@@ -106,7 +106,7 @@ const ScreeningsEditor = (props) => {
   const getScreeningsList = (value) => {
     axios({
       method: 'get',
-      url: `/screenings/${value}`,
+      url: `api/screenings/${value}`,
     })
       .then((response) => {
         const { data } = response;
@@ -125,7 +125,7 @@ const ScreeningsEditor = (props) => {
   const postScreenSeries = (screeningsId) => {
     axios({
       method: 'post',
-      url: `/screenings-series/`,
+      url: `api/screenings-series/`,
       data: {
         screenings_id: screeningsId,
         series_id: serId,
@@ -146,7 +146,7 @@ const ScreeningsEditor = (props) => {
     if (serId !== origSer) {
       axios({
         method: 'put',
-        url: `/screenings-series/`,
+        url: `api/screenings-series/`,
         data: {
           screenings_id: scrId,
           series_id: origSer,
@@ -170,7 +170,7 @@ const ScreeningsEditor = (props) => {
   const postScreening = () => {
     axios({
       method: 'post',
-      url: `/screenings/`,
+      url: `api/screenings/`,
       data: {
         movies_id: movId,
         venues_id: venue,
@@ -197,7 +197,7 @@ const ScreeningsEditor = (props) => {
   const editScreening = () => {
     axios({
       method: 'put',
-      url: `/screenings/`,
+      url: `api/screenings/`,
       data: {
         screening_id: scrId,
         movies_id: movId,
@@ -257,9 +257,9 @@ const ScreeningsEditor = (props) => {
               <option value="newScr">New Screening</option>
               {scrList.map((selScr, i) => (
                 <option key={selScr.id} value={i}>
-                  {selScr.screening_id}
-                  {` - `}
                   {selScr.alt_title}
+                  {` - `}
+                  {selScr.screening_id}
                 </option>
               ))}
             </select>

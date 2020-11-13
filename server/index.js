@@ -7,63 +7,78 @@ const post = require('../database/post');
 const put = require('../database/put');
 
 app.use('/', express.static(path.join(__dirname, '../dist')));
+
 app.use(express.json());
+
+const sendApp = (req, res) => {
+  res.sendFile('index.html', {
+    root: path.join(__dirname, '../dist/'),
+  });
+};
 
 // Read
 
-app.get('/recommended/:id', get.getRecommendedOnDate);
+app.get('/api/recommended/:id', get.getRecommendedOnDate);
 
-app.get('/showtimes/:id', get.getShowtimesOnDate);
+app.get('/api/showtimes/:id', get.getShowtimesOnDate);
 
-app.get('/showtimes-submit/:id', get.getShowtimesSubmit);
+app.get('/api/showtimes-submit/:id', get.getShowtimesSubmit);
 
-app.get('/venues/', get.getVenues);
+app.get('/api/venues/', get.getVenues);
 
-app.get('/series/', get.getSeries);
+app.get('/api/venue/:id', get.getVenue);
 
-app.get('/movies/', get.getMovies);
+app.get('/api/series/', get.getSeries);
 
-app.get('/screenings/:id', get.getScreenings);
+app.get('/api/movies/', get.getMovies);
 
-app.get('/showtime-hours/:id', get.getShowtimeHours);
+app.get('/api/screenings/:id', get.getScreenings);
 
-app.get('/featured/', get.getFeatured);
+app.get('/api/showtime-hours/:id', get.getShowtimeHours);
+
+app.get('/api/featured/', get.getFeatured);
 
 // Create
 
-app.post('/movies/', post.postMovie);
+app.post('/api/movies/', post.postMovie);
 
-app.post('/series/', post.postSeries);
+app.post('/api/series/', post.postSeries);
 
-app.post('/venues/', post.postVenue);
+app.post('/api/venues/', post.postVenue);
 
-app.post('/screenings/', post.postScreening);
+app.post('/api/screenings/', post.postScreening);
 
-app.post('/showtimes/', post.postShowtimes);
+app.post('/api/showtimes/', post.postShowtimes);
 
-app.post('/screenings-series/', post.postScreeningsSeries);
+app.post('/api/screenings-series/', post.postScreeningsSeries);
 
-app.post('/venues-series/', post.postVenuesSeries);
+app.post('/api/venues-series/', post.postVenuesSeries);
 
-app.post('/featured/', post.postFeatured);
+app.post('/api/featured/', post.postFeatured);
 
 // Update
 
-app.put('/series/', put.editSeries);
+app.put('/api/series/', put.editSeries);
 
-app.put('/screenings/', put.editScreening);
+app.put('/api/screenings/', put.editScreening);
 
-app.put('/screenings-series/', put.editScreeningsSeries);
+app.put('/api/screenings-series/', put.editScreeningsSeries);
 
-app.put('/showtimes/', put.editShowtimes);
+app.put('/api/showtimes/', put.editShowtimes);
 
-app.put('/movies/', put.editMovies);
+app.put('/api/movies/', put.editMovies);
 
-app.put('/venues/', put.editVenue);
+app.put('/api/venues/', put.editVenue);
 
-app.put('/featured/', put.editFeatured);
+app.put('/api/featured/', put.editFeatured);
 
 // Delete
+
+// Routes
+
+app.get('/venues/*', sendApp);
+
+app.get('/*', sendApp);
 
 const port = process.env.PORT || 3000;
 

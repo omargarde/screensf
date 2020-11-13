@@ -13,12 +13,14 @@ const MoviesEditor = () => {
   const [movRuntime, setMovRuntime] = useState('');
   const [movSyn, setMovSyn] = useState('');
   const [movList, setMovList] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResult, setSearchResult] = useState({ results: [] });
   const [note, setNote] = useState('');
 
   useEffect(() => {
     axios({
       method: 'get',
-      url: '/movies/',
+      url: 'api/movies/',
     })
       .then((response) => {
         const { data } = response;
@@ -58,6 +60,26 @@ const MoviesEditor = () => {
       });
   };
 
+  const searchMovie = (query) => {
+    setSearchQuery(query);
+    if (query === '') {
+      setSearchResult({ results: [] });
+      return;
+    }
+    const urlQuery = query.split(' ').join('%20');
+    axios({
+      method: 'get',
+      url: `https://api.themoviedb.org/3/search/movie/?api_key=${theMovieAPI}&query=${urlQuery}`,
+    })
+      .then((response) => {
+        const { data } = response;
+        setSearchResult(data);
+      })
+      .catch((error) => {
+        throw new Error(error);
+      });
+  };
+
   const selectMovie = (selectedId) => {
     setNote('');
     setMovKey(selectedId);
@@ -83,7 +105,7 @@ const MoviesEditor = () => {
   const postMovie = () => {
     axios({
       method: 'post',
-      url: `/movies/`,
+      url: `api/movies/`,
       data: {
         id: movId,
         title: movTitle,
@@ -105,7 +127,7 @@ const MoviesEditor = () => {
   const editMovie = () => {
     axios({
       method: 'put',
-      url: `/movies/`,
+      url: `api/movies/`,
       data: {
         id: movId,
         title: movTitle,
@@ -145,6 +167,26 @@ const MoviesEditor = () => {
           ))}
         </select>
       </label>
+      <label htmlFor={searchQuery}>
+        Search Movies:
+        <input
+          onChange={(e) => searchMovie(e.target.value, e)}
+          value={searchQuery}
+          type="text"
+        />
+      </label>
+      {searchResult.results.map((result) => (
+        <div>
+          <div className="film-title">
+            {result.title}
+            {` (`}
+            {result.release_date}
+            {`)`}
+          </div>
+          <div className="film-details">{result.id}</div>
+          <div className="film-series">{result.overview}</div>
+        </div>
+      ))}
       <label htmlFor={movId}>
         Movie ID:
         <input
