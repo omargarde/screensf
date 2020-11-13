@@ -249,7 +249,7 @@ $highlight: #8B2635;
     text-align: center;
   }
 
-  .screenings-venues h3 {
+  .venue-title {
     font-weight: 500;
     margin: 0%;
     font-size: 1.3em;
@@ -259,8 +259,30 @@ $highlight: #8B2635;
     margin: 4% 0%;
   }
 
+  .venue-img {
+    max-width: 100%;
+    text-align: center;
+    margin: 2% 0% 3% 0%;
+  }
+
+  .venue-img img {
+    max-height: 500px;
+  }
+
+  .venue-description {
+    font-weight: 300;
+    font-size: 1em;
+    margin: 1% 0% 1% 0%;
+  }
+
   .venue-address {
     font-weight: 300;
+    font-size: 1em;
+  }
+
+  .venue-link {
+    color: $highlight;
+    font-weight: 600;
     font-size: 1em;
   }
 
@@ -361,4 +383,5 @@ $highlight: #8B2635;
     height: 30px;
     margin: 0%;
   }
+
 }

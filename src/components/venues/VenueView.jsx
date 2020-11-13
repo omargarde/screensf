@@ -5,6 +5,7 @@ import { loadImage } from '../helpers';
 
 const VenueView = () => {
   const params = useParams();
+  const venId = params.id.split('-')[0];
   const [venName, setVenName] = useState('');
   const [venAdd, setVenAdd] = useState('');
   const [venUrl, setVenUrl] = useState('');
@@ -16,7 +17,7 @@ const VenueView = () => {
     const getVenue = () => {
       axios({
         method: 'get',
-        url: `/api/venue/${params.id}`,
+        url: `/api/venue/${venId}`,
       })
         .then((response) => {
           const { data } = response;
@@ -34,7 +35,7 @@ const VenueView = () => {
         });
     };
     getVenue();
-  }, [params.id]);
+  }, [venId]);
 
   if (isLoading) {
     return (
@@ -46,12 +47,14 @@ const VenueView = () => {
 
   return (
     <div>
-      <img src={venImg} alt="venue" />
-      <h2>{venName}</h2>
+      <div className="venue-img">
+        <img src={venImg} alt="venue" />
+      </div>
+      <h2 className="venue-title">{venName}</h2>
       <div className="venue-address">{venAdd}</div>
-      <div>{venDesc}</div>
-      <div>
-        <a href={venUrl}>Website</a>
+      <div className="venue-description">{venDesc}</div>
+      <div className="venue-link">
+        <a href={venUrl}>Official Website</a>
       </div>
     </div>
   );
