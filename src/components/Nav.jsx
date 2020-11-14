@@ -8,13 +8,13 @@ const Nav = () => (
     </ul>
     <ul className="nav-links">
       <li>
+        <Link to="/about/">about</Link>
+      </li>
+      <li>
         <Link to="/">showtimes</Link>
       </li>
       <li>
         <Link to="/venues/">venues</Link>
-      </li>
-      <li>
-        <Link to="/about/">about</Link>
       </li>
     </ul>
   </div>
