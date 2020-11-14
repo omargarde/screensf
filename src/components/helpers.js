@@ -11,7 +11,7 @@ const boilerplate = {
   image: 'https://storage.googleapis.com/filmcans/true-romance-banner.jpg',
   writer: '',
   article:
-    'The SF Bay Film Calendar is an exciting new resource for filmgoing in ' +
+    'The SF Bay Film calendar is an exciting new resource for filmgoing in ' +
     'the Bay Area. Starting in summer 2020, we will list daily showtimes for ' +
     'independent theaters, repertory cinema, and select film series and ' +
     "festivals. We'll also recommended a movie for the day. Currently " +
@@ -43,10 +43,16 @@ const editShowtimes = (showtimes) => {
   return venueArray;
 };
 
+const isValidDate = (dateString) => {
+  const regEx = /^\d{4}-\d{2}-\d{2}$/;
+  return dateString.match(regEx) != null;
+};
+
 module.exports = {
   data: boilerplate,
   loadImage,
   editShowtimes,
   boilerplateImage,
   images,
+  isValidDate,
 };

@@ -4,6 +4,7 @@ import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import Home from './components/Home';
 import Nav from './components/Nav';
 import Venues from './components/venues/Venues';
+import About from './components/About';
 import VenueView from './components/venues/VenueView';
 import ScrollToTop from './components/ScrollToTop';
 
@@ -19,6 +20,8 @@ function App() {
           <Route exact path="/" component={Home} />
           <Route path="/venues/:id" component={VenueView} />
           <Route path="/venues" component={Venues} />
+          <Route path="/about" component={About} />
+          <Route path="/:id" component={Home} />
           <Redirect to="/" />
         </Switch>
       </div>

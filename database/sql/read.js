@@ -118,7 +118,7 @@ screenings.screening_url,
 screenings.format,
 screenings.screening_note;`;
 
-const getVenues = `SELECT * from venues`;
+const getVenues = `SELECT * from venues ORDER BY title`;
 
 const getVenue = `SELECT * from venues WHERE id = $1`;
 

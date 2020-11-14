@@ -119,6 +119,7 @@ const getShowtimesOnDate = (req, res) => {
             showsByVenue[venueTitle] = {
               venue: venueTitle,
               address: shortAddress,
+              id: rows[i].venue_id,
               shows: [],
             };
           }

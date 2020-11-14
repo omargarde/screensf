@@ -59,14 +59,42 @@ $highlight: #8B2635;
     background-color: $screen-sf;
     color: #FFF;
     line-height: 2;
-    margin: .5% 0% .5% 0%;
+    margin: .5% 0%;
+    padding: 0% 15%;
+    display: flex;
+    justify-content: space-evenly;
+    font-weight: 300;
+    font-size: 1.25em;  
 
-    h1 {
-      font-weight: 300;
-      text-align: center;
-      font-size: 1.5em;
-      margin: 0;
+    ul { 
+      margin: 0%;
+      padding: 0%;
     }
+
+    li {
+      display: inline;
+      margin: 0 1.5em 0 0;
+    }
+
+    @media screen and (max-width: $breakpoint-small) {
+      display: block;
+      text-align: center;
+      .main-title { 
+        font-size: 1.5em;
+      }
+      .nav-links {
+        font-size: 1em;
+      }
+    }
+
+    div {
+      margin: .5% 0%;
+    }
+
+    .nav-links div {
+      margin: 0 5% 0% 0%;
+    }
+
   }
 
   .wrapper {
@@ -123,13 +151,15 @@ $highlight: #8B2635;
     gap: 0% 1%;
     height: 50px;
 
-    button.ssf-button {
+    .ssf-button {
       font-family: inherit;
       font-weight: 300;
-      font-size: .9em;
+      font-size: 1em;
       background-color: #F5F6F4;
-      width: 100%;
+      display: flex;
       justify-content: center;
+      align-items: center;
+      height: 100%;
       cursor: pointer;
       border-width: 1px;
       border-style: solid;
@@ -257,6 +287,27 @@ $highlight: #8B2635;
 
   .venue-block {
     margin: 4% 0%;
+  }
+  .venue-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    @media only screen and (max-width: $breakpoint-small) {
+      grid-template-columns: 1fr;
+    }
+
+
+    .venue-item {
+      text-align: center;
+      padding: 2%;
+    }
+
+    .venue-item img {
+      width: 250px;
+      height: 250px;
+      object-fit: cover;
+      object-position: 20% 10%;
+    }
+  
   }
 
   .venue-img {

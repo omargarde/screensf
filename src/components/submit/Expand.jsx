@@ -10,7 +10,7 @@ const Expand = (props) => {
           <button
             type="button"
             className="submit-screening-button"
-            onClick={() => handleExpand()}
+            onClick={() => handleExpand(!expand)}
           >
             {expand ? '-' : '+'}
           </button>

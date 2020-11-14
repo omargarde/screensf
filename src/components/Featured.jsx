@@ -10,9 +10,7 @@ const Featured = (props) => {
         <img src={featured.image} className="featured-image" alt="featured" />
       </div>
       <h3>
-        {featured.welcome
-          ? 'Welcome to the SF Bay Film Calendar'
-          : 'Featured Film for '}
+        {featured.welcome ? 'Welcome to SF Bay Film' : 'Featured Film for '}
         {featured.welcome ? '' : moment(today).format('dddd, MMMM D YYYY')}
       </h3>
       <div

@@ -18,7 +18,7 @@ const SeriesEditor = () => {
     const getSeriesList = () => {
       axios({
         method: 'get',
-        url: 'api/series/',
+        url: '/api/series/',
       })
         .then((response) => {
           const { data } = response;
@@ -60,7 +60,7 @@ const SeriesEditor = () => {
   const postSeries = () => {
     axios({
       method: 'post',
-      url: `api/series/`,
+      url: `/api/series/`,
       data: {
         title: serTitle,
         start_date: startDate,
@@ -81,7 +81,7 @@ const SeriesEditor = () => {
   const editSeries = () => {
     axios({
       method: 'put',
-      url: `api/series/`,
+      url: `/api/series/`,
       data: {
         series_id: serId,
         title: serTitle,
