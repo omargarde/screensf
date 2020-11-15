@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom';
 const Nav = () => (
   <div className="nav">
     <ul className="main-title">
-      <li>sf bay film</li>
+      <li>
+        <Link to="/">sf bay film</Link>
+      </li>
     </ul>
     <ul className="nav-links">
       <li>
