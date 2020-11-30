@@ -3,11 +3,11 @@ import axios from 'axios';
 import { digitsList } from './helpers';
 
 const ShowtimesEditor = (props) => {
-  const { screening, today, submit } = props;
+  const { screening, submit, dates } = props;
   const [expand, setExpand] = useState(false);
   const [hour, setHour] = useState('00');
   const [minute, setMinute] = useState('00');
-  const [date, setDate] = useState(today);
+  const [date, setDate] = useState(dates.today.format('YYYY-MM-DD'));
   const [shoKey, setShoKey] = useState('new');
   const [shoId, setShoId] = useState('');
   const [shoNote, setShoNote] = useState('');
