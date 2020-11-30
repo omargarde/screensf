@@ -20,7 +20,7 @@ const MoviesEditor = () => {
   useEffect(() => {
     axios({
       method: 'get',
-      url: 'api/movies/',
+      url: '/api/movies/',
     })
       .then((response) => {
         const { data } = response;
@@ -105,7 +105,7 @@ const MoviesEditor = () => {
   const postMovie = () => {
     axios({
       method: 'post',
-      url: `api/movies/`,
+      url: `/api/movies/`,
       data: {
         id: movId,
         title: movTitle,
@@ -127,7 +127,7 @@ const MoviesEditor = () => {
   const editMovie = () => {
     axios({
       method: 'put',
-      url: `api/movies/`,
+      url: `/api/movies/`,
       data: {
         id: movId,
         title: movTitle,

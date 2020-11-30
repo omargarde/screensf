@@ -24,7 +24,7 @@ const ShowtimesEditor = (props) => {
     const getShowList = () => {
       axios({
         method: 'get',
-        url: `api/showtime-hours/${screening}`,
+        url: `/api/showtime-hours/${screening}`,
       })
         .then((response) => {
           const { data } = response;
@@ -46,7 +46,7 @@ const ShowtimesEditor = (props) => {
   const postShowtime = () => {
     axios({
       method: 'post',
-      url: `api/showtimes/`,
+      url: `/api/showtimes/`,
       data: {
         screenings_id: screening,
         showtime: newShow(),
@@ -70,7 +70,7 @@ const ShowtimesEditor = (props) => {
   const editShowtime = () => {
     axios({
       method: 'put',
-      url: `api/showtimes/`,
+      url: `/api/showtimes/`,
       data: {
         showtime_id: shoId,
         showtime: newShow(),

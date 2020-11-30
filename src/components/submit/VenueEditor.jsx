@@ -20,7 +20,7 @@ const VenueEditor = () => {
     const getVenueList = () => {
       axios({
         method: 'get',
-        url: 'api/venues/',
+        url: '/api/venues/',
       })
         .then((response) => {
           const { data } = response;
@@ -70,7 +70,7 @@ const VenueEditor = () => {
   const postVenue = () => {
     axios({
       method: 'post',
-      url: `api/venues/`,
+      url: `/api/venues/`,
       data: {
         id: venId,
         title: venTitle,
@@ -95,7 +95,7 @@ const VenueEditor = () => {
   const editVenue = () => {
     axios({
       method: 'put',
-      url: `api/venues/`,
+      url: `/api/venues/`,
       data: {
         id: venId,
         title: venTitle,

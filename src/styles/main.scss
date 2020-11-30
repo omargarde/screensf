@@ -1,5 +1,17 @@
+
+/* Breakpoints */
+
+$breakpoint-large: 110em;
+$breakpoint-small: 63em;
+
+/* Colors */
+
+$screen-sf: #466995;
+$highlight: #8B2635;
+$background-color: #FFF;
+
 html {
-  background-color: #466995;
+  background-color: $screen-sf;
 }
 
 @media only screen and (orientation: portrait) {
@@ -26,27 +38,16 @@ html {
 body {
   margin: 0%;
   cursor: default;
-  background-color: #FFF;
+  background-color: $background-color;
 
   a {
     color: inherit;
     text-decoration: inherit; 
   }
   a:hover {
-    color: #CA3F54;
+    color: $highlight;
   }
 }
-
-
-/* Breakpoints */
-
-$breakpoint-large: 110em;
-$breakpoint-small: 63em;
-
-/* Colors */
-
-$screen-sf: #466995;
-$highlight: #8B2635;
 
 #root {
   @import url('https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,600,600i,700,700i');
@@ -59,14 +60,46 @@ $highlight: #8B2635;
     background-color: $screen-sf;
     color: #FFF;
     line-height: 2;
-    margin: .5% 0% .5% 0%;
+    margin: .5% 0%;
+    padding: 0% 15%;
+    display: flex;
+    justify-content: space-evenly;
+    font-weight: 300;
+    font-size: 1.25em;  
 
-    h1 {
-      font-weight: 300;
-      text-align: center;
-      font-size: 1.5em;
-      margin: 0;
+    ul { 
+      margin: 0%;
+      padding: 0%;
     }
+
+    li {
+      display: inline;
+      margin: 0 1.5em 0 0;
+    }
+
+    @media screen and (max-width: $breakpoint-small) {
+      display: block;
+      text-align: center;
+      .main-title { 
+        font-size: 1.5em;
+      }
+      .nav-links {
+        font-size: 1em;
+      }
+    }
+
+    div {
+      margin: .5% 0%;
+    }
+
+    .nav-links div {
+      margin: 0 5% 0% 0%;
+    }
+
+    a:hover {
+      color: #FFF;
+    }
+
   }
 
   .wrapper {
@@ -123,13 +156,15 @@ $highlight: #8B2635;
     gap: 0% 1%;
     height: 50px;
 
-    button.ssf-button {
+    .ssf-button {
       font-family: inherit;
       font-weight: 300;
-      font-size: .9em;
+      font-size: 1em;
       background-color: #F5F6F4;
-      width: 100%;
+      display: flex;
       justify-content: center;
+      align-items: center;
+      height: 100%;
       cursor: pointer;
       border-width: 1px;
       border-style: solid;
@@ -249,7 +284,7 @@ $highlight: #8B2635;
     text-align: center;
   }
 
-  .screenings-venues h3 {
+  .venue-title {
     font-weight: 500;
     margin: 0%;
     font-size: 1.3em;
@@ -259,8 +294,58 @@ $highlight: #8B2635;
     margin: 4% 0%;
   }
 
+  .venue-region {
+    font-weight: 500;
+    font-size: 1.3em;
+  }
+
+  .venue-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    @media only screen and (max-width: $breakpoint-small) {
+      grid-template-columns: 1fr 1fr;
+    }
+
+
+    .venue-item {
+      text-align: center;
+      padding: 2%;
+    }
+
+    .venue-item img {
+      width: 300px;
+      height: 200px;
+      object-fit: cover;
+      object-position: 20% 10%;
+      border: 1px black solid;
+    }
+  
+  }
+
+  .venue-img {
+    max-width: 100%;
+    text-align: center;
+    margin: 2% 0% 3% 0%;
+  }
+
+  .venue-img img {
+    max-height: 500px;
+  }
+
+  .venue-description {
+    font-weight: 300;
+    font-size: 1em;
+    margin: 1% 0% 1% 0%;
+  }
+
   .venue-address {
     font-weight: 300;
+    font-size: 1em;
+  }
+
+  .venue-link {
+    color: $highlight;
+    font-weight: 600;
     font-size: 1em;
   }
 
@@ -361,4 +446,5 @@ $highlight: #8B2635;
     height: 30px;
     margin: 0%;
   }
+
 }

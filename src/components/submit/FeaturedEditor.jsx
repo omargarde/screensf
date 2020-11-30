@@ -18,7 +18,7 @@ const FeaturedEditor = () => {
     const getFeaturedList = () => {
       axios({
         method: 'get',
-        url: 'api/featured/',
+        url: '/api/featured/',
       })
         .then((response) => {
           const { data } = response;
@@ -60,7 +60,7 @@ const FeaturedEditor = () => {
   const postFeatured = () => {
     axios({
       method: 'post',
-      url: `api/featured/`,
+      url: `/api/featured/`,
       data: {
         screenings_id: screenId,
         ondate: onDate,
@@ -81,7 +81,7 @@ const FeaturedEditor = () => {
   const editFeatured = () => {
     axios({
       method: 'put',
-      url: `api/featured/`,
+      url: `/api/featured/`,
       data: {
         id: featId,
         screenings_id: screenId,
