@@ -16,7 +16,7 @@ import VenueEditor from './submit/VenueEditor';
 import FeaturedEditor from './submit/FeaturedEditor';
 
 const Home = () => {
-  const isSubmit = false;
+  const isSubmit = true;
   let newDate = new Date();
   const params = useParams();
   if (params.id && isValidDate(params.id)) {
