@@ -8,7 +8,7 @@ import ScreeningsEditor from '../submit/ScreeningsEditor';
 import { theMovieAPI } from '../../../keys';
 
 const ShowsList = (props) => {
-  const { show, submit, today } = props;
+  const { show, submit, dates } = props;
   const [expand, setExpand] = useState(false);
   const [runtime, setRuntime] = useState('');
   const movieId = show.movie_id;
@@ -52,7 +52,7 @@ const ShowsList = (props) => {
     if (movieId > 1) {
       getMovieData();
     }
-  }, [movieId, screenId, show, today]);
+  }, [movieId, screenId, show]);
 
   return (
     <div>
@@ -94,9 +94,9 @@ const ShowsList = (props) => {
           {submit && (
             <span>
               <ShowtimesEditor
-                today={today}
                 screening={show.screening_id}
                 submit={submit}
+                dates={dates}
               />
             </span>
           )}
@@ -114,7 +114,7 @@ const ShowsList = (props) => {
           )}
           {expand && (
             <div>
-              <ScreeningsEditor today={today} show={show} submit={submit} />
+              <ScreeningsEditor show={show} />
             </div>
           )}
         </div>

@@ -277,11 +277,22 @@ body {
     margin: 2%;
   }
 
-// removed this h2
-  h2.screenings-title {
+  h2.date-title {
     font-weight: 300;
     margin: 10% 0% 5% 0%;
     text-align: center;
+  }
+
+  h2.screenings-title {
+    font-weight: 300;
+    margin: 10% 0% 5% 0%;
+    text-align: left;
+  }
+
+  .screenings-note {
+    font-weight: 300;
+    margin-bottom: 5%;
+    text-align: left;
   }
 
   .venue-title {

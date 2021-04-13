@@ -70,6 +70,7 @@ const getShowtimesSubmit = (req, res) => {
               address: shortAddress,
               id: rows[i].venue_id,
               shows: [],
+              virtualScreenings: [],
             };
           }
           const showData = rows[i];
@@ -112,15 +113,16 @@ const getShowtimesOnDate = (req, res) => {
         const showsByVenue = {};
         for (let i = 0; i < rows.length; i += 1) {
           const venueTitle = rows[i].venue;
-          const venueAddress = rows[i].venue_address.split(',');
-          const shortAddress = `${venueAddress[0]}, ${venueAddress[1]}`;
 
           if (!showsByVenue[venueTitle]) {
+            const venueAddress = rows[i].venue_address.split(',');
+            const shortAddress = `${venueAddress[0]}, ${venueAddress[1]}`;
             showsByVenue[venueTitle] = {
               venue: venueTitle,
               address: shortAddress,
               id: rows[i].venue_id,
               shows: [],
+              virtualScreenings: [],
             };
           }
           const showData = rows[i];
@@ -129,16 +131,18 @@ const getShowtimesOnDate = (req, res) => {
             today,
             tomorrow,
           );
-          if (
-            showData.showtimes.length > 0 ||
-            showData.format === 'Virtual Screening'
-          ) {
+          if (showData.showtimes.length > 0) {
             showsByVenue[venueTitle].shows.push(showData);
+          } else if (showData.format === 'Virtual Screening') {
+            showsByVenue[venueTitle].virtualScreenings.push(showData);
           }
         }
         const showsFinal = {};
         Object.keys(showsByVenue).forEach((item) => {
-          if (showsByVenue[item].shows.length > 0) {
+          if (
+            showsByVenue[item].shows.length > 0 ||
+            showsByVenue[item].virtualScreenings.length > 0
+          ) {
             showsFinal[item] = showsByVenue[item];
           }
         });

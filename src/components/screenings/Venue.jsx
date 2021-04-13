@@ -2,10 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import ShowsList from './ShowsList';
 
-const VenueList = (props) => {
-  const { venue, submit, today } = props;
+const Venue = (props) => {
+  const { venue, submit, dates, shows } = props;
   const venuefix = venue.venue.split(' ').join('-');
   const venueUrl = `/venues/${venue.id}-${venuefix}`;
+
+  if (shows.length === 0) return '';
 
   return (
     <div className="screenings-venues">
@@ -16,16 +18,16 @@ const VenueList = (props) => {
         <div className="venue-address">{venue.address}</div>
       </div>
       <div className="venue-shows">
-        {venue.shows.map((item) => (
+        {shows.map((item) => (
           <ShowsList
             show={item}
-            today={today}
             submit={submit}
-            key={item.film}
+            dates={dates}
+            key={item.alt_title}
           />
         ))}
       </div>
     </div>
   );
 };
-export default VenueList;
+export default Venue;
