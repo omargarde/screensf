@@ -106,12 +106,7 @@ const ShowtimesEditor = (props) => {
   };
 
   const handleShowtime = () => {
-    if (shoKey === 'new' && shoRepeat === 0) {
-      postShowtime(date);
-      setNote('posting showtime');
-    } else if (shoKey === 'new' && shoRepeat > 0) {
-      /* handle multiple post showtimes */
-      setNote('posting multiple showtimes')
+    if (shoKey === 'new') {
       for (var i = 0; i <= shoRepeat; i++) {
         let iterateDate = moment(date).add(i, 'days').format('YYYY-MM-DD');
         postShowtime(iterateDate);
