@@ -1,5 +1,5 @@
 const screensf = require('./database.js');
-const read = require('./sql/read');
+const read = require('../sql/read');
 
 const fixShowtimes = (showtimes, today, tomorrow) => {
   const result = [];
@@ -157,6 +157,39 @@ const getShowtimesOnDate = (req, res) => {
     });
 };
 
+const getShowtimesByVenue = (req, res) => {
+  const { venId, today } = req.params;
+  const query = {
+    text: read.getShowtimesByVenue,
+    values: [today, venId],
+  };
+  screensf.client
+    .query(query)
+    .then((data) => {
+      const { rows } = data;
+      const showByDate = {};
+      rows.forEach((showtime) => {
+        if (!showByDate[showtime.date]) {
+          showByDate[showtime.date] = {};
+          showByDate[showtime.date].date = showtime.date;
+        }
+        if (!showByDate[showtime.date][showtime.screening_id]) {
+          showByDate[showtime.date][showtime.screening_id] = showtime;
+        } else {
+          showByDate[showtime.date][showtime.screening_id].showtimes.push(
+            showtime.showtimes[0],
+          );
+        }
+      });
+      res.send(JSON.stringify(Object.values(showByDate)));
+      res.end();
+    })
+    .catch((error) => {
+      console.log(error, 'There was an error');
+      res.end(error);
+    });
+};
+
 const getVenues = (req, res) => {
   const query = {
     text: read.getVenues,
@@ -280,4 +313,5 @@ module.exports = {
   getScreenings,
   getShowtimeHours,
   getFeatured,
+  getShowtimesByVenue,
 };

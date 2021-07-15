@@ -8,7 +8,7 @@ const DateSelector = (props) => {
     <span className="dates">
       <Link
         to={`${dates.todaysDate.format('YYYY-MM-DD')}`}
-        onClick={() => handleDateChange(dates.todaysDate.toDate())}
+        onClick={() => handleDateChange(dates.todaysDate.format('YYYY-MM-DD'))}
       >
         <div className="ssf-button">Today</div>
       </Link>
@@ -22,13 +22,13 @@ const DateSelector = (props) => {
       </Link>
       <Link
         to={`${dates.yesterday.format('YYYY-MM-DD')}`}
-        onClick={() => handleDateChange(dates.yesterday.toDate())}
+        onClick={() => handleDateChange(dates.yesterday.format('YYYY-MM-DD'))}
       >
         <div className="ssf-button">Previous</div>
       </Link>
       <Link
         to={`${dates.tomorrow.format('YYYY-MM-DD')}`}
-        onClick={() => handleDateChange(dates.tomorrow.toDate())}
+        onClick={() => handleDateChange(dates.tomorrow.format('YYYY-MM-DD'))}
       >
         <div className="ssf-button">Next</div>
       </Link>

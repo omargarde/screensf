@@ -171,6 +171,40 @@ const getShowtimeHours = `SELECT
     showtime;
   `;
 
+const getShowtimesByVenue = `SELECT
+  screenings.id AS screening_id,
+  screenings.movies_id AS movie_id,
+  screenings.alt_title,
+  screenings.screening_url,
+  screenings.start_date,
+  screenings.end_date,
+  screenings.format,
+  screenings.screening_note,
+  screenings.canceled,
+  showtime::DATE AS date,
+  json_agg(json_build_object(
+    'id', showtimes.id,
+    'screenings_id', showtimes.screenings_id,
+    'showtime', showtimes.showtime,
+    'showtime_note', showtimes.showtime_note,
+    'canceled', showtimes.canceled,
+    'hide', showtimes.hide
+    )
+    ORDER BY
+    showtimes.showtime
+    ) AS showtimes
+  FROM
+  showtimes
+  LEFT JOIN screenings ON showtimes.screenings_id = screenings.id
+  WHERE
+  showtimes.showtime >= $1 AND screenings.venues_id = $2
+  GROUP BY
+  showtimes.showtime,
+  showtimes.id,
+  screenings.id
+  ORDER BY
+  showtimes.showtime;`;
+
 module.exports = {
   showtimesOnDate,
   recommendedOnDate,
@@ -181,4 +215,5 @@ module.exports = {
   getScreenings,
   getShowtimeHours,
   getFeatured,
+  getShowtimesByVenue,
 };

@@ -43,16 +43,10 @@ const editShowtimes = (showtimes) => {
   return venueArray;
 };
 
-const isValidDate = (dateString) => {
-  const regEx = /^\d{4}-\d{2}-\d{2}$/;
-  return dateString.match(regEx) != null;
-};
-
 module.exports = {
   data: boilerplate,
   loadImage,
   editShowtimes,
   boilerplateImage,
   images,
-  isValidDate,
 };

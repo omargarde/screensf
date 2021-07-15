@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import axios from 'axios';
@@ -6,7 +7,7 @@ import Featured from './Featured';
 import Screenings from './screenings/Screenings';
 import DateSelector from './DateSelector';
 import 'react-datepicker/dist/react-datepicker.css';
-import { data, loadImage, isValidDate } from './helpers';
+import { data, loadImage } from './helpers';
 import ScreeningsEditor from './submit/ScreeningsEditor';
 import { showBoilerplate } from './submit/helpers';
 import SeriesEditor from './submit/SeriesEditor';
@@ -16,23 +17,30 @@ import VenueEditor from './submit/VenueEditor';
 import FeaturedEditor from './submit/FeaturedEditor';
 
 const Home = () => {
-  const isSubmit = true;
-  let newDate = new Date();
+  const isSubmit = false;
   const params = useParams();
-  if (params.id && isValidDate(params.id)) {
-    newDate = new Date(`${params.id} 00:00:00`);
-  }
+  const selected = (sDate) => {
+    const newDate = moment(`${sDate} 00:00`, 'YYYY-MM-DD HH:mm').toDate();
+    if (!isNaN(newDate)) {
+      return newDate;
+    }
+    return new Date();
+  };
   const [showtimes, setShowtimes] = useState([]);
   const [featured, setFeatured] = useState(data);
   const [isLoading, setLoading] = useState(true);
-  const [selectedDate, setSelectedDate] = useState(newDate);
+  const [selectedDate, setSelectedDate] = useState(selected(params.id));
   const [expand, setExpand] = useState(false);
   const [serExpand, setSerExpand] = useState(false);
   const [movExpand, setMovExpand] = useState(false);
   const [featExpand, setFeatExpand] = useState(false);
 
   const dateChange = (date) => {
-    setSelectedDate(date);
+    if (!isNaN(date)) {
+      setSelectedDate(date);
+    } else {
+      setSelectedDate(selected(date));
+    }
     setLoading(true);
   };
 

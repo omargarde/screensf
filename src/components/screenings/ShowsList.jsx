@@ -14,8 +14,8 @@ const ShowsList = (props) => {
   const movieId = show.movie_id;
   const screenId = show.screening_id;
   const [movieData, setMovieData] = useState('');
-  const [director, setDirector] = useState(show.director);
-  const [year, setYear] = useState(show.year);
+  const [director, setDirector] = useState('');
+  const [year, setYear] = useState('');
   const getCrew = (data, title) => {
     const crewman = [];
     data.credits.crew.forEach((crew) => {

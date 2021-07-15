@@ -4,12 +4,12 @@ const { Client } = require('pg');
 // const client = new Client(proxy);
 // const client = new Client(local);
 
-// const client = new Client({
-//   host: `/cloudsql/${process.env.CLOUD_SQL_CONNECTION_NAME}`,
-//   user: process.env.DB_USER,
-//   database: process.env.DB_NAME,
-//   password: process.env.DB_PASS,
-// });
+const client = new Client({
+  host: `/cloudsql/${process.env.CLOUD_SQL_CONNECTION_NAME}`,
+  user: process.env.DB_USER,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASS,
+});
 
 client.connect((err) => {
   if (err) {

@@ -289,6 +289,13 @@ body {
     text-align: left;
   }
 
+  h3.date-header {
+    font-weight: 300;
+    margin: 2% 0% 2% 0%;
+    text-align: left;
+  }
+
+
   .screenings-note {
     font-weight: 300;
     margin-bottom: 5%;
@@ -313,6 +320,8 @@ body {
   .venue-list {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
+    row-gap: 1ch;
+    column-gap: 1ch;
     @media only screen and (max-width: $breakpoint-small) {
       grid-template-columns: 1fr 1fr;
     }

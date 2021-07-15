@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import moment from 'moment';
 import { useParams } from 'react-router-dom';
 import { loadImage } from '../helpers';
+import ByDate from './ByDate';
 
 const VenueView = () => {
   const params = useParams();
   const venId = params.id.split('-')[0];
+  const today = moment(new Date()).format('YYYY-MM-DD');
   const [venName, setVenName] = useState('');
   const [venAdd, setVenAdd] = useState('');
   const [venUrl, setVenUrl] = useState('');
   const [venDesc, setVenDesc] = useState('');
   const [venImg, setVenImg] = useState('');
+  const [showData, setShowData] = useState([]);
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -34,8 +38,18 @@ const VenueView = () => {
           throw new Error(error);
         });
     };
+    const getVenueView = () => {
+      axios({
+        method: 'get',
+        url: `/api/showtimes-venue/venId/${venId}/today/${today}`,
+      }).then((response) => {
+        const { data } = response;
+        setShowData(data);
+      });
+    };
     getVenue();
-  }, [venId]);
+    getVenueView();
+  }, [venId, today]);
 
   if (isLoading) {
     return (
@@ -55,6 +69,16 @@ const VenueView = () => {
       <div className="venue-description">{venDesc}</div>
       <div className="venue-link">
         <a href={venUrl}>Official Website</a>
+      </div>
+      <div className="venue-block">
+        {showData.map((day) => (
+          <div>
+            <h3 className="date-header">
+              {moment(day.date).format('dddd, MMMM D YYYY')}
+            </h3>
+            <ByDate shows={day} />
+          </div>
+        ))}
       </div>
     </div>
   );

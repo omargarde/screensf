@@ -22,6 +22,11 @@ app.get('/api/recommended/:id', get.getRecommendedOnDate);
 
 app.get('/api/showtimes/:id', get.getShowtimesOnDate);
 
+app.get(
+  '/api/showtimes-venue/venId/:venId/today/:today',
+  get.getShowtimesByVenue,
+);
+
 app.get('/api/showtimes-submit/:id', get.getShowtimesSubmit);
 
 app.get('/api/venues/', get.getVenues);
