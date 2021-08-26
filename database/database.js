@@ -1,7 +1,7 @@
 const { Client } = require('pg');
-// const { proxy } = require('../keys');
+const { proxy } = require('../keys');
 // const { local } = require('../keys');
-// const client = new Client(proxy);
+const client = new Client(proxy);
 // const client = new Client(local);
 
 const client = new Client({
