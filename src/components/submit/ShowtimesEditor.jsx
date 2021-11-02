@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import moment from 'moment';
 import { digitsList } from './helpers';
 
 const ShowtimesEditor = (props) => {
@@ -14,10 +15,11 @@ const ShowtimesEditor = (props) => {
   const [shoCanceled, setCanceled] = useState(0);
   const [shoHide, setHide] = useState(0);
   const [shoList, setShoList] = useState([]);
+  const [shoRepeat, setShoRepeat] = useState(0);
   const [note, setNote] = useState('');
 
-  const newShow = () => {
-    return `${date} ${hour}:${minute}:00-8:00`;
+  const newShow = (newDate) => {
+    return `${newDate} ${hour}:${minute}:00-8:00`;
   };
 
   useEffect(() => {
@@ -43,20 +45,20 @@ const ShowtimesEditor = (props) => {
     getShowList();
   }, [screening]);
 
-  const postShowtime = () => {
+  const postShowtime = (newDate) => {
     axios({
       method: 'post',
       url: `/api/showtimes/`,
       data: {
         screenings_id: screening,
-        showtime: newShow(),
+        showtime: newShow(newDate),
         showtime_note: shoNote,
         canceled: shoCanceled,
         hide: shoHide,
       },
     })
       .then(() => {
-        setNote('Successful post. Reload the page.');
+        setNote('Successful post.');
         setTimeout(() => {
           setNote('');
         }, 1000);
@@ -67,13 +69,13 @@ const ShowtimesEditor = (props) => {
       });
   };
 
-  const editShowtime = () => {
+  const editShowtime = (newDate) => {
     axios({
       method: 'put',
       url: `/api/showtimes/`,
       data: {
         showtime_id: shoId,
-        showtime: newShow(),
+        showtime: newShow(newDate),
         showtime_note: shoNote,
         canceled: shoCanceled,
         hide: shoHide,
@@ -105,10 +107,12 @@ const ShowtimesEditor = (props) => {
 
   const handleShowtime = () => {
     if (shoKey === 'new') {
-      postShowtime();
-      setNote('posting showtime');
+      for (var i = 0; i <= shoRepeat; i++) {
+        let iterateDate = moment(date).add(i, 'days').format('YYYY-MM-DD');
+        postShowtime(iterateDate);
+      }
     } else {
-      editShowtime();
+      editShowtime(date);
       setNote('editing showtime');
     }
   };
@@ -174,6 +178,21 @@ const ShowtimesEditor = (props) => {
                 value={shoNote}
                 type="text"
               />
+            </label>
+            <label htmlFor={shoRepeat}>
+              Repeat?
+              <select
+                value={shoRepeat}
+                onChange={(e) => setShoRepeat(e.target.value)}
+              >
+                <option value={0}>No</option>
+                <option value={1}>1 Day</option>
+                <option value={2}>2 Days</option>
+                <option value={3}>3 Days</option>
+                <option value={4}>4 Days</option>
+                <option value={5}>5 Days</option>
+                <option value={6}>6 Days</option>
+              </select>
             </label>
             <label htmlFor={shoCanceled}>
               Canceled?

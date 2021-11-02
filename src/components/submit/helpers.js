@@ -17,7 +17,7 @@ const showBoilerplate = {
   director: '',
   end_date: '',
   film: '',
-  format: '',
+  format: 'DCP',
   movie_id: '',
   release_date: '',
   runtime: '',
@@ -36,6 +36,7 @@ const showBoilerplate = {
   venueshorttitle: '',
   year: '',
   submit: true,
+  canceled: 0,
 };
 
 const cutDate = (date) => {
