@@ -171,11 +171,13 @@ const getShowtimesByVenue = (req, res) => {
       rows.forEach((showtime) => {
         if (!showByDate[showtime.date]) {
           showByDate[showtime.date] = {};
-          showByDate[showtime.date].date = showtime.date;
+          showByDate[showtime.date].date = showtime.date.toJSON().slice(0, 10);
         }
         if (!showByDate[showtime.date][showtime.screening_id]) {
           showByDate[showtime.date][showtime.screening_id] = showtime;
         } else {
+          // TO DO: Clean this up so that showtimes are arranged correctly
+          // first movie should be listed first, everything else follows
           showByDate[showtime.date][showtime.screening_id].showtimes.push(
             showtime.showtimes[0],
           );

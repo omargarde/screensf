@@ -34,6 +34,8 @@ const Home = () => {
   const [serExpand, setSerExpand] = useState(false);
   const [movExpand, setMovExpand] = useState(false);
   const [featExpand, setFeatExpand] = useState(false);
+  const [shows, setShows] = useState([]);
+  const [virtual, setVirtual] = useState([]);
 
   const dateChange = (date) => {
     if (!isNaN(date)) {
@@ -59,6 +61,18 @@ const Home = () => {
         .then((response) => {
           setShowtimes(response.data);
           setLoading(false);
+          const show = [];
+          const virtScr = [];
+          response.data.forEach((item) => {
+            if (item.shows.length > 0) {
+              show.push(item.shows);
+            }
+            if (item.virtualScreenings.length > 0) {
+              virtScr.push(item.virtualScreenings);
+            }
+          });
+          setShows(show);
+          setVirtual(virtScr);
         })
         .catch((error) => {
           throw new Error(error);
@@ -139,7 +153,14 @@ const Home = () => {
       />
       {movExpand && <MoviesEditor />}
       <h2 className="date-title">{dates.today.format('dddd, MMMM D YYYY')}</h2>
-      <Screenings venues={showtimes} submit={isSubmit} dates={dates} />
+      <Screenings
+        venues={showtimes}
+        submit={isSubmit}
+        dates={dates}
+        shows={shows}
+        virtual={virtual}
+      />
+      <div className="bottom-space" />
     </div>
   );
 };

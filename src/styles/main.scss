@@ -285,7 +285,7 @@ body {
 
   h2.screenings-title {
     font-weight: 300;
-    margin: 10% 0% 5% 0%;
+    margin: 5% 0% 5% 0%;
     text-align: left;
   }
 
@@ -466,5 +466,8 @@ body {
     height: 30px;
     margin: 0%;
   }
-
+  
+  .bottom-space {
+    height: 100px;
+  }
 }

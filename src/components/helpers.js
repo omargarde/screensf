@@ -12,12 +12,9 @@ const boilerplate = {
   writer: '',
   article:
     'The SF Bay Film calendar is an exciting new resource for filmgoing in ' +
-    'the Bay Area. Starting in summer 2020, we will list daily showtimes for ' +
+    'the Bay Area. Starting in summer 2021, we will list daily showtimes for ' +
     'independent theaters, repertory cinema, and select film series and ' +
-    "festivals. We'll also recommended a movie for the day. Currently " +
-    "we're listing all virtual screenings being made available in local " +
-    'theaters. As theaters begin to reopen, we hope you will return and let ' +
-    'us be your guide back to the movies.',
+    "festivals. We'll also try to recommended a movie for the day.",
   showtimes: [],
   welcome: true,
 };
