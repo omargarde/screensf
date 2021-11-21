@@ -60,7 +60,7 @@ const postVenue = (req, res, next) => {
     .query(
       `INSERT INTO 
       venues 
-      (id, title, short_title, region, venue_description, address, img, venue_url, currently_open) 
+      (id, title, short_title, region, venue_description, address, img, venue_url, venue_uri, currently_open) 
       VALUES 
       (DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8);`,
       [
@@ -71,6 +71,7 @@ const postVenue = (req, res, next) => {
         req.body.address,
         req.body.img,
         req.body.venue_url,
+        req.body.venue_uri,
         req.body.currently_open,
       ],
     )
