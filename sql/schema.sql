@@ -37,6 +37,7 @@ CREATE TABLE venues (
   address text,
   img text,
   venue_url text,
+  venue_uri text,
   currently_open int
 );
 
@@ -51,6 +52,7 @@ CREATE TABLE screenings (
   format text,
   screening_note text,
   canceled int,
+  use_alt boolean,
   display int
 );
 

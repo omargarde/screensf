@@ -12,6 +12,7 @@ const ShowtimesEditor = (props) => {
   const [shoKey, setShoKey] = useState('new');
   const [shoId, setShoId] = useState('');
   const [shoNote, setShoNote] = useState('');
+  const [shoInPerson, setInPerson] = useState(0);
   const [shoCanceled, setCanceled] = useState(0);
   const [shoHide, setHide] = useState(0);
   const [shoList, setShoList] = useState([]);
@@ -54,6 +55,7 @@ const ShowtimesEditor = (props) => {
         showtime: newShow(newDate),
         showtime_note: shoNote,
         canceled: shoCanceled,
+        in_person: shoInPerson,
         hide: shoHide,
       },
     })
@@ -78,6 +80,7 @@ const ShowtimesEditor = (props) => {
         showtime: newShow(newDate),
         showtime_note: shoNote,
         canceled: shoCanceled,
+        in_person: shoInPerson,
         hide: shoHide,
       },
     })
@@ -103,6 +106,7 @@ const ShowtimesEditor = (props) => {
     setShoNote(showTimeData.showtime_note);
     setHide(showTimeData.hide);
     setCanceled(showTimeData.canceled);
+    setInPerson(showTimeData.in_person);
   };
 
   const handleShowtime = () => {
@@ -208,6 +212,14 @@ const ShowtimesEditor = (props) => {
             <label htmlFor={shoHide}>
               Hide?
               <select value={shoHide} onChange={(e) => setHide(e.target.value)}>
+                <option value="">Select...</option>
+                <option value={0}>No</option>
+                <option value={1}>Yes</option>
+              </select>
+            </label>
+            <label htmlFor={shoHide}>
+              In Person?
+              <select value={shoHide} onChange={(e) => setInPerson(e.target.value)}>
                 <option value="">Select...</option>
                 <option value={0}>No</option>
                 <option value={1}>Yes</option>

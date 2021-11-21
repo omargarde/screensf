@@ -13,6 +13,7 @@ const VenueEditor = () => {
   const [venAdd, setVenAdd] = useState('');
   const [venImg, setVenImg] = useState('');
   const [venUrl, setVenUrl] = useState('');
+  const [venUri, setVenUri] = useState('');
   const [venOpen, setVenOpen] = useState('');
   const [note, setNote] = useState('');
 
@@ -43,6 +44,7 @@ const VenueEditor = () => {
     setVenAdd('');
     setVenImg('');
     setVenUrl('');
+    setVenUri('');
     setVenOpen('');
     setNote('');
     const {
@@ -54,6 +56,7 @@ const VenueEditor = () => {
       address,
       img,
       venue_url,
+      venue_uri,
       currently_open,
     } = venList[value];
     setVenId(id);
@@ -64,6 +67,7 @@ const VenueEditor = () => {
     setVenAdd(address);
     setVenImg(img);
     setVenUrl(venue_url);
+    setVenUri(venue_uri);
     setVenOpen(currently_open);
   };
 
@@ -80,6 +84,7 @@ const VenueEditor = () => {
         address: venAdd,
         img: venImg,
         venue_url: venUrl,
+        venue_uri: venUri,
         currently_open: venOpen,
       },
     })
@@ -105,6 +110,7 @@ const VenueEditor = () => {
         address: venAdd,
         img: venImg,
         venue_url: venUrl,
+        venue_uri: venUri,
         currently_open: venOpen,
       },
     })
@@ -192,6 +198,14 @@ const VenueEditor = () => {
           type="text"
           value={venUrl}
           onChange={(e) => setVenUrl(e.target.value)}
+        />
+      </label>
+      <label htmlFor={venUri}>
+        Venue URI:
+        <input
+          type="text"
+          value={venUri}
+          onChange={(e) => setVenUri(e.target.value)}
         />
       </label>
       <label htmlFor={venOpen}>
