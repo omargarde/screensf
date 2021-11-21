@@ -52,7 +52,6 @@ CREATE TABLE screenings (
   format text,
   screening_note text,
   canceled int,
-  use_alt boolean,
   display int
 );
 
@@ -61,6 +60,7 @@ CREATE TABLE showtimes (
   screenings_id int REFERENCES screenings (id),
   showtime text,
   showtime_note text,
+  in_person int,
   canceled int,
   hide int
 );

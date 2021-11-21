@@ -325,11 +325,12 @@ const ScreeningsEditor = (props) => {
             value={screenFormat}
             onChange={(e) => setFormat(e.target.value)}
           >
-            <option value="">Select...</option>
+            <option value=" ">Select...</option>
             <option value="DCP">DCP</option>
             <option value="35mm">35mm</option>
             <option value="16mm">16mm</option>
             <option value="70mm">70mm</option>
+            <option value="Digital">Digital</option>
             <option value="Video">Video</option>
             <option value="VHS">VHS</option>
             <option value="Virtual Screening">Virtual Screening</option>

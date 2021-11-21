@@ -1,6 +1,3 @@
-ALTER TABLE venues
-ADD venue_uri text;
-
-ALTER TABLE screenings
-ADD in_person boolean;
+ALTER TABLE showtimes
+ADD in_person int;
 
