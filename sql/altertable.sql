@@ -1,3 +1,2 @@
 ALTER TABLE showtimes
-ADD in_person int;
-
+ALTER COLUMN in_person int;

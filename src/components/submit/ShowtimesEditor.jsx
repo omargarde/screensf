@@ -217,9 +217,9 @@ const ShowtimesEditor = (props) => {
                 <option value={1}>Yes</option>
               </select>
             </label>
-            <label htmlFor={shoHide}>
+            <label htmlFor={shoInPerson}>
               In Person?
-              <select value={shoHide} onChange={(e) => setInPerson(e.target.value)}>
+              <select value={shoInPerson} onChange={(e) => setInPerson(e.target.value)}>
                 <option value="">Select...</option>
                 <option value={0}>No</option>
                 <option value={1}>Yes</option>

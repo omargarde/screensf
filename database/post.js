@@ -122,7 +122,7 @@ const postShowtimes = (req, res, next) => {
     .query(
       `INSERT INTO 
       showtimes 
-      (id, screenings_id, showtime, showtime_note, canceled, hide)
+      (id, screenings_id, showtime, showtime_note, canceled, in_person, hide)
       VALUES 
       (DEFAULT, $1, $2, $3, $4, $5);`,
       [
@@ -130,6 +130,7 @@ const postShowtimes = (req, res, next) => {
         req.body.showtime,
         req.body.showtime_note,
         req.body.canceled,
+        req.body.in_person,
         req.body.hide,
       ],
     )

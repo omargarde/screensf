@@ -87,7 +87,7 @@ const editShowtimes = (req, res, next) => {
       `UPDATE
       showtimes
       SET 
-      showtime = $2, showtime_note = $3, canceled = $4, hide = $5
+      showtime = $2, showtime_note = $3, canceled = $4, in_person = $5, hide = $6
       WHERE
       id = $1;
       `,
@@ -96,6 +96,7 @@ const editShowtimes = (req, res, next) => {
         req.body.showtime,
         req.body.showtime_note,
         req.body.canceled,
+        req.body.in_person,
         req.body.hide,
       ],
     )
