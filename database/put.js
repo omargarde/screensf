@@ -143,7 +143,7 @@ const editVenue = (req, res, next) => {
       `UPDATE
       venues
       SET 
-      title = $2, short_title = $3, region = $4, venue_description = $5, address = $6, img = $7, venue_url = $8, venue_uri = $9 currently_open = $10
+      title = $2, short_title = $3, region = $4, venue_description = $5, address = $6, img = $7, venue_url = $8, venue_uri = $9, currently_open = $10
       WHERE
       id = $1;
       `,
