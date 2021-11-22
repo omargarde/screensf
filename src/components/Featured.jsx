@@ -1,19 +1,33 @@
 import React from 'react';
 import moment from 'moment';
 import ShowsList from './screenings/ShowsList';
+import React, { useEffect, useState } from 'react';
 
 const Featured = (props) => {
   const { featured, today } = props;
   const images = [
-    'https://storage.googleapis.com/filmcans/true-romance-banner.jpg',
-    'https://storage.googleapis.com/filmcans/vdM73PvqnJqS3t23h3Pir4dY2xO.jpg',
+    'https://storage.googleapis.com/filmcans/featured/true-romance.jpg',
+    'https://storage.googleapis.com/filmcans/featured/stranger-than-paradise.jpg',
+    'https://storage.googleapis.com/filmcans/featured/goodbye-dragon-inn.jpg',
+    'https://storage.googleapis.com/filmcans/featured/gremlins.jpg',
+    'https://storage.googleapis.com/filmcans/featured/inglorious-basterds.jpg',
   ];
-  const image = images[Math.floor(Math.random() * images.length)]
+  const [image, setImage] = useState(0);
+
+  useEffect(()=>{
+    const selectImage = (min, max, excluded) => {
+      var n = Math.floor(Math.random() * (max-min) + min);
+      if (n >= excluded) n++;
+      setImage(n);
+    }
+    selectImage(0,3,image);
+  },[])
+  
   return (
     <div className="featured">
       <div className="featured-image">
         {featured.welcome ? 
-        <img src={image} className="featured-image" alt="featured" /> :
+        <img src={images[n]} className="featured-image" alt="featured" /> :
         <img src={featured.image} className="featured-image" alt="featured" /> 
         }
       </div>
