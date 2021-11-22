@@ -186,6 +186,9 @@ const getShowtimesByVenue = `SELECT
   screenings.screening_note,
   screenings.canceled,
   showtime::DATE AS date,
+  string_agg(DISTINCT series.title, ', ') AS series,
+  string_agg(DISTINCT series.series_url, ', ') AS series_url,
+  string_agg(DISTINCT series.id::character varying, ', ') AS series_id,
   json_agg(json_build_object(
     'id', showtimes.id,
     'screenings_id', showtimes.screenings_id,
