@@ -160,10 +160,10 @@ const getShowtimesOnDate = (req, res) => {
 };
 
 const getShowtimesByVenue = (req, res) => {
-  const { venId, today } = req.params;
+  const { venUri, today } = req.params;
   const query = {
     text: read.getShowtimesByVenue,
-    values: [today, venId],
+    values: [today, venUri],
   };
   screensf.client
     .query(query)

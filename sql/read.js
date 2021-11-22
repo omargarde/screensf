@@ -200,8 +200,11 @@ const getShowtimesByVenue = `SELECT
   FROM
   showtimes
   LEFT JOIN screenings ON showtimes.screenings_id = screenings.id
+  LEFT JOIN venues ON screenings.venues_id=venues.id
+  LEFT JOIN screenings_series ON screenings.id = screenings_series.screenings_id
+  LEFT JOIN series ON series.id = screenings_series.series_id 
   WHERE
-  showtimes.showtime >= $1 AND screenings.venues_id = $2 AND screenings.canceled = 0 AND showtimes.hide = 0
+  showtimes.showtime >= $1 AND venues.venue_uri = $2 AND screenings.canceled = 0 AND showtimes.hide = 0
   GROUP BY
   showtimes.showtime,
   showtimes.id,

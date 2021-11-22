@@ -6,10 +6,8 @@ import { loadImage } from '../helpers';
 import ByDate from './ByDate';
 
 const VenueView = () => {
-  const params = useParams();
-  const venUri = params.id;
+  const { id } = useParams();
   const today = moment(new Date()).format('YYYY-MM-DD');
-  const [venId, setVenId] = useState('');
   const [venName, setVenName] = useState('');
   const [venAdd, setVenAdd] = useState('');
   const [venUrl, setVenUrl] = useState('');
@@ -22,12 +20,11 @@ const VenueView = () => {
     const getVenue = () => {
       axios({
         method: 'get',
-        url: `/api/venue/${venUri}`,
+        url: `/api/venue/${id}`,
       })
         .then((response) => {
           const { data } = response;
           const ven = data[0];
-          setVenId(ven.id);
           setVenName(ven.title);
           setVenAdd(ven.address);
           setVenUrl(ven.venue_url);
@@ -42,7 +39,7 @@ const VenueView = () => {
     const getVenueView = () => {
       axios({
         method: 'get',
-        url: `/api/showtimes-venue/venId/${venId}/today/${today}`,
+        url: `/api/showtimes-venue/venUri/${id}/today/${today}`,
       }).then((response) => {
         const { data } = response;
         setShowData(data);
@@ -50,7 +47,7 @@ const VenueView = () => {
     };
     getVenue();
     getVenueView();
-  }, [venId, today]);
+  }, [id, today]);
 
   if (isLoading) {
     return (
