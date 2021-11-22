@@ -16,11 +16,11 @@ const Featured = (props) => {
 
   useEffect(()=>{
     const selectImage = (min, max, excluded) => {
-      var n = Math.floor(Math.random() * (max-min) + min);
-      if (n >= excluded) n++;
+      var n = excluded + 1;
+      if (n > max) n = min;
       setIndex(n);
     }
-    selectImage(0,3,index);
+    selectImage(0,4,index);
   },[])
   
   return (
