@@ -12,22 +12,22 @@ const Featured = (props) => {
     'https://storage.googleapis.com/filmcans/featured/gremlins.jpg',
     'https://storage.googleapis.com/filmcans/featured/inglorious-basterds.jpg',
   ];
-  const [image, setImage] = useState(0);
+  const [index, setIndex] = useState(0);
 
   useEffect(()=>{
     const selectImage = (min, max, excluded) => {
       var n = Math.floor(Math.random() * (max-min) + min);
       if (n >= excluded) n++;
-      setImage(n);
+      setIndex(n);
     }
-    selectImage(0,3,image);
+    selectImage(0,3,index);
   },[])
   
   return (
     <div className="featured">
       <div className="featured-image">
         {featured.welcome ? 
-        <img src={images[n]} className="featured-image" alt="featured" /> :
+        <img src={images[index]} className="featured-image" alt="featured" /> :
         <img src={featured.image} className="featured-image" alt="featured" /> 
         }
       </div>
