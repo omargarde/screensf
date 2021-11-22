@@ -71,6 +71,7 @@ const getShowtimesSubmit = (req, res) => {
               id: rows[i].venue_id,
               shows: [],
               virtualScreenings: [],
+              venue_uri: rows[i].venue_uri,
             };
           }
           const showData = rows[i];
