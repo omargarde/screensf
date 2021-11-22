@@ -8,9 +8,9 @@ const Featured = (props) => {
   const images = [
     'https://storage.googleapis.com/filmcans/featured/true-romance.jpg',
     'https://storage.googleapis.com/filmcans/featured/stranger-than-paradise.jpg',
-    'https://storage.googleapis.com/filmcans/featured/goodbye-dragon-inn.jpg',
-    'https://storage.googleapis.com/filmcans/featured/gremlins.jpg',
-    'https://storage.googleapis.com/filmcans/featured/inglorious-basterds.jpg',
+    'https://storage.googleapis.com/filmcans/featured/goodbye-dragon-inn.jpeg',
+    'https://storage.googleapis.com/filmcans/featured/gremlins.jpeg',
+    'https://storage.googleapis.com/filmcans/featured/inglorious-basterds.jpeg',
   ];
   const [index, setIndex] = useState(0);
 
