@@ -31,7 +31,6 @@ const VenueView = () => {
           setVenName(ven.title);
           setVenAdd(ven.address);
           setVenUrl(ven.venue_url);
-          setVenUri(ven.venue_uri);
           setVenDesc(ven.venue_description);
           setVenImg(ven.img);
           setLoading(false);
