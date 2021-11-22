@@ -120,7 +120,7 @@ screenings.screening_note;`;
 
 const getVenues = `SELECT * from venues ORDER BY title`;
 
-const getVenue = `SELECT * from venues WHERE id = $1`;
+const getVenue = `SELECT * from venues WHERE venue_uri = $1`;
 
 const getSeries = `SELECT * from series`;
 

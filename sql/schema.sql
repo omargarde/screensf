@@ -37,7 +37,7 @@ CREATE TABLE venues (
   address text,
   img text,
   venue_url text,
-  venue_uri text,
+  venue_uri text UNIQUE,
   currently_open int
 );
 

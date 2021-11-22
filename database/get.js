@@ -208,10 +208,10 @@ const getVenues = (req, res) => {
 };
 
 const getVenue = (req, res) => {
-  const venId = req.params.id;
+  const venUri = req.params.id;
   const query = {
     text: read.getVenue,
-    values: [venId],
+    values: [venUri],
   };
   screensf.client
     .query(query)

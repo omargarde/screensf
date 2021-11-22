@@ -4,8 +4,7 @@ import ShowsList from './ShowsList';
 
 const Venue = (props) => {
   const { venue, submit, dates, shows } = props;
-  const venuefix = venue.venue.split(' ').join('-');
-  const venueUrl = `/venues/${venue.id}-${venuefix}`;
+  const venueUrl = `/venues/${venue.venue_uri}`;
 
   if (shows.length === 0) return '';
 

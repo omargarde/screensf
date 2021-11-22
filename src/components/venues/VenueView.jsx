@@ -7,8 +7,9 @@ import ByDate from './ByDate';
 
 const VenueView = () => {
   const params = useParams();
-  const venId = params.id.split('-')[0];
+  const venUri = params.id;
   const today = moment(new Date()).format('YYYY-MM-DD');
+  const [venId, setVenId] = useState('');
   const [venName, setVenName] = useState('');
   const [venAdd, setVenAdd] = useState('');
   const [venUrl, setVenUrl] = useState('');
@@ -21,15 +22,16 @@ const VenueView = () => {
     const getVenue = () => {
       axios({
         method: 'get',
-        url: `/api/venue/${venId}`,
+        url: `/api/venue/${venUri}`,
       })
         .then((response) => {
           const { data } = response;
           const ven = data[0];
-
+          setVenId(ven.id);
           setVenName(ven.title);
           setVenAdd(ven.address);
           setVenUrl(ven.venue_url);
+          setVenUri(ven.venue_uri);
           setVenDesc(ven.venue_description);
           setVenImg(ven.img);
           setLoading(false);

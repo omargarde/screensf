@@ -50,7 +50,7 @@ const Venues = () => {
 
   const printList = (array) => {
     return array.map((venue) => (
-      <Link to={`/venues/${venue.id}`}>
+      <Link to={`/venues/${venue.venue_uri}`}>
         <div className="venue-item">
           <img src={venue.img} alt="venue-img" />
           <div>{venue.title}</div>
