@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import ShowsList from './screenings/ShowsList';
-import React, { useEffect, useState } from 'react';
+
 
 const Featured = (props) => {
   const { featured, today } = props;
