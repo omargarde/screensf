@@ -1,20 +1,6 @@
-const boilerplateImage = (arr) => {
-  return arr[Math.floor(Math.random() * arr.length)];
-};
-
-const images = [
-  'https://storage.googleapis.com/filmcans/true-romance-banner.jpg',
-  'https://storage.googleapis.com/filmcans/vdM73PvqnJqS3t23h3Pir4dY2xO.jpg',
-];
-
 const boilerplate = {
-  image: 'https://storage.googleapis.com/filmcans/true-romance-banner.jpg',
   writer: '',
-  article:
-    'The SF Bay Film calendar is an exciting new resource for filmgoing in ' +
-    'the Bay Area. We will list daily showtimes for ' +
-    'independent theaters, repertory cinema, and select film series and ' +
-    "festivals. We'll also try to recommended a movie for the day.",
+  article:'',
   showtimes: [],
   welcome: true,
 };
@@ -44,6 +30,4 @@ module.exports = {
   data: boilerplate,
   loadImage,
   editShowtimes,
-  boilerplateImage,
-  images,
 };
