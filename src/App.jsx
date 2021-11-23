@@ -18,11 +18,11 @@ function App() {
       <Helmet>
           <meta charset="UTF-8"/>
           <title>SF Bay Film</title>
-          <meta property="og:title" content="SF Bay Film"/>
-          <meta property="og:url" content="http://sfbayfilm.com/"/>
-          <meta property="og:image" content="https://storage.googleapis.com/filmcans/true-romance-banner.jpg"/>
-          <meta property="og:description" content="SF Bay Film is a listing of daily showtimes for independent theaters, repertory cinema, and select film series and festivals in the San Francisco Bay Area."/>
-          <meta property="og:type" content="website"/>
+          <meta property="og:title" content="SF Bay Film" data-react-helmet="true"/>
+          <meta property="og:url" content="http://sfbayfilm.com/" data-react-helmet="true"/>
+          <meta property="og:image" content="https://storage.googleapis.com/filmcans/true-romance-banner.jpg" data-react-helmet="true"/>
+          <meta property="og:description" content="SF Bay Film is a listing of daily showtimes for independent theaters, repertory cinema, and select film series and festivals in the San Francisco Bay Area." data-react-helmet="true"/>
+          <meta property="og:type" content="website" data-react-helmet="true"/>
       </Helmet>
       <Nav />
       <div className="wrapper">
