@@ -1,17 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import ShowsList from './screenings/ShowsList';
-
+import { images } from './helpers'
 
 const Featured = (props) => {
   const { featured, today, featIndex, setFeatIndex } = props;
-  const images = [
-    'https://storage.googleapis.com/filmcans/featured/true-romance.jpg',
-    'https://storage.googleapis.com/filmcans/featured/stranger-than-paradise.jpg',
-    'https://storage.googleapis.com/filmcans/featured/goodbye-dragon-inn.jpeg',
-    'https://storage.googleapis.com/filmcans/featured/gremlins.jpeg',
-    'https://storage.googleapis.com/filmcans/featured/inglorious-basterds.jpeg',
-  ];
 
   useEffect(()=>{
     const selectImage = (min, max, excluded) => {

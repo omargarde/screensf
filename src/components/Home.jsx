@@ -7,7 +7,7 @@ import Featured from './Featured';
 import Screenings from './screenings/Screenings';
 import DateSelector from './DateSelector';
 import 'react-datepicker/dist/react-datepicker.css';
-import { data, loadImage } from './helpers';
+import { featWelcome, loadImage } from './helpers';
 import ScreeningsEditor from './submit/ScreeningsEditor';
 import { showBoilerplate } from './submit/helpers';
 import SeriesEditor from './submit/SeriesEditor';
@@ -79,7 +79,7 @@ const Home = () => {
           throw new Error(error);
         });
     };
-    const fetchRecommended = () => {
+    const fetchFeatured = () => {
       const thisDay = moment(selectedDate).format('YYYY-MM-DD');
       const nextDay = moment(new Date(selectedDate))
         .add(1, 'days')
@@ -93,14 +93,14 @@ const Home = () => {
           if (response.data) {
             setFeatured(response.data);
           } else {
-            setFeatured(data);
+            setFeatured(featWelcome);
           }
         })
         .catch((error) => {
           throw new Error(error);
         });
     };
-    fetchRecommended();
+    fetchFeatured();
     fetchShowtimes();
   }, [isSubmit, selectedDate]);
 
