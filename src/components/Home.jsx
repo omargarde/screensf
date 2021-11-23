@@ -28,7 +28,7 @@ const Home = () => {
   };
   const [showtimes, setShowtimes] = useState([]);
   const [featured, setFeatured] = useState(data);
-  const [featIndex, setFeatIndex] = useState(0);
+  const [featIndex, setFeatIndex] = useState(Math.floor(Math.random() * 5));
   const [isLoading, setLoading] = useState(true);
   const [selectedDate, setSelectedDate] = useState(selected(params.id));
   const [expand, setExpand] = useState(false);
