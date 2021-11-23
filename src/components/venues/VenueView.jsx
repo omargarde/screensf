@@ -61,13 +61,11 @@ const VenueView = () => {
   return (
     <div>
       <Helmet>
-        <meta charset="UTF-8"/>
         <title>{venName} | SF Bay Film</title>
-        <meta property="og:title" content={{venName} + ` | SF Bay Film`}/>
-        <meta property="og:url" content={`http://sfbayfilm.com/venues/` + {id}}/>
+        <meta property="og:title" content={`${venName} | SF Bay Film`}/>
+        <meta property="og:url" content={`http://sfbayfilm.com/venues/${id}`}/>
         <meta property="og:image" content={venImg}/>
-        <meta property="og:description" content={{venDesc} + `SF Bay Film is a listing of daily showtimes for repertory cinema in the San Francisco Bay Area.`}/>
-        <meta property="og:type" content="website"/>
+        <meta property="og:description" content={`${venDesc} SF Bay Film is a listing of daily showtimes for repertory cinema in the San Francisco Bay Area.`}/>
       </Helmet>
       <div className="venue-img">
         <img src={venImg} alt="venue" />
