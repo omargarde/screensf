@@ -20,7 +20,7 @@ const Featured = (props) => {
       setFeatIndex(n);
     }
     selectImage(0,4,featIndex);
-  },[index])
+  },[today])
   
   return (
     <div className="featured">
