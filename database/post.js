@@ -62,7 +62,7 @@ const postVenue = (req, res, next) => {
       venues 
       (id, title, short_title, region, venue_description, address, img, venue_url, venue_uri, currently_open) 
       VALUES 
-      (DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8);`,
+      (DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8, $9);`,
       [
         req.body.title,
         req.body.short_title,
@@ -125,7 +125,7 @@ const postShowtimes = (req, res, next) => {
       showtimes 
       (id, screenings_id, showtime, showtime_note, canceled, in_person, hide)
       VALUES 
-      (DEFAULT, $1, $2, $3, $4, $5);`,
+      (DEFAULT, $1, $2, $3, $4, $5, $6);`,
       [
         req.body.screenings_id,
         req.body.showtime,

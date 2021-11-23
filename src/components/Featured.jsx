@@ -4,7 +4,7 @@ import ShowsList from './screenings/ShowsList';
 
 
 const Featured = (props) => {
-  const { featured, today } = props;
+  const { featured, today, featIndex, setFeatIndex } = props;
   const images = [
     'https://storage.googleapis.com/filmcans/featured/true-romance.jpg',
     'https://storage.googleapis.com/filmcans/featured/stranger-than-paradise.jpg',
@@ -12,22 +12,21 @@ const Featured = (props) => {
     'https://storage.googleapis.com/filmcans/featured/gremlins.jpeg',
     'https://storage.googleapis.com/filmcans/featured/inglorious-basterds.jpeg',
   ];
-  const [index, setIndex] = useState(0);
 
   useEffect(()=>{
     const selectImage = (min, max, excluded) => {
-      var n = excluded + 1;
+      var n = excluded++;
       if (n > max) n = min;
-      setIndex(n);
+      setFeatIndex(n);
     }
-    selectImage(0,4,index);
-  },[])
+    selectImage(0,4,featIndex);
+  },[index])
   
   return (
     <div className="featured">
       <div className="featured-image">
         {featured.welcome ? 
-        <img src={images[index]} className="featured-image" alt="featured" /> :
+        <img src={images[featIndex]} className="featured-image" alt="featured" /> :
         <img src={featured.image} className="featured-image" alt="featured" /> 
         }
       </div>

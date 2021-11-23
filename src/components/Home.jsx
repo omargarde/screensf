@@ -28,6 +28,7 @@ const Home = () => {
   };
   const [showtimes, setShowtimes] = useState([]);
   const [featured, setFeatured] = useState(data);
+  const [featIndex, setFeatIndex] = useState(0);
   const [isLoading, setLoading] = useState(true);
   const [selectedDate, setSelectedDate] = useState(selected(params.id));
   const [expand, setExpand] = useState(false);
@@ -122,7 +123,12 @@ const Home = () => {
         onChange={dateChange}
         handleDateChange={dateChange}
       />
-      <Featured featured={featured} today={selectedDate} />
+      <Featured
+        featured={featured} 
+        today={selectedDate}
+        featIndex={featIndex}
+        setFeatIndex={setFeatIndex}
+      />
       <Expand
         handleExpand={setFeatExpand}
         expand={featExpand}
