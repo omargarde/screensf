@@ -21,7 +21,7 @@ const Featured = (props) => {
     <div>
       <Helmet>
       <title>SF Bay Film | {todayMDY}</title>
-      <meta property="og:title" content={`SF Bay Film | ` + {todayMDY}}/>
+      <meta property="og:title" content={`SF Bay Film | ${todayMDY}`}/>
       {featured.welcome ? 
         <meta property="og:image" content={images[featIndex]}/> :
         <meta property="og:image" content={featured.image}/>
