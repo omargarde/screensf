@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
+import { Helmet } from 'react-helmet';
 import ShowsList from './screenings/ShowsList';
 import { images } from './helpers'
 
@@ -20,12 +21,12 @@ const Featured = (props) => {
   return (
     <div>
       <Helmet>
-      <title>SF Bay Film | {todayMDY}</title>
-      <meta property="og:title" content={`SF Bay Film | ${todayMDY}`}/>
-      {featured.welcome ? 
-        <meta property="og:image" content={images[featIndex]}/> :
-        <meta property="og:image" content={featured.image}/>
-      }
+        <title>SF Bay Film | {todayMDY}</title>
+        <meta property="og:title" content={`SF Bay Film | ${todayMDY}`}/>
+        {featured.welcome ? 
+          <meta property="og:image" content={images[featIndex]}/> :
+          <meta property="og:image" content={featured.image}/>
+        }
       </Helmet>
       <div className="featured">
         <div className="featured-image">
