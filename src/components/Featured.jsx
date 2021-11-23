@@ -15,7 +15,8 @@ const Featured = (props) => {
 
   useEffect(()=>{
     const selectImage = (min, max, excluded) => {
-      var n = excluded++;
+      var n = excluded;
+      n++
       if (n > max) n = min;
       setFeatIndex(n);
     }
