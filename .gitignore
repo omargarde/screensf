@@ -10,7 +10,6 @@ keys.js
 screen-sf-85b8f51a1820.json
 .eslintrc.js
 .prettierrc.js
-dist/
 app.yaml
 gn.js
 gn-builder.js
