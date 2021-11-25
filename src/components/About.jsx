@@ -6,7 +6,7 @@ const About = () => {
   return (
     <div>
       <Helmet>
-        <title>About | SF Bay Film</title>
+        <title>SF Bay Film | About</title>
         <meta property="og:title" content={`About | SF Bay Film`}/>
       </Helmet>
       <div>

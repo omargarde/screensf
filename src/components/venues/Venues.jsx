@@ -61,7 +61,7 @@ const Venues = () => {
   return (
     <div>
       <Helmet>
-        <title>Venues | SF Bay Film</title>
+        <title>SF Bay Film | Venues</title>
         <meta property="og:title" content={`Venues | SF Bay Film`}/>
       </Helmet>
       <div>
