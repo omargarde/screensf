@@ -5,6 +5,7 @@ import moment from 'moment';
 import { useParams } from 'react-router-dom';
 import { loadImage } from '../helpers';
 import ByDate from './ByDate';
+import { Link } from 'react-router-dom'
 
 const VenueView = () => {
   const { id } = useParams();
@@ -12,6 +13,7 @@ const VenueView = () => {
   const [venName, setVenName] = useState('');
   const [venAdd, setVenAdd] = useState('');
   const [venUrl, setVenUrl] = useState('');
+  const [venUri, setVenUri] = useState('');
   const [venDesc, setVenDesc] = useState('');
   const [venImg, setVenImg] = useState('');
   const [showData, setShowData] = useState([]);
@@ -29,6 +31,7 @@ const VenueView = () => {
           setVenName(ven.title);
           setVenAdd(ven.address);
           setVenUrl(ven.venue_url);
+          setVenUri(ven.venue_uri);
           setVenDesc(ven.venue_description);
           setVenImg(ven.img);
           setLoading(false);
@@ -80,7 +83,7 @@ const VenueView = () => {
         {showData.map((day) => (
           <div>
             <h3 className="date-header">
-              {moment(day.date).format('dddd, MMMM D YYYY')}
+            <Link to={`/${moment(day.date).format('YYYY-MM-DD')}#${venUri}`}>{moment(day.date).format('dddd, MMMM D YYYY')}</Link>
             </h3>
             <ByDate shows={day} />
           </div>

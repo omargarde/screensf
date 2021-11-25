@@ -36,7 +36,7 @@ const Featured = (props) => {
           }
         </div>
         <h3>
-          {featured.welcome ? 'Welcome to SF Bay Film | ' : 'Featured Film for '}
+          {featured.welcome ? 'SF Bay Film | ' : 'Featured Film for '}
           {moment(today).format('dddd, MMMM D YYYY')}
         </h3>
         <div
