@@ -19,6 +19,7 @@ const ScreeningsEditor = (props) => {
   const [screenNote, setScreenNote] = useState(show.screening_note);
   const [screenUrl, setScreenUrl] = useState(show.screening_url);
   const [screenFormat, setFormat] = useState(show.format);
+  const [screenUseAlt, setUseAlt] = useState(show.use_alt);
   const [screenCanceled, setCanceled] = useState(show.canceled);
   const [startDate, setStartDate] = useState(start);
   const [endDate, setEndDate] = useState(end);
@@ -71,6 +72,7 @@ const ScreeningsEditor = (props) => {
     setEndDate('');
     setFormat('');
     setScreenNote('');
+    setUseAlt('');
     setCanceled('');
     if (selectedId === 'newScr') {
       setOrigSer('');
@@ -87,6 +89,7 @@ const ScreeningsEditor = (props) => {
       end_date,
       format,
       screening_note,
+      use_alt,
       canceled,
     } = scrList[selectedId];
     setScrId(screening_id);
@@ -100,6 +103,7 @@ const ScreeningsEditor = (props) => {
     setEndDate(cutDate(end_date));
     setFormat(format);
     setScreenNote(screening_note);
+    setUseAlt(use_alt);
     setCanceled(canceled);
   };
 
@@ -180,6 +184,7 @@ const ScreeningsEditor = (props) => {
         end_date: endDate,
         format: screenFormat,
         screening_note: screenNote,
+        use_alt: screenUseAlt,
         canceled: screenCanceled,
       },
     })
@@ -208,6 +213,7 @@ const ScreeningsEditor = (props) => {
         end_date: endDate,
         format: screenFormat,
         screening_note: screenNote,
+        use_alt: screenUseAlt,
         canceled: screenCanceled,
       },
     })
@@ -352,6 +358,18 @@ const ScreeningsEditor = (props) => {
             type="text"
           />
         </label>
+        <label htmlFor={screenUseAlt}>
+          Use Alt Title?
+          <select
+            value={screenUseAlt}
+            onChange={(e) => setUseAlt(e.target.value)}
+          >
+            <option value="">Select...</option>
+            <option value={0}>No</option>
+            <option value={1}>Yes</option>
+          </select>
+        </label>
+        
         <label htmlFor={screenCanceled}>
           Canceled?
           <select

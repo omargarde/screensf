@@ -63,7 +63,6 @@ const getShowtimesSubmit = (req, res) => {
           const venueTitle = rows[i].venue;
           const venueAddress = rows[i].venue_address.split(',');
           const shortAddress = `${venueAddress[0]}, ${venueAddress[1]}`;
-
           if (!showsByVenue[venueTitle]) {
             showsByVenue[venueTitle] = {
               venue: venueTitle,
@@ -80,7 +79,6 @@ const getShowtimesSubmit = (req, res) => {
             today,
             tomorrow,
           );
-
           showsByVenue[venueTitle].shows.push(showData);
         }
         const showsFinal = {};

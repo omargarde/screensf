@@ -91,9 +91,9 @@ const postScreening = (req, res, next) => {
     .query(
       `INSERT INTO 
       screenings 
-      (id, movies_id, venues_id, alt_title, screening_url, start_date, end_date, format, screening_note, canceled)
+      (id, movies_id, venues_id, alt_title, screening_url, start_date, end_date, format, screening_note, use_alt, canceled)
       VALUES 
-      (DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8, $9)
+      (DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
       RETURNING
       id; 
       `,
@@ -106,6 +106,7 @@ const postScreening = (req, res, next) => {
         req.body.end_date,
         req.body.format,
         req.body.screening_note,
+        req.body.use_alt,
         req.body.canceled,
       ],
     )

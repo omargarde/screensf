@@ -34,7 +34,7 @@ const editScreening = (req, res, next) => {
       screenings
       SET 
       movies_id = $2, venues_id = $3, alt_title = $4, screening_url = $5, 
-      start_date = $6, end_date = $7, format = $8, screening_note = $9, canceled = $10
+      start_date = $6, end_date = $7, format = $8, screening_note = $9, use_alt = $10, canceled = $11
       WHERE
       id = $1;
       `,
@@ -48,6 +48,7 @@ const editScreening = (req, res, next) => {
         req.body.end_date,
         req.body.format,
         req.body.screening_note,
+        req.body.use_alt,
         req.body.canceled,
       ],
     )

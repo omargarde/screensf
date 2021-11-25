@@ -36,6 +36,7 @@ const showBoilerplate = {
   venueshorttitle: '',
   year: '',
   submit: true,
+  use_alt: 0,
   canceled: 0,
 };
 
