@@ -10,7 +10,7 @@ const About = () => {
           {`SF Bay Film is an exciting new resource 
           for filmgoing in the Bay Area. We list daily showtimes
           for independent theaters, repertory cinema, and select film series and
-          festivals.`}
+          festivals. Questions? Feel free hit us up on Twitter.`}
         </div>
       </div>
     </div>
