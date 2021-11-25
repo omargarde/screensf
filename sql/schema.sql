@@ -51,6 +51,7 @@ CREATE TABLE screenings (
   end_date date,
   format text,
   screening_note text,
+  use_alt int,
   canceled int,
   display int
 );

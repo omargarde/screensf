@@ -74,7 +74,7 @@ const ShowsList = (props) => {
             rel="noreferrer"
             aria-describedby="new-window-2"
           >
-            {movieData.title ? movieData.title : show.alt_title}
+            {(show.use_alt === 1 || show.movie_id === 1)  ? show.alt_title : movieData.title}
           </a>
         </div>
         <div className="film-details">
