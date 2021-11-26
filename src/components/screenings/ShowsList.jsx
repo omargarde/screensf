@@ -60,7 +60,6 @@ const ShowsList = (props) => {
         <div className="film-series">
           <a
             href={show.series_url}
-            target="_blank"
             rel="noreferrer"
             aria-describedby="new-window-2"
           >
@@ -70,7 +69,6 @@ const ShowsList = (props) => {
         <div className="film-title">
           <a
             href={show.screening_url}
-            target="_blank"
             rel="noreferrer"
             aria-describedby="new-window-2"
           >
