@@ -17,11 +17,13 @@ const postMovie = (req, res, next) => {
         req.body.synopsis,
       ],
     )
-    .then(() => {
+    .then((response) => {
       console.log('successful post');
+      res.send(JSON.stringify(response.rows[0]));
       res.end();
     })
     .catch((error) => {
+      console.log('error')
       return next(error);
     });
 

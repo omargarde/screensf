@@ -137,11 +137,17 @@ const ScreeningsEditor = (props) => {
     })
       .then(() => {
         setNote('Successful screening and series post. Reload the page.');
+        setTimeout(() => {
+          setNote('');
+        }, 1000);
       })
       .catch((error) => {
         setNote(
           'The screening posted, but there was an error posting the series.',
         );
+        setTimeout(() => {
+          setNote('');
+        }, 1000);
         throw new Error(error);
       });
   };
@@ -159,16 +165,25 @@ const ScreeningsEditor = (props) => {
       })
         .then(() => {
           setNote('Successful screening and series edits. Reload the page.');
+          setTimeout(() => {
+            setNote('');
+          }, 1000);
         })
         .catch((error) => {
           setNote(
             'The screening edited, but there was an error editing the series.',
           );
+          setTimeout(() => {
+            setNote('');
+          }, 1000);
           throw new Error(error);
         });
     } else {
       setNote('Successful screening edit. No series change necessary.');
-    }
+      setTimeout(() => {
+        setNote('');
+      }, 1000);
+    };
   };
 
   const postScreening = () => {

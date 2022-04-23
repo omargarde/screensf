@@ -16,8 +16,8 @@ import MoviesEditor from './submit/MoviesEditor';
 import VenueEditor from './submit/VenueEditor';
 import FeaturedEditor from './submit/FeaturedEditor';
 
-const Home = () => {
-  const isSubmit = false;
+const Home = () => { 
+  const isSubmit = true;
   const params = useParams();
   const selected = (sDate) => {
     const newDate = moment(`${sDate} 00:00`, 'YYYY-MM-DD HH:mm').toDate();

@@ -80,6 +80,8 @@ const ShowsList = (props) => {
           <div>{year}</div>
           <div>{runtime}</div>
           <div>{show.format}</div>
+          <div>{submit && (screenId)}
+          </div>
         </div>
         <div className="film-note">{show.screening_note}</div>
         {show.showtimes.map((showtime) => (
