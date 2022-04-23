@@ -64,7 +64,7 @@ const VenueView = () => {
   return (
     <div>
       <Helmet>
-        <title>{venName} | SF Bay Film</title>
+        <title>SF Bay Film | {venName}</title>
         <meta property="og:title" content={`${venName} | SF Bay Film`}/>
         <meta property="og:url" content={`http://sfbayfilm.com/venues/${id}`}/>
         <meta property="og:image" content={venImg}/>

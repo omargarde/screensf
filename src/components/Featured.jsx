@@ -15,7 +15,7 @@ const Featured = (props) => {
       if (n > max) n = min;
       setFeatIndex(n);
     }
-    selectImage(0,4,featIndex);
+    selectImage(0,9,featIndex);
   },[today])
   
   return (
