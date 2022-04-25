@@ -41,14 +41,18 @@ const VenueView = () => {
       axios({
         method: 'get',
         url: `/api/showtimes-venue/venUri/${id}/today/${today}`,
-      }).then((response) => {
-        const { data } = response;
-        setShowData(data);
-      });
+      })
+        .then((response) => {
+          const { data } = response;
+          setShowData(data);
+        })
+        .catch((error) => {
+          throw new Error(error);
+        })
     };
     getVenue();
     getVenueView();
-  }, [id, today]);
+  },[id, today]);
 
   if (isLoading) {
     return (
@@ -65,7 +69,7 @@ const VenueView = () => {
         <meta property="og:title" content={`${venName} | SF Bay Film`}/>
         <meta property="og:url" content={`http://sfbayfilm.com/venues/${id}`}/>
         <meta property="og:image" content={venImg}/>
-        <meta property="og:description" content={`${venDesc} SF Bay Film is a listing of daily showtimes for repertory cinema in the San Francisco Bay Area.`}/>
+        <meta property="og:description" content={`${venDesc} | SF Bay Film is a listing of daily showtimes for repertory cinema in the San Francisco Bay Area.`}/>
       </Helmet>
       <div className="venue-img">
         <img src={venImg} alt="venue" />
