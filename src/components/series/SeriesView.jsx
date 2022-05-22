@@ -4,33 +4,35 @@ import axios from 'axios';
 import moment from 'moment';
 import { useParams } from 'react-router-dom';
 import { loadImage } from '../helpers';
+import ByDate from '../venues/ByDate'
 
 const SeriesView = () => {
     const { id } = useParams();
-    const today = moment(new Date()).format('YYYY-MM-DD');
+    // const today = moment(new Date()).format('YYYY-MM-DD');
+    const today = '2022-04-01';
     const [serName, setSerName] = useState('');
     const [serDesc, setSerDesc] = useState('');
     const [serStart, setStart] = useState('');
     const [serEnd, setEnd] = useState('');
     const [serUrl, setSerUrl] = useState('');
+    const [serUri, setSerUri] = useState(id);
     const [showData, setShowData] = useState([]);
     const [isLoading, setLoading] = useState(true)
 
     useEffect(() => {
-        const getSeries = () => {
+        const getSeriesByUri = () => {
             axios({
                 method: 'get',
-                url: `api/series/${id}`,
+                url: `/api/series/${id}`,
             })
             .then((response) => {
                 const { data } = response;
                 const ser = data[0];
                 setSerName(ser.title);
-                setSerDesc(ser.description);
+                setSerDesc(ser.series_description);
                 setStart(ser.start_date);
                 setEnd(ser.end_date);
-                setEndDate(ser.end_date);
-                setSerUrl(ser.url);
+                setSerUrl(ser.series_url);
                 setLoading(false)
             })
             .catch((error) => {
@@ -50,8 +52,8 @@ const SeriesView = () => {
                 throw new Error(error);
             })
         }
-        getSeries();
-        getSeriesView;
+        getSeriesByUri();
+        getSeriesView();
     },[id, today]);
 
     if (isLoading) {
@@ -71,13 +73,25 @@ const SeriesView = () => {
                 <meta property="og:description" content={`${serDesc} | SF Bay Film is a listing of daily showtimes for repertory cinema in the San Francisco Bay Area.`}/>
             </Helmet>
             <h2 className="series-name">{serName}</h2>
-            <div className="series-description">{serDesc}</div>
             <div className="series-dates">
                 <div className="series-start">{serStart}</div>
                 <div className="series-end">{serEnd}</div>
             </div>
             <div className="series-link">
                 <a href={serUrl}>Official Website</a>
+            </div>
+            <div className="series-description">{serDesc}</div>
+            <div className="venue-block">
+                <div>
+                    {showData.map((day) => (
+                    <div>
+                        <h3 className="date-header">
+                        {moment(day.date).format('dddd, MMMM D YYYY')}
+                        </h3>
+                        <ByDate shows={day} />
+                    </div>
+                    ))}
+                </div>
             </div>
         </div>
     )

@@ -132,6 +132,8 @@ const getVenue = `SELECT * from venues WHERE venue_uri = $1`;
 
 const getSeries = `SELECT * from series`;
 
+const getSeriesByUri = `SELECT * from series WHERE series_uri = $1`;
+
 const getMovies = `SELECT *  FROM  movies`;
 
 const getFeatured = `SELECT * FROM featured_films`;
@@ -222,15 +224,59 @@ const getShowtimesByVenue = `SELECT
   ORDER BY
   showtimes.showtime;`;
 
+  const getShowtimesBySeries = `SELECT
+  screenings.id AS screening_id,
+  screenings.movies_id AS movie_id,
+  screenings.alt_title,
+  screenings.screening_url,
+  screenings.start_date,
+  screenings.end_date,
+  screenings.format,
+  screenings.screening_note,
+  screenings.use_alt,
+  screenings.canceled,
+  showtime::DATE AS date,
+  string_agg(DISTINCT series.title, ', ') AS series,
+  string_agg(DISTINCT series.series_url, ', ') AS series_url,
+  string_agg(DISTINCT series.id::character varying, ', ') AS series_id,
+  json_agg(json_build_object(
+    'id', showtimes.id,
+    'screenings_id', showtimes.screenings_id,
+    'showtime', showtimes.showtime,
+    'showtime_note', showtimes.showtime_note,
+    'canceled', showtimes.canceled,
+    'hide', showtimes.hide
+    )
+    ORDER BY
+    showtimes.showtime
+    ) AS showtimes
+  FROM
+  showtimes
+  LEFT JOIN screenings ON showtimes.screenings_id = screenings.id
+  LEFT JOIN venues ON screenings.venues_id=venues.id
+  LEFT JOIN screenings_series ON screenings.id = screenings_series.screenings_id
+  LEFT JOIN series ON series.id = screenings_series.series_id 
+  WHERE
+  showtimes.showtime >= $1 AND series.series_uri = $2 AND screenings.canceled = 0 AND showtimes.hide = 0
+  GROUP BY
+  showtimes.showtime,
+  showtimes.id,
+  screenings.id
+  ORDER BY
+  showtimes.showtime;`;
+
+
 module.exports = {
   showtimesOnDate,
   recommendedOnDate,
   getVenues,
   getVenue,
   getSeries,
+  getSeriesByUri,
   getMovies,
   getScreenings,
   getShowtimeHours,
   getFeatured,
   getShowtimesByVenue,
+  getShowtimesBySeries,
 };

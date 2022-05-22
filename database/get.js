@@ -1,5 +1,5 @@
 const screensf = require('./database.js');
-const read = require('../sql/read');
+const read = require('../sql/get');
 
 const fixShowtimes = (showtimes, today, tomorrow) => {
   const result = [];
@@ -192,6 +192,43 @@ const getShowtimesByVenue = (req, res) => {
     });
 };
 
+const getShowtimesBySeries = (req, res) => {
+  const { serUri, today } = req.params;
+  const query = {
+    text: read.getShowtimesBySeries,
+    values: [today, serUri],
+  };
+  screensf.client
+    .query(query)
+    .then((data) => {
+      const { rows } = data;
+      const showByDate = {};
+      rows.forEach((showtime) => {
+        if (!showByDate[showtime.date]) {
+          showByDate[showtime.date] = {};
+          showByDate[showtime.date].date = showtime.date.toJSON().slice(0, 10);
+        }
+        if (!showByDate[showtime.date][showtime.screening_id]) {
+          showByDate[showtime.date][showtime.screening_id] = showtime;
+        } else {
+          // TO DO: Clean this up so that showtimes are arranged correctly
+          // first movie should be listed first, everything else follows
+          showByDate[showtime.date][showtime.screening_id].showtimes.push(
+            showtime.showtimes[0],
+          );
+        }
+      });
+      res.send(JSON.stringify(Object.values(showByDate)));
+      res.end();
+    })
+    .catch((error) => {
+      console.log(error, 'There was an error');
+      res.end(error);
+    });
+};
+
+
+
 const getVenues = (req, res) => {
   const query = {
     text: read.getVenues,
@@ -227,6 +264,23 @@ const getVenue = (req, res) => {
 const getSeries = (req, res) => {
   const query = {
     text: read.getSeries,
+  };
+  screensf.client
+    .query(query)
+    .then((data) => {
+      res.send(JSON.stringify(data.rows));
+      res.end();
+    })
+    .catch((error) => {
+      res.end(error);
+    });
+};
+
+const getSeriesByUri = (req, res) => {
+  const serUri = req.params.id;
+  const query = {
+    text: read.getSeriesByUri,
+    values: [serUri],
   };
   screensf.client
     .query(query)
@@ -311,9 +365,11 @@ module.exports = {
   getVenues,
   getVenue,
   getSeries,
+  getSeriesByUri,
   getMovies,
   getScreenings,
   getShowtimeHours,
   getFeatured,
   getShowtimesByVenue,
+  getShowtimesBySeries,
 };

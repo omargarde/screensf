@@ -7,10 +7,11 @@ const SeriesEditor = () => {
   const [serKey, setSerKey] = useState('new');
   const [serId, setSerId] = useState('');
   const [serTitle, setSerTitle] = useState('');
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
   const [serDesc, setSerDesc] = useState('');
   const [serUrl, setSerUrl] = useState('');
+  const [serUri, setSerUri] = useState('');
   const [serList, setSerList] = useState([]);
   const [note, setNote] = useState('');
 
@@ -40,6 +41,7 @@ const SeriesEditor = () => {
     setEndDate('');
     setSerDesc('');
     setSerUrl('');
+    setSerUri('')
     if (selectedId === 'new') return;
     const {
       id,
@@ -48,6 +50,7 @@ const SeriesEditor = () => {
       end_date,
       series_description,
       series_url,
+      series_uri,
     } = serList[selectedId];
     setSerId(id);
     setSerTitle(title);
@@ -55,6 +58,7 @@ const SeriesEditor = () => {
     setEndDate(cutDate(end_date));
     setSerDesc(series_description);
     setSerUrl(series_url);
+    setSerUri(series_uri);
   };
 
   const postSeries = () => {
@@ -67,10 +71,14 @@ const SeriesEditor = () => {
         end_date: endDate,
         series_description: serDesc,
         series_url: serUrl,
+        series_uri: serUri,
       },
     })
       .then(() => {
         setNote('Series posted successfully.');
+        setTimeout(() => {
+          setNote('');
+        }, 1000);
       })
       .catch((error) => {
         setNote('There was an error posting this series.');
@@ -89,10 +97,14 @@ const SeriesEditor = () => {
         end_date: endDate,
         series_description: serDesc,
         series_url: serUrl,
+        series_uri: serUri,
       },
     })
       .then(() => {
         setNote('Series edited successfully.');
+        setTimeout(() => {
+          setNote('');
+        }, 1000);
       })
       .catch((error) => {
         setNote('There was an error editing this series.');
@@ -134,7 +146,10 @@ const SeriesEditor = () => {
         <input
           type="date"
           value={startDate}
-          onChange={(e) => setStartDate(e.target.value)}
+          onChange={(e) => {
+            setStartDate(e.target.value)
+            if (e.target.value === '') setStartDate(null)
+          }}
         />
       </label>
       <label htmlFor={endDate}>
@@ -142,7 +157,10 @@ const SeriesEditor = () => {
         <input
           type="date"
           value={endDate}
-          onChange={(e) => setEndDate(e.target.value)}
+          onChange={(e) => {
+            setEndDate(e.target.value)
+            if (e.target.value === '') setEndDate(null)
+          }}
         />
       </label>
       <label htmlFor={serDesc}>
@@ -158,6 +176,14 @@ const SeriesEditor = () => {
         <input
           onChange={(e) => setSerUrl(e.target.value)}
           value={serUrl}
+          type="text"
+        />
+      </label>
+      <label htmlFor={serUrl}>
+        Series URI:
+        <input
+          onChange={(e) => setSerUri(e.target.value)}
+          value={serUri}
           type="text"
         />
       </label>

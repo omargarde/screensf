@@ -5,7 +5,7 @@ const editSeries = (req, res, next) => {
     .query(
       `UPDATE
       series
-      SET title = $2, start_date = $3, end_date = $4, series_description = $5, series_url = $6
+      SET title = $2, start_date = $3, end_date = $4, series_description = $5, series_url = $6, series_uri = $7
       WHERE
       id = $1;
       `,
@@ -16,6 +16,7 @@ const editSeries = (req, res, next) => {
         req.body.end_date,
         req.body.series_description,
         req.body.series_url,
+        req.body.series_uri,
       ],
     )
     .then(() => {
