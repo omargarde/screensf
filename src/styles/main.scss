@@ -377,6 +377,29 @@ body {
     }
   }
 
+  .series-description {
+    font-weight: 300;
+    font-size: 1em;
+    margin: 1% 0% 1% 0%;
+  }
+
+  .series-dates {
+    font-weight: 300;
+    font-size: 1em;
+    display: inline-flex;
+  }
+
+  .series-address {
+    font-weight: 300;
+    font-size: 1em;
+  }
+
+  .series-link {
+    color: $highlight;
+    font-weight: 600;
+    font-size: 1em;
+  }
+
   .shows-film {
     margin-bottom: 10%;
     padding-right: 10%;

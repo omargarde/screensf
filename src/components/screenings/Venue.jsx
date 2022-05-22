@@ -22,7 +22,7 @@ const Venue = (props) => {
             show={item}
             submit={submit}
             dates={dates}
-            key={item.alt_title}
+            key={item.screening_id}
           />
         ))}
       </div>

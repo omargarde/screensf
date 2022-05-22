@@ -97,6 +97,7 @@ const ShowsList = (props) => {
                 screening={show.screening_id}
                 submit={submit}
                 dates={dates}
+                key={show.screening_id}
               />
             </span>
           )}

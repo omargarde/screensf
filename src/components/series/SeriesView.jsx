@@ -18,6 +18,8 @@ const SeriesView = () => {
     const [serUri, setSerUri] = useState(id);
     const [showData, setShowData] = useState([]);
     const [isLoading, setLoading] = useState(true)
+    const dash = ' - ';
+
 
     useEffect(() => {
         const getSeriesByUri = () => {
@@ -74,8 +76,9 @@ const SeriesView = () => {
             </Helmet>
             <h2 className="series-name">{serName}</h2>
             <div className="series-dates">
-                <div className="series-start">{serStart}</div>
-                <div className="series-end">{serEnd}</div>
+                {serStart && (moment(serStart).format('dddd, MMMM D YYYY'))}
+                {serStart && (dash)}
+                {serStart && (moment(serEnd).format('dddd, MMMM D YYYY'))}
             </div>
             <div className="series-link">
                 <a href={serUrl}>Official Website</a>

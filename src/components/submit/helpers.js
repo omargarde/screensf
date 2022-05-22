@@ -39,12 +39,7 @@ const showBoilerplate = {
   canceled: 0,
 };
 
-const cutDate = (date) => {
-  return date.split('T')[0];
-};
-
 module.exports = {
   digitsList,
   showBoilerplate,
-  cutDate,
 };

@@ -1,36 +1,46 @@
 /* eslint-disable camelcase */
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { cutDate } from './helpers';
 
 const SeriesEditor = () => {
   const [serKey, setSerKey] = useState('new');
   const [serId, setSerId] = useState('');
   const [serTitle, setSerTitle] = useState('');
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
   const [serDesc, setSerDesc] = useState('');
   const [serUrl, setSerUrl] = useState('');
   const [serUri, setSerUri] = useState('');
   const [serList, setSerList] = useState([]);
   const [note, setNote] = useState('');
 
-  useEffect(() => {
-    const getSeriesList = () => {
-      axios({
-        method: 'get',
-        url: '/api/series/',
+  const getSeriesList = () => {
+    axios({
+      method: 'get',
+      url: '/api/series/',
+    })
+      .then((response) => {
+        const { data } = response;
+        setSerList(data);
       })
-        .then((response) => {
-          const { data } = response;
-          setSerList(data);
-        })
-        .catch((error) => {
-          throw new Error(error);
-        });
-    };
+      .catch((error) => {
+        throw new Error(error);
+      });
+  };
+
+  useEffect(() => {
     getSeriesList();
   }, []);
+
+  const dateHandle = (date) => {
+    if (date === null) {
+      return '';
+    } else if (date === '') {
+      return null;
+    } else {
+      return date.split('T')[0];
+    }
+  }
 
   const selectSeries = (selectedId) => {
     setNote('');
@@ -54,8 +64,8 @@ const SeriesEditor = () => {
     } = serList[selectedId];
     setSerId(id);
     setSerTitle(title);
-    setStartDate(cutDate(start_date));
-    setEndDate(cutDate(end_date));
+    setStartDate(dateHandle(start_date));
+    setEndDate(dateHandle(end_date));
     setSerDesc(series_description);
     setSerUrl(series_url);
     setSerUri(series_uri);
@@ -84,6 +94,7 @@ const SeriesEditor = () => {
         setNote('There was an error posting this series.');
         throw new Error(error);
       });
+      getSeriesList()
   };
 
   const editSeries = () => {
@@ -110,6 +121,7 @@ const SeriesEditor = () => {
         setNote('There was an error editing this series.');
         throw new Error(error);
       });
+      getSeriesList()
   };
 
   const handleSeries = () => {
@@ -147,8 +159,7 @@ const SeriesEditor = () => {
           type="date"
           value={startDate}
           onChange={(e) => {
-            setStartDate(e.target.value)
-            if (e.target.value === '') setStartDate(null)
+            setStartDate(dateHandle(e.target.value))
           }}
         />
       </label>
@@ -158,8 +169,7 @@ const SeriesEditor = () => {
           type="date"
           value={endDate}
           onChange={(e) => {
-            setEndDate(e.target.value)
-            if (e.target.value === '') setEndDate(null)
+            setEndDate(dateHandle(e.target.value))
           }}
         />
       </label>
