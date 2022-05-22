@@ -30,6 +30,7 @@ const showtimesOnDate = `SELECT
     screenings.end_date,
     screenings.format,
     screenings.screening_note,
+    screenings.use_alt,
     screenings.canceled
     FROM
     screenings
@@ -58,6 +59,7 @@ const showtimesOnDate = `SELECT
     screenings.end_date,
     screenings.format,
     screenings.screening_note,
+    screenings.use_alt,
     screenings.canceled
     ORDER BY
     venues.title,
@@ -82,6 +84,7 @@ screenings.alt_title,
 screenings.screening_url,
 screenings.format,
 screenings.screening_note,
+screenings.use_alt,
 json_agg(json_build_object(
   'id', showtimes.id,
   'screenings_id', showtimes.screenings_id,
@@ -120,7 +123,8 @@ screenings.id,
 screenings.alt_title,
 screenings.screening_url,
 screenings.format,
-screenings.screening_note;`;
+screenings.screening_note,
+screenings.use_alt;`;
 
 const getVenues = `SELECT * from venues ORDER BY title`;
 
@@ -141,6 +145,7 @@ const getScreenings = `SELECT
   screenings.end_date,
   screenings.format,
   screenings.screening_note,
+  screenings.use_alt,
   screenings.canceled,
   string_agg(DISTINCT series.id::character varying, ', ') AS series_id,
   venues.id AS venue_id
@@ -162,6 +167,7 @@ const getScreenings = `SELECT
   screenings.end_date,
   screenings.format,
   screenings.screening_note,
+  screenings.use_alt,
   screenings.canceled;
   `;
 
@@ -184,6 +190,7 @@ const getShowtimesByVenue = `SELECT
   screenings.end_date,
   screenings.format,
   screenings.screening_note,
+  screenings.use_alt,
   screenings.canceled,
   showtime::DATE AS date,
   string_agg(DISTINCT series.title, ', ') AS series,

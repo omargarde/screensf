@@ -17,7 +17,7 @@ import VenueEditor from './submit/VenueEditor';
 import FeaturedEditor from './submit/FeaturedEditor';
 
 const Home = () => {
-  const isSubmit = false;
+  const isSubmit = true;
   const params = useParams();
   const selected = (sDate) => {
     const newDate = moment(`${sDate} 00:00`, 'YYYY-MM-DD HH:mm').toDate();
@@ -158,7 +158,6 @@ const Home = () => {
         title="Movie Editor"
       />
       {movExpand && <MoviesEditor />}
-      <h2 className="date-title">{dates.today.format('dddd, MMMM D YYYY')}</h2>
       <Screenings
         venues={showtimes}
         submit={isSubmit}

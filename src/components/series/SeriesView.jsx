@@ -31,6 +31,7 @@ const SeriesView = () => {
                 setEnd(ser.end_date);
                 setEndDate(ser.end_date);
                 setSerUrl(ser.url);
+                setLoading(false)
             })
             .catch((error) => {
                 throw new Error(error);

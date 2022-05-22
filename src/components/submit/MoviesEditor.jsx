@@ -117,6 +117,10 @@ const MoviesEditor = () => {
     })
       .then(() => {
         setNote('Movie posted successfully.');
+        setTimeout(() => {
+          setNote('');
+        }, 1000);
+        
       })
       .catch((error) => {
         setNote('There was an error posting this movie.');
