@@ -4,7 +4,8 @@ import axios from 'axios';
 import moment from 'moment';
 import { useParams } from 'react-router-dom';
 import { loadImage } from '../helpers';
-import ByDate from '../venues/ByDate'
+import Screenings from '../screenings/Screenings';
+import { Link } from 'react-router-dom';
 
 const SeriesView = () => {
     const { id } = useParams();
@@ -89,9 +90,12 @@ const SeriesView = () => {
                     {showData.map((day) => (
                     <div>
                         <h3 className="date-header">
-                        {moment(day.date).format('dddd, MMMM D YYYY')}
+                        <Link to={`/${moment(day.date).format('YYYY-MM-DD')}`}>{moment(day.date).format('dddd, MMMM D YYYY')}</Link>
                         </h3>
-                        <ByDate shows={day} />
+                        {/* <Screenings 
+                            venues={day.venues}
+                            submit={false}
+                        /> */}
                     </div>
                     ))}
                 </div>

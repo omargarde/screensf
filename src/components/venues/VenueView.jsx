@@ -5,6 +5,7 @@ import moment from 'moment';
 import { useParams } from 'react-router-dom';
 import { loadImage } from '../helpers';
 import ByDate from './ByDate';
+import { Link } from 'react-router-dom'
 
 const VenueView = () => {
   const { id } = useParams();
@@ -12,6 +13,7 @@ const VenueView = () => {
   const [venName, setVenName] = useState('');
   const [venAdd, setVenAdd] = useState('');
   const [venUrl, setVenUrl] = useState('');
+  const [venUri, setVenUri] = useState('');
   const [venDesc, setVenDesc] = useState('');
   const [venImg, setVenImg] = useState('');
   const [showData, setShowData] = useState([]);
@@ -29,6 +31,7 @@ const VenueView = () => {
           setVenName(ven.title);
           setVenAdd(ven.address);
           setVenUrl(ven.venue_url);
+          setVenUri(ven.venue_uri);
           setVenDesc(ven.venue_description);
           setVenImg(ven.img);
           setLoading(false);
@@ -41,18 +44,14 @@ const VenueView = () => {
       axios({
         method: 'get',
         url: `/api/showtimes-venue/venUri/${id}/today/${today}`,
-      })
-        .then((response) => {
-          const { data } = response;
-          setShowData(data);
-        })
-        .catch((error) => {
-          throw new Error(error);
-        })
+      }).then((response) => {
+        const { data } = response;
+        setShowData(data);
+      });
     };
     getVenue();
     getVenueView();
-  },[id, today]);
+  }, [id, today]);
 
   if (isLoading) {
     return (
@@ -65,11 +64,11 @@ const VenueView = () => {
   return (
     <div>
       <Helmet>
-        <title>{venName} | SF Bay Film</title>
+        <title>SF Bay Film | {venName}</title>
         <meta property="og:title" content={`${venName} | SF Bay Film`}/>
         <meta property="og:url" content={`http://sfbayfilm.com/venues/${id}`}/>
         <meta property="og:image" content={venImg}/>
-        <meta property="og:description" content={`${venDesc} | SF Bay Film is a listing of daily showtimes for repertory cinema in the San Francisco Bay Area.`}/>
+        <meta property="og:description" content={`${venDesc} SF Bay Film is a listing of daily showtimes for repertory cinema in the San Francisco Bay Area.`}/>
       </Helmet>
       <div className="venue-img">
         <img src={venImg} alt="venue" />
@@ -84,9 +83,9 @@ const VenueView = () => {
         {showData.map((day) => (
           <div>
             <h3 className="date-header">
-              {moment(day.date).format('dddd, MMMM D YYYY')}
+            <Link to={`/${moment(day.date).format('YYYY-MM-DD')}#${venUri}`}>{moment(day.date).format('dddd, MMMM D YYYY')}</Link>
             </h3>
-            <ByDate shows={day} />
+            <ByDate shows={day.shows} />
           </div>
         ))}
       </div>

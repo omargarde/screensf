@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { cutDate } from './helpers';
+import { dateHandle } from './helpers';
 import { theMovieAPI } from '../../../keys';
 
 const MoviesEditor = () => {
@@ -97,7 +97,7 @@ const MoviesEditor = () => {
     setMovId(id);
     setMovTitle(title);
     setMovDirector(director);
-    setRelDate(cutDate(release_date));
+    setRelDate(dateHandle(release_date));
     setMovRuntime(runtime);
     setMovSyn(synopsis);
   };

@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { cutDate } from './helpers';
+import { dateHandle } from './helpers';
 
 const FeaturedEditor = () => {
   const [featKey, setFeatKey] = useState('new');
@@ -51,7 +51,7 @@ const FeaturedEditor = () => {
     } = featList[selectedId];
     setFeatId(id);
     setScreenId(screenings_id);
-    setOnDate(cutDate(ondate));
+    setOnDate(dateHandle(ondate));
     setFeatImage(featured_image);
     setAuthor(author);
     setArticle(article);
@@ -121,7 +121,7 @@ const FeaturedEditor = () => {
             <option key={selFeat.id} value={i}>
               {selFeat.id}
               {' - '}
-              {cutDate(selFeat.ondate)}
+              {dateHandle(selFeat.ondate)}
             </option>
           ))}
         </select>

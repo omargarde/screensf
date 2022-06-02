@@ -235,6 +235,10 @@ const getShowtimesByVenue = `SELECT
   screenings.screening_note,
   screenings.use_alt,
   screenings.canceled,
+  venues.title AS venue,
+  venues.address AS venue_address,
+  venues.id AS venue_id,
+  venues.venue_uri AS venue_uri,
   showtime::DATE AS date,
   string_agg(DISTINCT series.title, ', ') AS series,
   string_agg(DISTINCT series.series_url, ', ') AS series_url,
@@ -261,7 +265,11 @@ const getShowtimesByVenue = `SELECT
   GROUP BY
   showtimes.showtime,
   showtimes.id,
-  screenings.id
+  screenings.id,
+  venues.title,
+  venues.address,
+  venues.id,
+  venues.venue_uri
   ORDER BY
   showtimes.showtime;`;
 

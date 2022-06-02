@@ -1,13 +1,13 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { cutDate } from './helpers';
+import { dateHandle } from './helpers';
 
 const ScreeningsEditor = (props) => {
   const { show } = props;
   const screenId = show.screening_id ? show.screening_id : 'newScr';
-  const start = cutDate(show.start_date);
-  const end = cutDate(show.end_date);
+  const start = dateHandle(show.start_date);
+  const end = dateHandle(show.end_date);
   const [venList, setVenList] = useState([]);
   const [venKey, setVenKey] = useState('');
   const [scrId, setScrId] = useState(screenId);
@@ -99,8 +99,8 @@ const ScreeningsEditor = (props) => {
     setVenue(venue_id);
     setAltTitle(alt_title);
     setScreenUrl(screening_url);
-    setStartDate(cutDate(start_date));
-    setEndDate(cutDate(end_date));
+    setStartDate(dateHandle(start_date));
+    setEndDate(dateHandle(end_date));
     setFormat(format);
     setScreenNote(screening_note);
     setUseAlt(use_alt);

@@ -39,7 +39,18 @@ const showBoilerplate = {
   canceled: 0,
 };
 
+const dateHandle = (date) => {
+  if (date === null) {
+    return '';
+  } else if (date === '') {
+    return null;
+  } else {
+    return date.split('T')[0];
+  }
+}
+
 module.exports = {
   digitsList,
   showBoilerplate,
+  dateHandle,
 };

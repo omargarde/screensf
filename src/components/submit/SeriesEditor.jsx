@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { dateHandle } from './helpers';
 
 const SeriesEditor = () => {
   const [serKey, setSerKey] = useState('new');
@@ -31,16 +32,6 @@ const SeriesEditor = () => {
   useEffect(() => {
     getSeriesList();
   }, []);
-
-  const dateHandle = (date) => {
-    if (date === null) {
-      return '';
-    } else if (date === '') {
-      return null;
-    } else {
-      return date.split('T')[0];
-    }
-  }
 
   const selectSeries = (selectedId) => {
     setNote('');

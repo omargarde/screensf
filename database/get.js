@@ -86,6 +86,7 @@ const getShowtimesSubmit = (req, res) => {
           showsFinal[item] = showsByVenue[item];
         });
         const showsStr = JSON.stringify(Object.values(showsFinal));
+        console.log(showsStr)
         res.send(showsStr);
       }
       res.end();
@@ -167,20 +168,23 @@ const getShowtimesByVenue = (req, res) => {
     .query(query)
     .then((data) => {
       const { rows } = data;
-      const showByDate = {};
+      let showByDate = {};
       rows.forEach((showtime) => {
-        if (!showByDate[showtime.date]) {
-          showByDate[showtime.date] = {};
-          showByDate[showtime.date].date = showtime.date.toJSON().slice(0, 10);
-        }
-        if (!showByDate[showtime.date][showtime.screening_id]) {
-          showByDate[showtime.date][showtime.screening_id] = showtime;
+        let showtimeDate = showtime.date.toJSON().slice(0, 10);
+        if (!showByDate[showtimeDate]) {
+          showByDate[showtimeDate] = {};
+          showByDate[showtimeDate].date = showtimeDate;
+          showByDate[showtimeDate].shows = [];
+          showByDate[showtimeDate].shows.push(showtime)
         } else {
-          // TO DO: Clean this up so that showtimes are arranged correctly
-          // first movie should be listed first, everything else follows
-          showByDate[showtime.date][showtime.screening_id].showtimes.push(
-            showtime.showtimes[0],
-          );
+          let none = 0
+          showByDate[showtimeDate].shows.forEach((show) => {
+            if (show.screening_id === showtime.screening_id) {
+              show.showtimes.push(showtime.showtimes[0]);
+              none = 1;
+            }
+          })
+          if (none === 0) showByDate[showtimeDate].shows.push(showtime);
         }
       });
       res.send(JSON.stringify(Object.values(showByDate)));
@@ -202,22 +206,48 @@ const getShowtimesBySeries = (req, res) => {
     .query(query)
     .then((data) => {
       const { rows } = data;
-      const showByDate = {};
+      let showByDate = {};
       rows.forEach((showtime) => {
-        if (!showByDate[showtime.date]) {
-          showByDate[showtime.date] = {};
-          showByDate[showtime.date].date = showtime.date.toJSON().slice(0, 10);
+        let showtimeDate = showtime.date.toJSON().slice(0, 10);
+
+        //create date
+
+        if (!showByDate[showtimeDate]) {
+          showByDate[showtimeDate] = {};
+          showByDate[showtimeDate].date = showtimeDate;
+          showByDate[showtimeDate]['venues'] = {};
+
         }
-        if (!showByDate[showtime.date][showtime.screening_id]) {
-          showByDate[showtime.date][showtime.screening_id] = showtime;
+
+        // create venue
+        if (!showByDate[showtimeDate]['venues'][showtime.venue]) {
+          showByDate[showtimeDate]['venues'][showtime.venue] = {};
+          showByDate[showtimeDate]['venues'][showtime.venue].venue = showtime.venue;
+          showByDate[showtimeDate]['venues'][showtime.venue].address = showtime.venue_address;
+          showByDate[showtimeDate]['venues'][showtime.venue].id = showtime.venue_id;
+          showByDate[showtimeDate]['venues'][showtime.venue].venue_uri = showtime.venue_uri;
+          showByDate[showtimeDate]['venues'][showtime.venue].shows = [];
+          showByDate[showtimeDate]['venues'][showtime.venue].shows.push(showtime)
         } else {
-          // TO DO: Clean this up so that showtimes are arranged correctly
-          // first movie should be listed first, everything else follows
-          showByDate[showtime.date][showtime.screening_id].showtimes.push(
-            showtime.showtimes[0],
-          );
+
+          // look for screening_id at the current venue on the current date
+          let none = 0;
+          showByDate[showtimeDate]['venues'][showtime.venue].shows.forEach((show) => {
+            if (show.screening_id === showtime.screening_id) {
+              show.showtimes.push(showtime.showtimes[0]);
+              none = 1;
+            }
+          })
+          if (none === 0) showByDate[showtimeDate]['venues'][showtime.venue].shows.push(showtime);
         }
       });
+      
+      // present venue in array for Screenings component
+      for (date in showByDate) {
+        console.log(showByDate[date])
+        showByDate[date].venues = Object.values(showByDate[date].venues);
+      }
+
       res.send(JSON.stringify(Object.values(showByDate)));
       res.end();
     })
