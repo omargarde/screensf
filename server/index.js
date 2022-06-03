@@ -28,9 +28,10 @@ app.get(
 );
 
 app.get(
-  '/api/showtimes-series/serUri/:serUri/today/:today',
+  '/api/showtimes-series/serUri/:serUri/today/:today/prev/:prev',
   get.getShowtimesBySeries,
 );
+
 
 app.get('/api/showtimes-submit/:id', get.getShowtimesSubmit);
 

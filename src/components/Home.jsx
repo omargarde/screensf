@@ -17,7 +17,7 @@ import VenueEditor from './submit/VenueEditor';
 import FeaturedEditor from './submit/FeaturedEditor';
 
 const Home = () => {
-  const isSubmit = true;
+  const isSubmit = false;
   const params = useParams();
   const selected = (sDate) => {
     const newDate = moment(`${sDate} 00:00`, 'YYYY-MM-DD HH:mm').toDate();
@@ -35,8 +35,6 @@ const Home = () => {
   const [serExpand, setSerExpand] = useState(false);
   const [movExpand, setMovExpand] = useState(false);
   const [featExpand, setFeatExpand] = useState(false);
-  const [shows, setShows] = useState([]);
-  const [virtual, setVirtual] = useState([]);
 
   const dateChange = (date) => {
     if (!isNaN(date)) {
@@ -72,8 +70,6 @@ const Home = () => {
               virtScr.push(item.virtualScreenings);
             }
           });
-          setShows(show);
-          setVirtual(virtScr);
         })
         .catch((error) => {
           throw new Error(error);
@@ -162,8 +158,6 @@ const Home = () => {
         venues={showtimes}
         submit={isSubmit}
         dates={dates}
-        shows={shows}
-        virtual={virtual}
       />
       <div className="bottom-space" />
     </div>

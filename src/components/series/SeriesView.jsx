@@ -9,8 +9,8 @@ import { Link } from 'react-router-dom';
 
 const SeriesView = () => {
     const { id } = useParams();
-    // const today = moment(new Date()).format('YYYY-MM-DD');
-    const today = '2022-04-01';
+    const today = moment(new Date()).format('YYYY-MM-DD');
+    // const today = '2022-04-28';
     const [serName, setSerName] = useState('');
     const [serDesc, setSerDesc] = useState('');
     const [serStart, setStart] = useState('');
@@ -18,7 +18,16 @@ const SeriesView = () => {
     const [serUrl, setSerUrl] = useState('');
     const [serUri, setSerUri] = useState(id);
     const [showData, setShowData] = useState([]);
+    const [prevData, setPrevData] = useState([]);
     const [isLoading, setLoading] = useState(true)
+    const [upcoming, setUpcoming] = useState('')
+    const [previous, setPrevious] = useState('')
+    const dates = {
+        yesterday: moment(new Date()).subtract(1, 'days'),
+        today: moment(new Date()),
+        tomorrow: moment(new Date()).add(1, 'days'),
+        todaysDate: moment(new Date()),
+      };
     const dash = ' - ';
 
 
@@ -42,21 +51,29 @@ const SeriesView = () => {
                 throw new Error(error);
             });
         };
-        const getSeriesView = () => {
+        const getSeriesView = (prev) => {
             axios({
                 method: 'get',
-                url: `/api/showtimes-series/serUri/${id}/today/${today}`,
+                url: `/api/showtimes-series/serUri/${id}/today/${today}/prev/${prev}`,
             })
             .then((response) => {
                 const { data } = response;
-                setShowData(data);
+                if (prev) {
+                    setPrevData(data);
+                    if (data.length > 0) setPrevious('Previous Showtimes')
+                }
+                if (!prev) {
+                    setShowData(data);
+                    if (data.length > 0) setUpcoming('Upcoming Showtimes')
+                }
             })
             .catch((error) => {
                 throw new Error(error);
             })
         }
         getSeriesByUri();
-        getSeriesView();
+        getSeriesView(true);
+        getSeriesView(false);
     },[id, today]);
 
     if (isLoading) {
@@ -81,24 +98,48 @@ const SeriesView = () => {
                 {serStart && (dash)}
                 {serStart && (moment(serEnd).format('dddd, MMMM D YYYY'))}
             </div>
+            <div className="series-description">{serDesc}</div>
             <div className="series-link">
                 <a href={serUrl}>Official Website</a>
             </div>
-            <div className="series-description">{serDesc}</div>
             <div className="venue-block">
+                <h2 className="upcoming-showtimes">{upcoming}</h2>
                 <div>
                     {showData.map((day) => (
-                    <div>
-                        <h3 className="date-header">
-                        <Link to={`/${moment(day.date).format('YYYY-MM-DD')}`}>{moment(day.date).format('dddd, MMMM D YYYY')}</Link>
-                        </h3>
-                        {/* <Screenings 
-                            venues={day.venues}
-                            submit={false}
-                        /> */}
-                    </div>
+                        <div>
+                            <h3 className="date-header">
+                                <Link to={`/${moment(day.date).format('YYYY-MM-DD')}`}>
+                                    {moment(day.date).format('dddd, MMMM D YYYY')}
+                                </Link>
+                            </h3>
+                            <Screenings 
+                                venues={day.venues}
+                                submit={false}
+                                dates={dates}
+                                key={day.date}
+                            />
+                        </div>
                     ))}
                 </div>
+                <h2 className="upcoming-showtimes">Previous Showtimes</h2>
+                <div>
+                    {prevData.map((day) => (
+                        <div>
+                            <h3 className="date-header">
+                                <Link to={`/${moment(day.date).format('YYYY-MM-DD')}`}>
+                                    {moment(day.date).format('dddd, MMMM D YYYY')}
+                                </Link>
+                            </h3>
+                            <Screenings 
+                                venues={day.venues}
+                                submit={false}
+                                dates={dates}
+                                key={day.date}
+                            />
+                        </div>
+                    ))}
+                </div>
+
             </div>
         </div>
     )

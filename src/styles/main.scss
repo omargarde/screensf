@@ -284,36 +284,48 @@ body {
   }
 
   h2.screenings-title {
-    font-weight: 300;
+    font-weight: 500;
     margin: 5% 0% 5% 0%;
     text-align: left;
   }
 
   h3.date-header {
     font-weight: 300;
-    margin: 2% 0% 2% 0%;
+    font-size: 1.4em;
+    margin: 2% 0% 4% 0%;
     text-align: left;
   }
-
 
   .screenings-note {
     font-weight: 300;
     margin-bottom: 5%;
     text-align: left;
   }
+  
+  .screenings-venues {
+    margin: 4% 3% 6% 3%;
+  }
 
   .venue-title {
-    font-weight: 500;
+    font-weight: 400;
     margin: 0%;
     font-size: 1.3em;
   }
 
   .venue-block {
-    margin: 8% 0% 4% 0%;
+    margin: 4% 0% 2% 0%;
   }
 
+  .upcoming-showtimes {
+    font-size: 1.5em;
+    font-weight: 400;
+    text-align: center;
+    margin-bottom: 6%;
+  }
+
+
   .venue-region {
-    font-weight: 500;
+    font-weight: 300;
     font-size: 1.3em;
   }
 
@@ -401,8 +413,8 @@ body {
   }
 
   .shows-film {
-    margin-bottom: 10%;
-    padding-right: 10%;
+    margin-bottom: 5%;
+    padding-right: 5%;
   }
 
   .film-series {

@@ -86,7 +86,6 @@ const getShowtimesSubmit = (req, res) => {
           showsFinal[item] = showsByVenue[item];
         });
         const showsStr = JSON.stringify(Object.values(showsFinal));
-        console.log(showsStr)
         res.send(showsStr);
       }
       res.end();
@@ -197,11 +196,14 @@ const getShowtimesByVenue = (req, res) => {
 };
 
 const getShowtimesBySeries = (req, res) => {
-  const { serUri, today } = req.params;
+  const { serUri, today, prev } = req.params;
+  let text = read.getShowtimesBySeries;
+  if (prev === "true") text = read.getPrevShowtimesBySeries;
   const query = {
-    text: read.getShowtimesBySeries,
+    text: text,
     values: [today, serUri],
   };
+
   screensf.client
     .query(query)
     .then((data) => {
@@ -244,10 +246,17 @@ const getShowtimesBySeries = (req, res) => {
       
       // present venue in array for Screenings component
       for (date in showByDate) {
-        console.log(showByDate[date])
-        showByDate[date].venues = Object.values(showByDate[date].venues);
-      }
 
+        const ordered = Object.keys(showByDate[date].venues).sort().reduce(
+          (obj, key) => { 
+            obj[key] = showByDate[date].venues[key]; 
+            return obj;
+          },
+          {}
+        );
+
+         showByDate[date].venues = Object.values(ordered);
+      }
       res.send(JSON.stringify(Object.values(showByDate)));
       res.end();
     })
