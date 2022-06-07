@@ -32,6 +32,8 @@ app.get(
   get.getShowtimesBySeries,
 );
 
+app.get('/api/showtimes-onfilm/today/:today/', get.getShowtimesOnFilm);
+
 
 app.get('/api/showtimes-submit/:id', get.getShowtimesSubmit);
 

@@ -4,6 +4,7 @@ import axios from 'axios';
 import moment from 'moment';
 import { useParams } from 'react-router-dom';
 import { loadImage } from '../helpers';
+import { dateHandle } from '../submit/helpers';
 import Screenings from '../screenings/Screenings';
 import { Link } from 'react-router-dom';
 
@@ -42,8 +43,8 @@ const SeriesView = () => {
                 const ser = data[0];
                 setSerName(ser.title);
                 setSerDesc(ser.series_description);
-                setStart(ser.start_date);
-                setEnd(ser.end_date);
+                setStart(dateHandle(ser.start_date));
+                setEnd(dateHandle(ser.end_date));
                 setSerUrl(ser.series_url);
                 setLoading(false)
             })
@@ -59,7 +60,8 @@ const SeriesView = () => {
             .then((response) => {
                 const { data } = response;
                 if (prev) {
-                    setPrevData(data);
+                    let reversed = data.map((val, index, array) => array[array.length - 1 - index])
+                    setPrevData(reversed);
                     if (data.length > 0) setPrevious('Previous Showtimes')
                 }
                 if (!prev) {
@@ -121,7 +123,7 @@ const SeriesView = () => {
                         </div>
                     ))}
                 </div>
-                <h2 className="upcoming-showtimes">Previous Showtimes</h2>
+                <h2 className="upcoming-showtimes">{previous}</h2>
                 <div>
                     {prevData.map((day) => (
                         <div>

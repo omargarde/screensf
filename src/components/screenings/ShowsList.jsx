@@ -6,16 +6,21 @@ import Showtime from './Showtime';
 import ShowtimesEditor from '../submit/ShowtimesEditor';
 import ScreeningsEditor from '../submit/ScreeningsEditor';
 import { theMovieAPI } from '../../../keys';
+import { Link } from 'react-router-dom';
 
 const ShowsList = (props) => {
   const { show, submit, dates } = props;
-  const [expand, setExpand] = useState(false);
-  const [runtime, setRuntime] = useState('');
   const movieId = show.movie_id;
   const screenId = show.screening_id;
+  const series_uri = `/series/${show.series_uri}`
+  const [expand, setExpand] = useState(false);
+  const [runtime, setRuntime] = useState('');
   const [movieData, setMovieData] = useState('');
   const [director, setDirector] = useState('');
   const [year, setYear] = useState('');
+  const filmFormats = ['35mm', '16mm', '8mm', '70mm'];
+  const formats = filmFormats.includes(show.format);
+
   const getCrew = (data, title) => {
     const crewman = [];
     data.credits.crew.forEach((crew) => {
@@ -54,12 +59,21 @@ const ShowsList = (props) => {
     }
   }, [movieId, screenId, show]);
 
+  function Format (props) {
+    if (props.format) {
+      return <Link to="/onfilm">{props.show.format}</Link>
+    } else {
+      return <div>{props.show.format}</div>
+    }
+  }
+
+
   return (
     <div>
       <div className="shows-film">
         <div className="film-series">
           <a
-            href={show.series_url}
+            href={(show.series_uri) ? series_uri : show.series_url}
             rel="noreferrer"
             aria-describedby="new-window-2"
           >
@@ -79,7 +93,12 @@ const ShowsList = (props) => {
           <div>{director}</div>
           <div>{year}</div>
           <div>{runtime}</div>
-          <div>{show.format}</div>
+          <div>
+            <Format 
+              show={show}
+              format={formats}
+            />
+          </div>
           <div>{submit && (screenId)}
           </div>
         </div>

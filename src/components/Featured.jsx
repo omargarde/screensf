@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import { Helmet } from 'react-helmet';
 import ShowsList from './screenings/ShowsList';
+import { Link } from 'react-router-dom';
 import { images } from './helpers'
 
 const Featured = (props) => {
   const { featured, today, featIndex, setFeatIndex } = props;
-  const todayMDY = moment(today).format('MM-DD-YYYY')
+  const todayMDY = moment(today).format('MM-DD-YYYY');
+  const venueUrl = `/venues/${featured.venue_uri}`;
 
   useEffect(()=>{
     const selectImage = (min, max, excluded) => {
@@ -45,7 +47,9 @@ const Featured = (props) => {
           <div
             className={featured.welcome ? 'welcome-hide' : 'featured-showtime'}
           >
-            <h4>{featured.venue}</h4>
+            <h4>
+              <Link to={venueUrl}>{featured.venue}</Link>
+            </h4>
             <ShowsList show={featured} />
           </div>
           <div className={featured.welcome ? '' : 'featured-article'}>

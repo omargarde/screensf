@@ -4,13 +4,14 @@ import { Link } from 'react-router-dom';
 
 const DateSelector = (props) => {
   const { handleDateChange, dates } = props;
+  const todayClass = "ssf-button ssf-button-today"
   return (
     <span className="dates">
       <Link
         to={`${dates.todaysDate.format('YYYY-MM-DD')}`}
         onClick={() => handleDateChange(dates.todaysDate.format('YYYY-MM-DD'))}
       >
-        <div className="ssf-button">Today</div>
+        <div className={todayClass}>Today</div>
       </Link>
       <Link to="/">
         <div className="date-calendar">
