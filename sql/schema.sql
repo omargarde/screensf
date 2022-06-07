@@ -25,7 +25,8 @@ CREATE TABLE series (
   start_date date,
   end_date date,
   series_description text,
-  series_url text
+  series_url text,
+  series_uri text UNIQUE
 );
 
 CREATE TABLE venues (

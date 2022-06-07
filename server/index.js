@@ -27,6 +27,14 @@ app.get(
   get.getShowtimesByVenue,
 );
 
+app.get(
+  '/api/showtimes-series/serUri/:serUri/today/:today/prev/:prev',
+  get.getShowtimesBySeries,
+);
+
+app.get('/api/showtimes-onfilm/today/:today/', get.getShowtimesOnFilm);
+
+
 app.get('/api/showtimes-submit/:id', get.getShowtimesSubmit);
 
 app.get('/api/venues/', get.getVenues);
@@ -34,6 +42,8 @@ app.get('/api/venues/', get.getVenues);
 app.get('/api/venue/:id', get.getVenue);
 
 app.get('/api/series/', get.getSeries);
+
+app.get('/api/series/:id', get.getSeriesByUri);
 
 app.get('/api/movies/', get.getMovies);
 

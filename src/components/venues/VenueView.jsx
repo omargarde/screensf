@@ -85,7 +85,7 @@ const VenueView = () => {
             <h3 className="date-header">
             <Link to={`/${moment(day.date).format('YYYY-MM-DD')}#${venUri}`}>{moment(day.date).format('dddd, MMMM D YYYY')}</Link>
             </h3>
-            <ByDate shows={day} />
+            <ByDate shows={day.shows} />
           </div>
         ))}
       </div>

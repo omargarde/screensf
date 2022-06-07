@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { cutDate } from './helpers';
+import { dateHandle } from './helpers';
 
 const SeriesEditor = () => {
   const [serKey, setSerKey] = useState('new');
@@ -11,23 +11,25 @@ const SeriesEditor = () => {
   const [endDate, setEndDate] = useState('');
   const [serDesc, setSerDesc] = useState('');
   const [serUrl, setSerUrl] = useState('');
+  const [serUri, setSerUri] = useState('');
   const [serList, setSerList] = useState([]);
   const [note, setNote] = useState('');
 
-  useEffect(() => {
-    const getSeriesList = () => {
-      axios({
-        method: 'get',
-        url: '/api/series/',
+  const getSeriesList = () => {
+    axios({
+      method: 'get',
+      url: '/api/series/',
+    })
+      .then((response) => {
+        const { data } = response;
+        setSerList(data);
       })
-        .then((response) => {
-          const { data } = response;
-          setSerList(data);
-        })
-        .catch((error) => {
-          throw new Error(error);
-        });
-    };
+      .catch((error) => {
+        throw new Error(error);
+      });
+  };
+
+  useEffect(() => {
     getSeriesList();
   }, []);
 
@@ -40,6 +42,7 @@ const SeriesEditor = () => {
     setEndDate('');
     setSerDesc('');
     setSerUrl('');
+    setSerUri('')
     if (selectedId === 'new') return;
     const {
       id,
@@ -48,13 +51,15 @@ const SeriesEditor = () => {
       end_date,
       series_description,
       series_url,
+      series_uri,
     } = serList[selectedId];
     setSerId(id);
     setSerTitle(title);
-    setStartDate(cutDate(start_date));
-    setEndDate(cutDate(end_date));
+    setStartDate(dateHandle(start_date));
+    setEndDate(dateHandle(end_date));
     setSerDesc(series_description);
     setSerUrl(series_url);
+    setSerUri(series_uri);
   };
 
   const postSeries = () => {
@@ -67,15 +72,20 @@ const SeriesEditor = () => {
         end_date: endDate,
         series_description: serDesc,
         series_url: serUrl,
+        series_uri: serUri,
       },
     })
       .then(() => {
         setNote('Series posted successfully.');
+        setTimeout(() => {
+          setNote('');
+        }, 1000);
       })
       .catch((error) => {
         setNote('There was an error posting this series.');
         throw new Error(error);
       });
+      getSeriesList()
   };
 
   const editSeries = () => {
@@ -89,15 +99,20 @@ const SeriesEditor = () => {
         end_date: endDate,
         series_description: serDesc,
         series_url: serUrl,
+        series_uri: serUri,
       },
     })
       .then(() => {
         setNote('Series edited successfully.');
+        setTimeout(() => {
+          setNote('');
+        }, 1000);
       })
       .catch((error) => {
         setNote('There was an error editing this series.');
         throw new Error(error);
       });
+      getSeriesList()
   };
 
   const handleSeries = () => {
@@ -134,7 +149,9 @@ const SeriesEditor = () => {
         <input
           type="date"
           value={startDate}
-          onChange={(e) => setStartDate(e.target.value)}
+          onChange={(e) => {
+            setStartDate(dateHandle(e.target.value))
+          }}
         />
       </label>
       <label htmlFor={endDate}>
@@ -142,7 +159,9 @@ const SeriesEditor = () => {
         <input
           type="date"
           value={endDate}
-          onChange={(e) => setEndDate(e.target.value)}
+          onChange={(e) => {
+            setEndDate(dateHandle(e.target.value))
+          }}
         />
       </label>
       <label htmlFor={serDesc}>
@@ -158,6 +177,14 @@ const SeriesEditor = () => {
         <input
           onChange={(e) => setSerUrl(e.target.value)}
           value={serUrl}
+          type="text"
+        />
+      </label>
+      <label htmlFor={serUrl}>
+        Series URI:
+        <input
+          onChange={(e) => setSerUri(e.target.value)}
+          value={serUri}
           type="text"
         />
       </label>

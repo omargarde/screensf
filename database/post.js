@@ -35,15 +35,16 @@ const postSeries = (req, res, next) => {
     .query(
       `INSERT INTO 
       series 
-      (id, title, start_date, end_date, series_description, series_url) 
+      (id, title, start_date, end_date, series_description, series_url, series_uri) 
       VALUES 
-      (DEFAULT, $1, $2, $3, $4, $5 );`,
+      (DEFAULT, $1, $2, $3, $4, $5, $6 );`,
       [
         req.body.title,
         req.body.start_date,
         req.body.end_date,
         req.body.series_description,
         req.body.series_url,
+        req.body.series_uri,
       ],
     )
     .then(() => {

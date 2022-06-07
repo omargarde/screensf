@@ -6,6 +6,8 @@ import Nav from './components/Nav';
 import Venues from './components/venues/Venues';
 import About from './components/About';
 import VenueView from './components/venues/VenueView';
+import SeriesView from './components/series/SeriesView';
+import OnFilm from './components/onfilm/OnFilm';
 import ScrollToTop from './components/ScrollToTop';
 // eslint-disable-next-line
 import styles from './styles/main';
@@ -18,7 +20,9 @@ function App() {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/venues/:id" component={VenueView} />
+          <Route path="/series/:id" component={SeriesView} />
           <Route path="/venues" component={Venues} />
+          <Route path="/onfilm" component={OnFilm} />
           <Route path="/about" component={About} />
           <Route path="/:id" component={Home} />
           <Redirect to="/" />
