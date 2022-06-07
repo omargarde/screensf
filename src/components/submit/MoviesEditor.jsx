@@ -143,9 +143,15 @@ const MoviesEditor = () => {
     })
       .then(() => {
         setNote('Movie edited successfully.');
+        setTimeout(() => {
+          setNote('');
+        }, 1000);
       })
       .catch((error) => {
         setNote('There was an error editing this movie.');
+        setTimeout(() => {
+          setNote('');
+        }, 1000);
         throw new Error(error);
       });
   };

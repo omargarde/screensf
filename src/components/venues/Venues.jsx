@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import axios from 'axios';
 
 const Venues = () => {
-  // const [venList, setVenList] = useState({});
   const [venSanFran, setSanFran] = useState([]);
   const [venEast, setEast] = useState([]);
   const [venPen, setPen] = useState([]);
@@ -33,7 +33,6 @@ const Venues = () => {
         .then((response) => {
           const { data } = response;
           const fixData = fixVen(data);
-          // setVenList(fixData);
           setSanFran(fixData['San Francisco']);
           setEast(fixData['East Bay']);
           setPen(fixData.Peninsula);
@@ -61,18 +60,24 @@ const Venues = () => {
 
   return (
     <div>
-      <h2 className="venue-region">San Francisco</h2>
-      <div className="venue-list">{printList(venSanFran)}</div>
-      <h2 className="venue-region">East Bay</h2>
-      <div className="venue-list">{printList(venEast)}</div>
-      <h2 className="venue-region">Peninsula</h2>
-      <div className="venue-list">{printList(venPen)}</div>
-      <h2 className="venue-region">South Bay</h2>
-      <div className="venue-list">{printList(venSouth)}</div>
-      <h2 className="venue-region">North Bay</h2>
-      <div className="venue-list">{printList(venNorth)}</div>
-      <h2 className="venue-region">Santa Cruz</h2>
-      <div className="venue-list">{printList(venSanCru)}</div>
+      <Helmet>
+        <title>SF Bay Film | Venues</title>
+        <meta property="og:title" content={`Venues | SF Bay Film`}/>
+      </Helmet>
+      <div>
+        <h2 className="venue-region">San Francisco</h2>
+        <div className="venue-list">{printList(venSanFran)}</div>
+        <h2 className="venue-region">East Bay</h2>
+        <div className="venue-list">{printList(venEast)}</div>
+        <h2 className="venue-region">Peninsula</h2>
+        <div className="venue-list">{printList(venPen)}</div>
+        <h2 className="venue-region">South Bay</h2>
+        <div className="venue-list">{printList(venSouth)}</div>
+        <h2 className="venue-region">North Bay</h2>
+        <div className="venue-list">{printList(venNorth)}</div>
+        <h2 className="venue-region">Santa Cruz</h2>
+        <div className="venue-list">{printList(venSanCru)}</div>
+      </div>
     </div>
   );
 };

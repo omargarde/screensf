@@ -13,6 +13,11 @@ const images = [
   'https://storage.googleapis.com/filmcans/featured/goodbye-dragon-inn.jpeg',
   'https://storage.googleapis.com/filmcans/featured/gremlins.jpeg',
   'https://storage.googleapis.com/filmcans/featured/inglorious-basterds.jpeg',
+  'https://storage.googleapis.com/filmcans/featured/taxi-driver.jpeg',
+  'https://storage.googleapis.com/filmcans/featured/matinee.jpeg',
+  'https://storage.googleapis.com/filmcans/featured/pee-wees-big-adventure.jpeg',
+  'https://storage.googleapis.com/filmcans/featured/o-brother-where-art-thou.png',
+  'https://storage.googleapis.com/filmcans/featured/sherlock-jr.jpeg',
 ];
 
 const loadImage = 'https://storage.googleapis.com/filmcans/filmreel2.png';

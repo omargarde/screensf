@@ -16,7 +16,7 @@ import MoviesEditor from './submit/MoviesEditor';
 import VenueEditor from './submit/VenueEditor';
 import FeaturedEditor from './submit/FeaturedEditor';
 
-const Home = () => {
+const Home = () => { 
   const isSubmit = true;
   const params = useParams();
   const selected = (sDate) => {

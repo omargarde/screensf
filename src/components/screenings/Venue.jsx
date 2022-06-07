@@ -11,7 +11,7 @@ const Venue = (props) => {
   return (
     <div className="screenings-venues">
       <div className="venue-block">
-        <h3 className="venue-title">
+        <h3 className="venue-title" id={venue.venue_uri}>
           <Link to={venueUrl}>{venue.venue}</Link>
         </h3>
         <div className="venue-address">{venue.address}</div>
