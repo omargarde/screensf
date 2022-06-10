@@ -18,7 +18,7 @@ const ShowsList = (props) => {
   const [movieData, setMovieData] = useState('');
   const [director, setDirector] = useState('');
   const [year, setYear] = useState('');
-  const filmFormats = ['35mm', '16mm', '8mm', '70mm'];
+  const filmFormats = ['35mm', '16mm', '8mm', '70mm', 'Mixed Format'];
   const formats = filmFormats.includes(show.format);
 
   const getCrew = (data, title) => {
@@ -67,6 +67,13 @@ const ShowsList = (props) => {
     }
   }
 
+  function InPerson (props) {
+    if (props.show.in_person) {
+      return <Link to="/inperson">In Person</Link>
+    } else {
+      return ''
+    }
+  }
 
   return (
     <div>
@@ -104,7 +111,13 @@ const ShowsList = (props) => {
         </div>
         <div className="film-note">{show.screening_note}</div>
         {show.showtimes.map((showtime) => (
-          <div className="film-note">{showtime.showtime_note}</div>
+          <div className="film-note">
+            <InPerson 
+              show={showtime}
+            />
+            {showtime.in_person ? ': ' : ''}
+            {showtime.showtime_note}
+          </div>
         ))}
         <div className="showtimes">
           {show.showtimes.map((showtime) => (

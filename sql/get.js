@@ -18,6 +18,7 @@ const submitShowtimesOnDate = `SELECT
       'screenings_id', showtimes.screenings_id,
       'showtime', showtimes.showtime,
       'showtime_note', showtimes.showtime_note,
+      'in_person', showtimes.in_person,
       'canceled', showtimes.canceled,
       'hide', showtimes.hide
       )
@@ -86,6 +87,7 @@ const showtimesOnDate = `SELECT
       'screenings_id', showtimes.screenings_id,
       'showtime', showtimes.showtime,
       'showtime_note', showtimes.showtime_note,
+      'in_person', showtimes.in_person,
       'canceled', showtimes.canceled,
       'hide', showtimes.hide
       )
@@ -437,8 +439,68 @@ const getShowtimesByVenue = `SELECT
   LEFT JOIN series ON series.id = screenings_series.series_id 
   WHERE
   showtimes.showtime >= $1 
-    AND (screenings.format = '35mm' OR screenings.format = '16mm' OR screenings.format = '70mm' OR screenings.format = '8mm') 
+    AND (screenings.format = '35mm' 
+      OR screenings.format = '16mm' 
+      OR screenings.format = '70mm' 
+      OR screenings.format = '8mm'
+      OR screenings.format = 'Mixed Formats') 
     AND screenings.canceled = 0 AND showtimes.hide = 0
+  GROUP BY
+  showtimes.showtime,
+  showtimes.id,
+  screenings.id,
+  venues.title,
+  venues.address,
+  venues.id,
+  venues.venue_uri
+  ORDER BY
+  showtimes.showtime;`;
+
+  const getShowtimesInPerson = `SELECT
+  screenings.id AS screening_id,
+  screenings.movies_id AS movie_id,
+  screenings.alt_title,
+  screenings.screening_url,
+  screenings.start_date,
+  screenings.end_date,
+  screenings.format,
+  screenings.screening_note,
+  screenings.use_alt,
+  screenings.canceled,
+  venues.title AS venue,
+  venues.address AS venue_address,
+  venues.id AS venue_id,
+  venues.venue_uri AS venue_uri,
+  showtime::DATE AS date,
+  string_agg(DISTINCT series.title, ', ') AS series,
+  string_agg(DISTINCT series.series_url, ', ') AS series_url,
+  string_agg(DISTINCT series.series_uri, ', ') AS series_uri,
+  string_agg(DISTINCT series.id::character varying, ', ') AS series_id,
+  json_agg(json_build_object(
+    'id', showtimes.id,
+    'screenings_id', showtimes.screenings_id,
+    'showtime', showtimes.showtime,
+    'showtime_note', showtimes.showtime_note,
+    'in_person', showtimes.in_person,
+    'canceled', showtimes.canceled,
+    'hide', showtimes.hide
+    )
+    ORDER BY
+    showtimes.showtime
+    ) AS showtimes
+  FROM
+  screenings
+  LEFT JOIN showtimes 
+    ON showtimes.screenings_id = screenings.id 
+      AND showtimes.in_person = 1
+  LEFT JOIN venues ON screenings.venues_id=venues.id
+  LEFT JOIN screenings_series ON screenings.id = screenings_series.screenings_id 
+  LEFT JOIN series ON series.id = screenings_series.series_id 
+  WHERE
+  showtimes.showtime >= $1 
+    AND showtimes.in_person = 1
+    AND screenings.canceled = 0
+    AND showtimes.hide = 0
   GROUP BY
   showtimes.showtime,
   showtimes.id,
@@ -466,4 +528,5 @@ module.exports = {
   getShowtimesBySeries,
   getPrevShowtimesBySeries,
   getShowtimesOnFilm,
+  getShowtimesInPerson,
 };

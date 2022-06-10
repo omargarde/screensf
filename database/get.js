@@ -191,6 +191,54 @@ const getShowtimesByVenue = (req, res) => {
     });
 };
 
+
+
+const getUpcoming = (rows) => {
+  let showByDate = {};
+  rows.forEach((showtime) => {
+    let showtimeDate = showtime.date.toJSON().slice(0, 10);
+    //create date
+    if (!showByDate[showtimeDate]) {
+      showByDate[showtimeDate] = {};
+      showByDate[showtimeDate].date = showtimeDate;
+      showByDate[showtimeDate]['venues'] = {};
+    }
+    // create venue
+    if (!showByDate[showtimeDate]['venues'][showtime.venue]) {
+      showByDate[showtimeDate]['venues'][showtime.venue] = {};
+      showByDate[showtimeDate]['venues'][showtime.venue].venue = showtime.venue;
+      showByDate[showtimeDate]['venues'][showtime.venue].address = showtime.venue_address;
+      showByDate[showtimeDate]['venues'][showtime.venue].id = showtime.venue_id;
+      showByDate[showtimeDate]['venues'][showtime.venue].venue_uri = showtime.venue_uri;
+      showByDate[showtimeDate]['venues'][showtime.venue].shows = [];
+      showByDate[showtimeDate]['venues'][showtime.venue].shows.push(showtime)
+    } else {
+      // look for screening_id at the current venue on the current date
+      let none = 0;
+      showByDate[showtimeDate]['venues'][showtime.venue].shows.forEach((show) => {
+        if (show.screening_id === showtime.screening_id) {
+          show.showtimes.push(showtime.showtimes[0]);
+          none = 1;
+        }
+      })
+      if (none === 0) showByDate[showtimeDate]['venues'][showtime.venue].shows.push(showtime);
+    }
+  });
+  
+  // present venue in array for Screenings component
+  for (date in showByDate) {
+    const ordered = Object.keys(showByDate[date].venues).sort().reduce(
+      (obj, key) => { 
+        obj[key] = showByDate[date].venues[key]; 
+        return obj;
+      },
+      {}
+    );
+     showByDate[date].venues = Object.values(ordered);
+  }
+  return showByDate;
+}
+
 const getShowtimesBySeries = (req, res) => {
   const { serUri, today, prev } = req.params;
   let text = read.getShowtimesBySeries;
@@ -199,59 +247,12 @@ const getShowtimesBySeries = (req, res) => {
     text: text,
     values: [today, serUri],
   };
-
   screensf.client
     .query(query)
     .then((data) => {
       const { rows } = data;
-      let showByDate = {};
-      rows.forEach((showtime) => {
-        let showtimeDate = showtime.date.toJSON().slice(0, 10);
-
-        //create date
-        if (!showByDate[showtimeDate]) {
-          showByDate[showtimeDate] = {};
-          showByDate[showtimeDate].date = showtimeDate;
-          showByDate[showtimeDate]['venues'] = {};
-
-        }
-
-        // create venue
-        if (!showByDate[showtimeDate]['venues'][showtime.venue]) {
-          showByDate[showtimeDate]['venues'][showtime.venue] = {};
-          showByDate[showtimeDate]['venues'][showtime.venue].venue = showtime.venue;
-          showByDate[showtimeDate]['venues'][showtime.venue].address = showtime.venue_address;
-          showByDate[showtimeDate]['venues'][showtime.venue].id = showtime.venue_id;
-          showByDate[showtimeDate]['venues'][showtime.venue].venue_uri = showtime.venue_uri;
-          showByDate[showtimeDate]['venues'][showtime.venue].shows = [];
-          showByDate[showtimeDate]['venues'][showtime.venue].shows.push(showtime)
-        } else {
-
-          // look for screening_id at the current venue on the current date
-          let none = 0;
-          showByDate[showtimeDate]['venues'][showtime.venue].shows.forEach((show) => {
-            if (show.screening_id === showtime.screening_id) {
-              show.showtimes.push(showtime.showtimes[0]);
-              none = 1;
-            }
-          })
-          if (none === 0) showByDate[showtimeDate]['venues'][showtime.venue].shows.push(showtime);
-        }
-      });
-      
-      // present venue in array for Screenings component
-      for (date in showByDate) {
-        const ordered = Object.keys(showByDate[date].venues).sort().reduce(
-          (obj, key) => { 
-            obj[key] = showByDate[date].venues[key]; 
-            return obj;
-          },
-          {}
-        );
-
-         showByDate[date].venues = Object.values(ordered);
-      }
-      res.send(JSON.stringify(Object.values(showByDate)));
+      const upcoming = getUpcoming(rows)
+      res.send(JSON.stringify(Object.values(upcoming)));
       res.end();
     })
     .catch((error) => {
@@ -259,7 +260,6 @@ const getShowtimesBySeries = (req, res) => {
       res.end(error);
     });
 };
-
 
 const getShowtimesOnFilm = (req, res) => {
   const { today } = req.params;
@@ -268,59 +268,12 @@ const getShowtimesOnFilm = (req, res) => {
     text: text,
     values: [today],
   };
-
   screensf.client
     .query(query)
     .then((data) => {
       const { rows } = data;
-      let showByDate = {};
-      rows.forEach((showtime) => {
-        let showtimeDate = showtime.date.toJSON().slice(0, 10);
-
-        //create date
-        if (!showByDate[showtimeDate]) {
-          showByDate[showtimeDate] = {};
-          showByDate[showtimeDate].date = showtimeDate;
-          showByDate[showtimeDate]['venues'] = {};
-
-        }
-
-        // create venue
-        if (!showByDate[showtimeDate]['venues'][showtime.venue]) {
-          showByDate[showtimeDate]['venues'][showtime.venue] = {};
-          showByDate[showtimeDate]['venues'][showtime.venue].venue = showtime.venue;
-          showByDate[showtimeDate]['venues'][showtime.venue].address = showtime.venue_address;
-          showByDate[showtimeDate]['venues'][showtime.venue].id = showtime.venue_id;
-          showByDate[showtimeDate]['venues'][showtime.venue].venue_uri = showtime.venue_uri;
-          showByDate[showtimeDate]['venues'][showtime.venue].shows = [];
-          showByDate[showtimeDate]['venues'][showtime.venue].shows.push(showtime)
-        } else {
-
-          // look for screening_id at the current venue on the current date
-          let none = 0;
-          showByDate[showtimeDate]['venues'][showtime.venue].shows.forEach((show) => {
-            if (show.screening_id === showtime.screening_id) {
-              show.showtimes.push(showtime.showtimes[0]);
-              none = 1;
-            }
-          })
-          if (none === 0) showByDate[showtimeDate]['venues'][showtime.venue].shows.push(showtime);
-        }
-      });
-      
-      // present venue in array for Screenings component
-      for (date in showByDate) {
-        const ordered = Object.keys(showByDate[date].venues).sort().reduce(
-          (obj, key) => { 
-            obj[key] = showByDate[date].venues[key]; 
-            return obj;
-          },
-          {}
-        );
-
-         showByDate[date].venues = Object.values(ordered);
-      }
-      res.send(JSON.stringify(Object.values(showByDate)));
+      const upcoming = getUpcoming(rows);
+      res.send(JSON.stringify(Object.values(upcoming)));
       res.end();
     })
     .catch((error) => {
@@ -329,7 +282,26 @@ const getShowtimesOnFilm = (req, res) => {
     });
 };
 
-
+const getShowtimesInPerson = (req, res) => {
+  const { today } = req.params;
+  let text = read.getShowtimesInPerson;
+  const query = {
+    text: text,
+    values: [today],
+  };
+  screensf.client
+    .query(query)
+    .then((data) => {
+      const { rows } = data;
+      const upcoming = getUpcoming(rows);
+      res.send(JSON.stringify(Object.values(upcoming)));
+      res.end();
+    })
+    .catch((error) => {
+      console.log(error, 'There was an error');
+      res.end(error);
+    });
+};
 
 const getVenues = (req, res) => {
   const query = {
@@ -475,4 +447,5 @@ module.exports = {
   getShowtimesByVenue,
   getShowtimesBySeries,
   getShowtimesOnFilm,
+  getShowtimesInPerson,
 };

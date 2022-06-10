@@ -85,6 +85,9 @@ body {
       }
       .nav-links {
         font-size: 1em;
+        display: flex;
+        flex-flow: wrap;
+        justify-content: center;
       }
     }
 
@@ -446,8 +449,6 @@ body {
   }
   
   .film-note {
-    display: flex;
-    flex-wrap: wrap;
     font-weight: 300;
     font-size: .85em;
   }

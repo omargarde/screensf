@@ -18,6 +18,12 @@ const Nav = () => (
       <li>
         <Link to="/venues/">venues</Link>
       </li>
+      <li>
+        <Link to="/onfilm/">on film</Link>
+      </li>
+      <li>
+        <Link to="/inperson/">in person</Link>
+      </li>
     </ul>
   </div>
 );

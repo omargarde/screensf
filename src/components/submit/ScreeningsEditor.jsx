@@ -351,6 +351,7 @@ const ScreeningsEditor = (props) => {
             <option value="35mm">35mm</option>
             <option value="16mm">16mm</option>
             <option value="70mm">70mm</option>
+            <option value="Mixed Formats">Mixed Formats</option>
             <option value="Digital">Digital</option>
             <option value="Video">Video</option>
             <option value="VHS">VHS</option>

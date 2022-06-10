@@ -7,7 +7,7 @@ import { loadImage } from '../helpers';
 import Screenings from '../screenings/Screenings';
 import { Link } from 'react-router-dom';
 
-const OnFilm = () => {
+const InPerson = () => {
     const { id } = useParams();
     const today = moment(new Date()).format('YYYY-MM-DD');
     const [showData, setShowData] = useState([]);
@@ -25,7 +25,7 @@ const OnFilm = () => {
         const getScreeningsOnFilm = () => {
             axios({
                 method: 'get',
-                url: `/api/showtimes-onfilm/today/${today}/`,
+                url: `/api/showtimes-inperson/today/${today}/`,
             })
             .then((response) => {
                 const { data } = response;
@@ -56,8 +56,8 @@ const OnFilm = () => {
                 <meta property="og:url" content={`http://sfbayfilm.com/onfilm/`}/>
                 <meta property="og:description" content={` SF Bay Film is a listing of daily showtimes for repertory cinema in the San Francisco Bay Area.`}/>
             </Helmet>
-            <h2 className="series-name">Bay Area Film Screenings</h2>
-            <div className="series-description">All upcoming film screenings in the Bay Area.</div>
+            <h2 className="series-name">In-Person Screenings</h2>
+            <div className="series-description">All upcoming film screenings with a special guest in attendance.</div>
             <div className="venue-block">
                 <h2 className="upcoming-showtimes">{upcoming}</h2>
                 <div>
@@ -83,4 +83,4 @@ const OnFilm = () => {
 
 };
 
-export default OnFilm;
+export default InPerson;
