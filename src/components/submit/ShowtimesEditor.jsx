@@ -204,7 +204,6 @@ const ShowtimesEditor = (props) => {
                 value={shoCanceled}
                 onChange={(e) => setCanceled(e.target.value)}
               >
-                <option value="">Select...</option>
                 <option value={0}>No</option>
                 <option value={1}>Yes</option>
               </select>
@@ -212,7 +211,6 @@ const ShowtimesEditor = (props) => {
             <label htmlFor={shoHide}>
               Hide?
               <select value={shoHide} onChange={(e) => setHide(e.target.value)}>
-                <option value="">Select...</option>
                 <option value={0}>No</option>
                 <option value={1}>Yes</option>
               </select>
@@ -220,7 +218,6 @@ const ShowtimesEditor = (props) => {
             <label htmlFor={shoInPerson}>
               In Person?
               <select value={shoInPerson} onChange={(e) => setInPerson(e.target.value)}>
-                <option value="">Select...</option>
                 <option value={0}>No</option>
                 <option value={1}>Yes</option>
               </select>

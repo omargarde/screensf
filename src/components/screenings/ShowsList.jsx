@@ -67,14 +67,6 @@ const ShowsList = (props) => {
     }
   }
 
-  function InPerson (props) {
-    if (props.show.in_person) {
-      return <Link to="/inperson">In Person</Link>
-    } else {
-      return ''
-    }
-  }
-
   return (
     <div>
       <div className="shows-film">
@@ -112,10 +104,6 @@ const ShowsList = (props) => {
         <div className="film-note">{show.screening_note}</div>
         {show.showtimes.map((showtime) => (
           <div className="film-note">
-            <InPerson 
-              show={showtime}
-            />
-            {showtime.in_person ? ': ' : ''}
             {showtime.showtime_note}
           </div>
         ))}

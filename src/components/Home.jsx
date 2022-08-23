@@ -12,7 +12,7 @@ import ScreeningsEditor from './submit/ScreeningsEditor';
 import { showBoilerplate } from './submit/helpers';
 import SeriesEditor from './submit/SeriesEditor';
 import Expand from './submit/Expand';
-import MoviesEditor from './submit/MoviesEditor';
+import MoviesEditor from './submit/Movies/MoviesEditor';
 import VenueEditor from './submit/VenueEditor';
 import FeaturedEditor from './submit/FeaturedEditor';
 

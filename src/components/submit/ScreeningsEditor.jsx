@@ -1,7 +1,8 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { dateHandle } from './helpers';
+import { dateHandle, digitsList } from './helpers';
+import MovieSearch from './Movies/MovieSearch';
 
 const ScreeningsEditor = (props) => {
   const { show } = props;
@@ -27,6 +28,12 @@ const ScreeningsEditor = (props) => {
   const [serList, setSerList] = useState([]);
   const [scrList, setScrList] = useState([]);
   const [scrKey, setScrKey] = useState('new');
+  const [singleShowtime, setSingleShowtime] = useState(0)
+  const [hour, setHour] = useState('00');
+  const [minute, setMinute] = useState('00');
+  const [shoNote, setShoNote] = useState('');
+  const [shoInPerson, setInPerson] = useState(0);
+
 
   useEffect(() => {
     const getSeriesList = () => {
@@ -152,6 +159,36 @@ const ScreeningsEditor = (props) => {
       });
   };
 
+  const postScreenShowtime = (screeningsId) => {
+    axios({
+      method: 'post',
+      url: `/api/showtimes/`,
+      data: {
+        screenings_id: screeningsId,
+        showtime: `${startDate} ${hour}:${minute}:00-8:00`,
+        showtime_note: shoNote,
+        canceled: "0",
+        in_person: shoInPerson,
+        hide: "0",
+      }
+    })
+    .then(() => {
+      setNote('Successful single showtime post..');
+      setTimeout(() => {
+        setNote('');
+      }, 1000);
+    })
+    .catch((error) => {
+      setNote(
+        'The screening posted, but there was an error posting the showtime.',
+      );
+      setTimeout(() => {
+        setNote('');
+      }, 1000);
+      throw new Error(error);
+    });
+  }
+
   const editScreenSeries = () => {
     if (serId !== origSer) {
       axios({
@@ -207,6 +244,9 @@ const ScreeningsEditor = (props) => {
         const { data } = screeningData;
         setNote('Screening posted successfully. Posting series data...');
         postScreenSeries(data.id);
+        if (singleShowtime === "1") {
+          postScreenShowtime(data.id);
+        }
       })
       .catch((error) => {
         setNote('There was an error posting this screening.');
@@ -286,6 +326,7 @@ const ScreeningsEditor = (props) => {
             </select>
           </label>
         </div>
+        <MovieSearch />
         <label htmlFor={movId}>
           Movie ID:
           <input
@@ -308,7 +349,6 @@ const ScreeningsEditor = (props) => {
         <label htmlFor={serId}>
           Select Series:
           <select value={serId} onChange={(e) => setSerId(e.target.value)}>
-            <option value="">Select...</option>
             {serList.map((selSer) => (
               <option key={selSer.id} value={selSer.id}>
                 {selSer.title}
@@ -380,23 +420,63 @@ const ScreeningsEditor = (props) => {
             value={screenUseAlt}
             onChange={(e) => setUseAlt(e.target.value)}
           >
-            <option value="">Select...</option>
             <option value={0}>No</option>
             <option value={1}>Yes</option>
           </select>
         </label>
-        
         <label htmlFor={screenCanceled}>
           Canceled?
           <select
             value={screenCanceled}
             onChange={(e) => setCanceled(e.target.value)}
           >
-            <option value="">Select...</option>
             <option value={0}>No</option>
             <option value={1}>Yes</option>
           </select>
         </label>
+        { show.screening_id ? '' : 
+        (    <div>
+          <label htmlFor={singleShowtime}>
+          Single Showtime?
+          <select
+            value={singleShowtime}
+            onChange={(e) => setSingleShowtime(e.target.value)}
+          >
+            <option value={0}>No</option>
+            <option value={1}>Yes</option>
+          </select>
+        </label>
+        <select value={hour} onChange={(e) => setHour(e.target.value)}>
+              {digitsList(0, 23, 'hour').map((time) => (
+                <option key={time.id} value={time.hour}>
+                  {time.hour}
+                </option>
+              ))}
+            </select>
+            <select value={minute} onChange={(e) => setMinute(e.target.value)}>
+              {digitsList(0, 59, 'minute').map((time) => (
+                <option key={time.id} value={time.minute}>
+                  {time.minute}
+                </option>
+              ))}
+            </select>
+            <label htmlFor={shoNote}>
+              Showtime Note:
+              <input
+                onChange={(e) => setShoNote(e.target.value)}
+                value={shoNote}
+                type="text"
+              />
+            </label>
+            <label htmlFor={shoInPerson}>
+              In Person?
+              <select value={shoInPerson} onChange={(e) => setInPerson(e.target.value)}>
+                <option value={0}>No</option>
+                <option value={1}>Yes</option>
+              </select>
+            </label>
+        </div>
+        )}
         <button
           type="button"
           className="ssf-button"

@@ -144,6 +144,7 @@ const getShowtimesOnDate = (req, res) => {
         let showsFinal = Object.values(showsByVenue)
         const showsStr = JSON.stringify(showsFinal);
         res.send(showsStr);
+        
       }
       res.end();
     })

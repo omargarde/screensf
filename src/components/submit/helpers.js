@@ -26,7 +26,7 @@ const showBoilerplate = {
   screening_url: '',
   series: '',
   series_url: '',
-  series_id: '',
+  series_id: 1,
   showtimes: [],
   showtimes_hide: '',
   showtimesid: [],
@@ -36,6 +36,7 @@ const showBoilerplate = {
   venueshorttitle: '',
   year: '',
   submit: true,
+  use_alt: 0,
   canceled: 0,
 };
 
