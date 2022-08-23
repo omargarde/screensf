@@ -17,7 +17,7 @@ const Featured = (props) => {
       if (n > max) n = min;
       setFeatIndex(n);
     }
-    selectImage(0,4,featIndex);
+    selectImage(0,9,featIndex);
   },[today])
   
   return (
@@ -38,7 +38,7 @@ const Featured = (props) => {
           }
         </div>
         <h3>
-          {featured.welcome ? 'Welcome to SF Bay Film | ' : 'Featured Film for '}
+          {featured.welcome ? 'SF Bay Film | ' : 'Featured Film for '}
           {moment(today).format('dddd, MMMM D YYYY')}
         </h3>
         <div
