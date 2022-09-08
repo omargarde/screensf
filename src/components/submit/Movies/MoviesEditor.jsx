@@ -1,8 +1,9 @@
 /* eslint-disable camelcase */
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { dateHandle } from './helpers';
-import { theMovieAPI } from '../../../keys';
+import { dateHandle } from '../helpers';
+import { theMovieAPI } from '../../../../keys';
+import MovieSearch from './MovieSearch';
 
 const MoviesEditor = () => {
   const [movKey, setMovKey] = useState('new');
@@ -13,8 +14,6 @@ const MoviesEditor = () => {
   const [movRuntime, setMovRuntime] = useState('');
   const [movSyn, setMovSyn] = useState('');
   const [movList, setMovList] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [searchResult, setSearchResult] = useState({ results: [] });
   const [note, setNote] = useState('');
 
   useEffect(() => {
@@ -60,25 +59,7 @@ const MoviesEditor = () => {
       });
   };
 
-  const searchMovie = (query) => {
-    setSearchQuery(query);
-    if (query === '') {
-      setSearchResult({ results: [] });
-      return;
-    }
-    const urlQuery = query.split(' ').join('%20');
-    axios({
-      method: 'get',
-      url: `https://api.themoviedb.org/3/search/movie/?api_key=${theMovieAPI}&query=${urlQuery}`,
-    })
-      .then((response) => {
-        const { data } = response;
-        setSearchResult(data);
-      })
-      .catch((error) => {
-        throw new Error(error);
-      });
-  };
+
 
   const selectMovie = (selectedId) => {
     setNote('');
@@ -177,26 +158,7 @@ const MoviesEditor = () => {
           ))}
         </select>
       </label>
-      <label htmlFor={searchQuery}>
-        Search Movies:
-        <input
-          onChange={(e) => searchMovie(e.target.value, e)}
-          value={searchQuery}
-          type="text"
-        />
-      </label>
-      {searchResult.results.map((result) => (
-        <div>
-          <div className="film-title">
-            {result.title}
-            {` (`}
-            {result.release_date}
-            {`)`}
-          </div>
-          <div className="film-details">{result.id}</div>
-          <div className="film-series">{result.overview}</div>
-        </div>
-      ))}
+      <MovieSearch />
       <label htmlFor={movId}>
         Movie ID:
         <input
