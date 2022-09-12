@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { dateHandle, digitsList } from './helpers';
 import MovieSearch from './Movies/MovieSearch';
+import postMovie from './Movies/postMovie';
+
 
 const ScreeningsEditor = (props) => {
   const { show } = props;
@@ -33,6 +35,7 @@ const ScreeningsEditor = (props) => {
   const [minute, setMinute] = useState('00');
   const [shoNote, setShoNote] = useState('');
   const [shoInPerson, setInPerson] = useState(0);
+  const [selectedMovie, setSelectedMovie] = useState('');
 
 
   useEffect(() => {
@@ -132,6 +135,20 @@ const ScreeningsEditor = (props) => {
     setVenKey(value);
     getScreeningsList(venList[value].id);
   };
+
+  const selectMovie = (result) => {
+    const data = {
+      id: result.id,
+      title: result.title,
+      director: result.director,
+      release_date: result.release_date,
+      runtime: result.runtime,
+      synopsis: result.overview,
+    }
+    setMovId(data.id);
+    setAltTitle(data.title)
+    postMovie(data);
+  }
 
   const postScreenSeries = (screeningsId) => {
     axios({
@@ -283,6 +300,7 @@ const ScreeningsEditor = (props) => {
   };
 
   const handleScreening = () => {
+    // post movie
     if (scrId === 'newScr') {
       postScreening();
       setNote('posting screening..');
@@ -326,7 +344,9 @@ const ScreeningsEditor = (props) => {
             </select>
           </label>
         </div>
-        <MovieSearch />
+        <MovieSearch 
+          selectMov={selectMovie}
+        />
         <label htmlFor={movId}>
           Movie ID:
           <input
