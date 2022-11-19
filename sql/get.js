@@ -213,6 +213,38 @@ const getMovies = `SELECT *  FROM  movies`;
 
 const getFeatured = `SELECT * FROM featured_films ORDER BY featured_films.ondate DESC`;
 
+const getAllScreenings = `SELECT
+  screenings.id AS screening_id,
+  screenings.movies_id,
+  screenings.alt_title,
+  screenings.screening_url,
+  screenings.start_date,
+  screenings.end_date,
+  screenings.format,
+  screenings.screening_note,
+  screenings.use_alt,
+  screenings.canceled,
+  screenings.venues_id AS venue_id,
+  string_agg(DISTINCT series.id::character varying, ', ') AS series_id
+  FROM
+  screenings
+  INNER JOIN screenings_series ON screenings.id = screenings_series.screenings_id
+  INNER JOIN series ON series.id = screenings_series.series_id 
+  GROUP BY
+  screenings.id,
+  screenings.movies_id,
+  screenings.alt_title,
+  screenings.screening_url,
+  screenings.start_date,
+  screenings.end_date,
+  screenings.format,
+  screenings.screening_note,
+  screenings.use_alt,
+  screenings.canceled
+  ORDER BY
+  screenings.id;
+  `;
+
 const getScreenings = `SELECT
   screenings.id AS screening_id,
   screenings.movies_id,
@@ -521,6 +553,7 @@ module.exports = {
   getSeries,
   getSeriesByUri,
   getMovies,
+  getAllScreenings,
   getScreenings,
   getShowtimeHours,
   getFeatured,

@@ -383,6 +383,23 @@ const getMovies = (req, res) => {
     });
 };
 
+const getAllScreenings = (req, res) => {
+  const query = {
+    text: read.getAllScreenings,
+  };
+  screensf.client
+    .query(query)
+    .then((data) => {
+      res.send(JSON.stringify(data.rows));
+      res.end();
+    })
+    .catch((error) => {
+      console.log(error)
+      res.end(error);
+    });
+};
+
+
 const getScreenings = (req, res) => {
   const query = {
     text: read.getScreenings,
@@ -442,6 +459,7 @@ module.exports = {
   getSeries,
   getSeriesByUri,
   getMovies,
+  getAllScreenings,
   getScreenings,
   getShowtimeHours,
   getFeatured,

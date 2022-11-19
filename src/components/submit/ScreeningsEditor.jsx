@@ -65,6 +65,7 @@ const ScreeningsEditor = (props) => {
           throw new Error(error);
         });
     };
+
     getSeriesList();
     getVenueList();
   }, []);
@@ -117,6 +118,20 @@ const ScreeningsEditor = (props) => {
     setCanceled(canceled);
   };
 
+  const getAllScreeningsList = () => {
+    axios({
+      method: 'get',
+      url: `/api/screenings/`,
+    })
+      .then((response) => {
+        const { data } = response;
+        setScrList(data);
+      })
+      .catch((error) => {
+        throw new Error(error);
+      });
+  };
+
   const getScreeningsList = (value) => {
     axios({
       method: 'get',
@@ -132,8 +147,13 @@ const ScreeningsEditor = (props) => {
   };
 
   const selectVenue = (value) => {
-    setVenKey(value);
-    getScreeningsList(venList[value].id);
+    if (value === 'allScr') { 
+      getAllScreeningsList();
+    } else {
+      setVenKey(value);
+      getScreeningsList(venList[value].id);
+    }
+
   };
 
   const selectMovie = (result) => {
@@ -149,6 +169,21 @@ const ScreeningsEditor = (props) => {
     setAltTitle(data.title)
     postMovie(data);
   }
+
+  const selectStartDate = (value) => {
+    setStartDate(value);
+    if (new Date(value) > new Date(endDate)) {
+      setEndDate(value);
+    };
+  }
+
+  const selectEndDate = (value) => {
+    setEndDate(value);
+    // if (new Date(value) < new Date(startDate)) {
+    //   setStartDate(value);
+    // };
+  }
+  
 
   const postScreenSeries = (screeningsId) => {
     axios({
@@ -321,6 +356,7 @@ const ScreeningsEditor = (props) => {
               onChange={(e) => selectVenue(e.target.value)}
             >
               <option>Filter by Venue</option>
+              <option value="allScr">All Screenings</option>
               {venList.map((ven, i) => (
                 <option key={ven.id} value={i}>
                   {ven.title}
@@ -358,7 +394,7 @@ const ScreeningsEditor = (props) => {
         <label htmlFor={venue}>
           Venue:
           <select value={venue} onChange={(e) => setVenue(e.target.value)}>
-            <option value="">Select...</option>
+            <option value="0">Select...</option>
             {venList.map((theater) => (
               <option key={theater.id} value={theater.id}>
                 {theater.title}
@@ -389,7 +425,7 @@ const ScreeningsEditor = (props) => {
           <input
             type="date"
             value={startDate}
-            onChange={(e) => setStartDate(e.target.value)}
+            onChange={(e) => selectStartDate(e.target.value)}
           />
         </label>
         <label htmlFor={endDate}>
@@ -397,7 +433,7 @@ const ScreeningsEditor = (props) => {
           <input
             type="date"
             value={endDate}
-            onChange={(e) => setEndDate(e.target.value)}
+            onChange={(e) => selectEndDate(e.target.value)}
           />
         </label>
         <label htmlFor={screenFormat}>
