@@ -58,18 +58,13 @@ const Home = () => {
         url: query,
       })
         .then((response) => {
-          setShowtimes(response.data);
+          const { data } = response;
+          if (isSubmit) {
+            setShowtimes(data);
+          } else {
+            setShowtimes(data[0].venues);
+          }
           setLoading(false);
-          const show = [];
-          const virtScr = [];
-          response.data.forEach((item) => {
-            if (item.shows.length > 0) {
-              show.push(item.shows);
-            }
-            if (item.virtualScreenings.length > 0) {
-              virtScr.push(item.virtualScreenings);
-            }
-          });
         })
         .catch((error) => {
           throw new Error(error);
