@@ -136,6 +136,7 @@ const getMovies = `SELECT *  FROM  movies`;
 
 const getFeatured = `SELECT * FROM featured_films`;
 
+
 const getScreenings = `SELECT
   screenings.id AS screening_id,
   screenings.movies_id,

@@ -96,69 +96,12 @@ const getShowtimesSubmit = (req, res) => {
     });
 };
 
-const getShowtimesOnDate = (req, res) => {
-  const text = req.params.id;
-  const today = text.slice(0, 10);
-  const tomorrow = text.slice(11, 21);
-  const query = {
-    text: read.showtimesOnDate,
-    values: [today],
-  };
-  screensf.client
-    .query(query)
-    .then((data) => {
-      if (data.rows) {
-        const { rows } = data;
-        const showsByVenue = {};
-        rows.forEach((row) =>{
-          const venueTitle = row.venue;
-
-          // create venue
-          if (!showsByVenue[venueTitle]) {
-            showsByVenue[venueTitle] = {
-              venue: venueTitle,
-              address: row.venue_address,
-              id: row.venue_id,
-              shows: [],
-              virtualScreenings: [],
-              venue_uri: row.venue_uri,
-            };
-          }
-
-          // enter shows data
-          const showData = row;
-          showData.showtimes = fixShowtimes(
-            showData.showtimes,
-            today,
-            tomorrow,
-          );
-          
-          // separate the virtual screenings
-          if (showData.showtimes.length > 0) {
-            showsByVenue[venueTitle].shows.push(showData);
-          } else if (showData.format === 'Virtual Screening') {
-            showsByVenue[venueTitle].virtualScreenings.push(showData);
-          }
-        })
-        
-        let showsFinal = Object.values(showsByVenue)
-        const showsStr = JSON.stringify(showsFinal);
-        res.send(showsStr);
-        
-      }
-      res.end();
-    })
-    .catch((error) => {
-      console.log('error', error);
-      res.end(error);
-    });
-};
-
 const getShowtimesByVenue = (req, res) => {
   const { venUri, today } = req.params;
+  let dateTime = `${today} 03:00:00-8:00`;
   const query = {
     text: read.getShowtimesByVenue,
-    values: [today, venUri],
+    values: [dateTime, venUri],
   };
   screensf.client
     .query(query)
@@ -166,7 +109,13 @@ const getShowtimesByVenue = (req, res) => {
       const { rows } = data;
       let showByDate = {};
       rows.forEach((showtime) => {
-        let showtimeDate = showtime.date.toJSON().slice(0, 10);
+        let showtimeDate = showtime.date.slice(0, 10);
+        let hour = showtime.date.slice(11,13);
+        if (parseInt(hour) < 4) {
+          let today = new Date(showtimeDate)
+          today.setDate(today.getDate() - 1);
+          showtimeDate = today.toISOString().split('T')[0];
+        }
         if (!showByDate[showtimeDate]) {
           showByDate[showtimeDate] = {};
           showByDate[showtimeDate].date = showtimeDate;
@@ -197,7 +146,15 @@ const getShowtimesByVenue = (req, res) => {
 const getUpcoming = (rows) => {
   let showByDate = {};
   rows.forEach((showtime) => {
-    let showtimeDate = showtime.date.toJSON().slice(0, 10);
+    let showtimeDate = showtime.date.slice(0, 10);
+
+    let hour = showtime.date.slice(11,13);
+    if (parseInt(hour) < 4) {
+      let today = new Date(showtimeDate)
+      today.setDate(today.getDate() - 1);
+      showtimeDate = today.toISOString().split('T')[0];
+    }
+
     //create date
     if (!showByDate[showtimeDate]) {
       showByDate[showtimeDate] = {};
@@ -228,25 +185,47 @@ const getUpcoming = (rows) => {
   
   // present venue in array for Screenings component
   for (date in showByDate) {
-    const ordered = Object.keys(showByDate[date].venues).sort().reduce(
-      (obj, key) => { 
+    const ordered = Object.keys(showByDate[date].venues).sort().reduce((obj, key) => { 
         obj[key] = showByDate[date].venues[key]; 
         return obj;
-      },
-      {}
-    );
+      },{});
      showByDate[date].venues = Object.values(ordered);
   }
   return showByDate;
-}
+};
+
+
+const getShowtimesOnDate = (req, res) => {
+  const text = req.params.id;
+  const today = `${text.slice(0, 10)} 03:00:00-8:00`;
+  const tomorrow = `${text.slice(11, 21)} 03:00:00-8:00`;
+  const query = {
+    text: read.showtimesOnDate,
+    values: [today, tomorrow],
+  };
+  screensf.client
+    .query(query)
+    .then((data) => {
+      const { rows } = data;
+      const upcoming = getUpcoming(rows);
+      const stringified = JSON.stringify(Object.values(upcoming))
+      res.send(stringified);
+      res.end();
+    })
+    .catch((error) => {
+      console.log('error', error);
+      res.end(error);
+    });
+};
 
 const getShowtimesBySeries = (req, res) => {
   const { serUri, today, prev } = req.params;
+  let dateTime = `${today} 03:00:00-8:00`;
   let text = read.getShowtimesBySeries;
   if (prev === "true") text = read.getPrevShowtimesBySeries;
   const query = {
     text: text,
-    values: [today, serUri],
+    values: [dateTime, serUri],
   };
   screensf.client
     .query(query)
@@ -264,17 +243,19 @@ const getShowtimesBySeries = (req, res) => {
 
 const getShowtimesOnFilm = (req, res) => {
   const { today } = req.params;
+  let dateTime = `${today} 03:00:00-8:00`;
   let text = read.getShowtimesOnFilm;
   const query = {
     text: text,
-    values: [today],
+    values: [dateTime],
   };
   screensf.client
     .query(query)
     .then((data) => {
       const { rows } = data;
       const upcoming = getUpcoming(rows);
-      res.send(JSON.stringify(Object.values(upcoming)));
+      const stringified = JSON.stringify(Object.values(upcoming))
+      res.send(stringified);
       res.end();
     })
     .catch((error) => {
@@ -285,10 +266,11 @@ const getShowtimesOnFilm = (req, res) => {
 
 const getShowtimesInPerson = (req, res) => {
   const { today } = req.params;
+  let dateTime = `${today} 03:00:00-8:00`;
   let text = read.getShowtimesInPerson;
   const query = {
     text: text,
-    values: [today],
+    values: [dateTime],
   };
   screensf.client
     .query(query)
@@ -383,6 +365,23 @@ const getMovies = (req, res) => {
     });
 };
 
+const getAllScreenings = (req, res) => {
+  const query = {
+    text: read.getAllScreenings,
+  };
+  screensf.client
+    .query(query)
+    .then((data) => {
+      res.send(JSON.stringify(data.rows));
+      res.end();
+    })
+    .catch((error) => {
+      console.log(error)
+      res.end(error);
+    });
+};
+
+
 const getScreenings = (req, res) => {
   const query = {
     text: read.getScreenings,
@@ -442,6 +441,7 @@ module.exports = {
   getSeries,
   getSeriesByUri,
   getMovies,
+  getAllScreenings,
   getScreenings,
   getShowtimeHours,
   getFeatured,

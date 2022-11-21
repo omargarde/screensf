@@ -59,7 +59,14 @@ const MoviesEditor = () => {
       });
   };
 
-
+  const selectFromList = (result) => {
+    setMovId(result.id);
+    setMovTitle(result.title);
+    setMovDirector(result.director);
+    setRelDate(dateHandle(result.release_date));
+    setMovRuntime(result.runtime);
+    setMovSyn(result.overview);
+  }
 
   const selectMovie = (selectedId) => {
     setNote('');
@@ -158,7 +165,9 @@ const MoviesEditor = () => {
           ))}
         </select>
       </label>
-      <MovieSearch />
+      <MovieSearch 
+        selectMov={selectFromList}
+      />
       <label htmlFor={movId}>
         Movie ID:
         <input

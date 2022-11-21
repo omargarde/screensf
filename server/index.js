@@ -48,6 +48,8 @@ app.get('/api/series/:id', get.getSeriesByUri);
 
 app.get('/api/movies/', get.getMovies);
 
+app.get('/api/screenings/', get.getAllScreenings);
+
 app.get('/api/screenings/:id', get.getScreenings);
 
 app.get('/api/showtime-hours/:id', get.getShowtimeHours);

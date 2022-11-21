@@ -67,17 +67,22 @@ const submitShowtimesOnDate = `SELECT
     venues.title,
     screenings.alt_title;`;
 
-const showtimesOnDate = `SELECT 
+    const showtimesOnDate = `SELECT
+    screenings.id AS screening_id,
+    screenings.movies_id AS movie_id,
+    screenings.alt_title,
+    screenings.screening_url,
+    screenings.start_date,
+    screenings.end_date,
+    screenings.format,
+    screenings.screening_note,
+    screenings.use_alt,
+    screenings.canceled,
     venues.title AS venue,
-    venues.short_title AS venueShortTitle,
     venues.address AS venue_address,
     venues.id AS venue_id,
     venues.venue_uri AS venue_uri,
-    movies.id AS movie_id,
-    movies.title AS film,
-    movies.director,
-    movies.release_date,
-    movies.runtime,
+    showtime AS date,
     string_agg(DISTINCT series.title, ', ') AS series,
     string_agg(DISTINCT series.series_url, ', ') AS series_url,
     string_agg(DISTINCT series.series_uri, ', ') AS series_uri,
@@ -87,54 +92,29 @@ const showtimesOnDate = `SELECT
       'screenings_id', showtimes.screenings_id,
       'showtime', showtimes.showtime,
       'showtime_note', showtimes.showtime_note,
-      'in_person', showtimes.in_person,
       'canceled', showtimes.canceled,
       'hide', showtimes.hide
       )
       ORDER BY
       showtimes.showtime
-      ) AS showtimes,
-    screenings.id AS screening_id,
-    screenings.alt_title,
-    screenings.screening_url,
-    screenings.start_date,
-    screenings.end_date,
-    screenings.format,
-    screenings.screening_note,
-    screenings.use_alt,
-    screenings.canceled
+      ) AS showtimes
     FROM
-    screenings
-    INNER JOIN movies ON screenings.movies_id=movies.id
-    INNER JOIN venues ON screenings.venues_id=venues.id
-    INNER JOIN screenings_series ON screenings.id = screenings_series.screenings_id
-    INNER JOIN series ON series.id = screenings_series.series_id 
-    LEFT JOIN showtimes ON showtimes.screenings_id = screenings.id
+    showtimes
+    LEFT JOIN screenings ON showtimes.screenings_id = screenings.id
+    LEFT JOIN venues ON screenings.venues_id=venues.id
+    LEFT JOIN screenings_series ON screenings.id = screenings_series.screenings_id
+    LEFT JOIN series ON series.id = screenings_series.series_id 
     WHERE
-    showtimes.showtime >= $1 AND screenings.canceled = 0
+    showtimes.showtime >= $1 AND showtimes.showtime < $2 AND screenings.canceled = 0 AND showtimes.hide = 0
     GROUP BY
     showtimes.showtime,
-    venues.title,
-    movies.title,
-    movies.id,
-    movies.director,
-    movies.release_date,
-    movies.runtime,
-    venues.id,
-    venues.short_title,
-    venues.address,
-    venues.venue_uri,
+    showtimes.id,
     screenings.id,
-    screenings.alt_title,
-    screenings.screening_url,
-    screenings.start_date,
-    screenings.end_date,
-    screenings.format,
-    screenings.screening_note,
-    screenings.use_alt,
-    screenings.canceled
-    ORDER BY
     venues.title,
+    venues.address,
+    venues.id,
+    venues.venue_uri
+    ORDER BY
     showtimes.showtime;`;
 
 const recommendedOnDate = `SELECT 
@@ -213,6 +193,38 @@ const getMovies = `SELECT *  FROM  movies`;
 
 const getFeatured = `SELECT * FROM featured_films ORDER BY featured_films.ondate DESC`;
 
+const getAllScreenings = `SELECT
+  screenings.id AS screening_id,
+  screenings.movies_id,
+  screenings.alt_title,
+  screenings.screening_url,
+  screenings.start_date,
+  screenings.end_date,
+  screenings.format,
+  screenings.screening_note,
+  screenings.use_alt,
+  screenings.canceled,
+  screenings.venues_id AS venue_id,
+  string_agg(DISTINCT series.id::character varying, ', ') AS series_id
+  FROM
+  screenings
+  INNER JOIN screenings_series ON screenings.id = screenings_series.screenings_id
+  INNER JOIN series ON series.id = screenings_series.series_id 
+  GROUP BY
+  screenings.id,
+  screenings.movies_id,
+  screenings.alt_title,
+  screenings.screening_url,
+  screenings.start_date,
+  screenings.end_date,
+  screenings.format,
+  screenings.screening_note,
+  screenings.use_alt,
+  screenings.canceled
+  ORDER BY
+  screenings.id;
+  `;
+
 const getScreenings = `SELECT
   screenings.id AS screening_id,
   screenings.movies_id,
@@ -269,7 +281,7 @@ const getShowtimesByVenue = `SELECT
   screenings.screening_note,
   screenings.use_alt,
   screenings.canceled,
-  showtime::DATE AS date,
+  showtime AS date,
   string_agg(DISTINCT series.title, ', ') AS series,
   string_agg(DISTINCT series.series_url, ', ') AS series_url,
   string_agg(DISTINCT series.series_uri, ', ') AS series_uri,
@@ -315,7 +327,7 @@ const getShowtimesByVenue = `SELECT
   venues.address AS venue_address,
   venues.id AS venue_id,
   venues.venue_uri AS venue_uri,
-  showtime::DATE AS date,
+  showtime AS date,
   string_agg(DISTINCT series.title, ', ') AS series,
   string_agg(DISTINCT series.series_url, ', ') AS series_url,
   string_agg(DISTINCT series.series_uri, ', ') AS series_uri,
@@ -365,7 +377,7 @@ const getShowtimesByVenue = `SELECT
   venues.address AS venue_address,
   venues.id AS venue_id,
   venues.venue_uri AS venue_uri,
-  showtime::DATE AS date,
+  showtime AS date,
   string_agg(DISTINCT series.title, ', ') AS series,
   string_agg(DISTINCT series.series_url, ', ') AS series_url,
   string_agg(DISTINCT series.series_uri, ', ') AS series_uri,
@@ -415,7 +427,7 @@ const getShowtimesByVenue = `SELECT
   venues.address AS venue_address,
   venues.id AS venue_id,
   venues.venue_uri AS venue_uri,
-  showtime::DATE AS date,
+  showtime AS date,
   string_agg(DISTINCT series.title, ', ') AS series,
   string_agg(DISTINCT series.series_url, ', ') AS series_url,
   string_agg(DISTINCT series.series_uri, ', ') AS series_uri,
@@ -471,7 +483,7 @@ const getShowtimesByVenue = `SELECT
   venues.address AS venue_address,
   venues.id AS venue_id,
   venues.venue_uri AS venue_uri,
-  showtime::DATE AS date,
+  showtime AS date,
   string_agg(DISTINCT series.title, ', ') AS series,
   string_agg(DISTINCT series.series_url, ', ') AS series_url,
   string_agg(DISTINCT series.series_uri, ', ') AS series_uri,
@@ -521,6 +533,7 @@ module.exports = {
   getSeries,
   getSeriesByUri,
   getMovies,
+  getAllScreenings,
   getScreenings,
   getShowtimeHours,
   getFeatured,
